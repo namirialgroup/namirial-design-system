@@ -12,6 +12,8 @@ coverage
 *.log
 .vercel
 .turbo
+# Configurazione locale Cursor (non versionare)
+.cursor
 
 # Figma sync: generati a ogni sync, non versionare
 packages/figma-sync/snapshots/previous-*.json
@@ -21,3 +23,5 @@ packages/figma-sync/snapshots/_mcp-page-*.json
 # Export MCP: file raw/temporanei (il merge ignora già .raw e _*)
 packages/figma-sync/snapshots/mcp-exports/*.raw.json
 packages/figma-sync/snapshots/mcp-exports/_*
+# Path errato (duplicato packages/) — non versionare
+packages/packages/
