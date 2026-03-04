@@ -1,0 +1,30 @@
+# Fail CI if generated output does not match Figma snapshot hash.
+name: CI — Figma/Code Mismatch Check
+
+on:
+  pull_request:
+    branches: [main, experimental]
+  push:
+    branches: [main, experimental]
+
+jobs:
+  mismatch-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Build figma-sync and validator
+        run: |
+          pnpm exec nx run figma-sync:build
+          pnpm exec nx run library-validator:build
+      - name: Validate — fail if mismatch
+        run: node tools/library-validator/dist/cli.js
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}

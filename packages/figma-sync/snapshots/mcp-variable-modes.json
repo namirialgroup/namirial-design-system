@@ -1,0 +1,10 @@
+{
+  "source": "figma-console-mcp",
+  "fileKey": "onY6xoWkmPGv6Zp4b1jEzn",
+  "variableModes": {
+    "Component dimension": ["xs", "sm", "md", "lg", "xl"],
+    "Component intent": ["Primary", "Secondary", "Accent", "Info", "Positive", "Negative", "Warning"],
+    "Theme": ["Light", "Dark"],
+    "Typography": ["Auto (Light)"]
+  }
+}

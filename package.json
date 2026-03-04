@@ -1,0 +1,43 @@
+{
+  "name": "namirial-design-system",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Namirial Design System — Enterprise design system platform",
+  "packageManager": "pnpm@9.14.2",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "nx run-many -t build --all",
+    "build:stable": "nx run-many -t build --projects=figma-sync,tokens,components,react-wrapper,angular-wrapper,vue-wrapper,docs --configuration=stable",
+    "build:experimental": "nx run-many -t build --projects=figma-sync,tokens,components,docs --configuration=experimental",
+    "sync:figma": "nx run figma-sync:sync",
+    "dev-sync": "pnpm sync:figma && pnpm exec nx run tokens:build && pnpm exec nx run components:build && pnpm docs:serve",
+    "release": "pnpm exec nx run changelog-engine:version-bump",
+    "docs:serve": "pnpm --filter @namirial/docs dev",
+    "docs:clean": "rm -rf apps/docs/.next node_modules/.cache",
+    "sync-and-serve": "pnpm sync:figma && pnpm docs:serve",
+    "validate": "nx run library-validator:validate",
+    "changelog": "nx run changelog-engine:generate",
+    "test": "nx run-many -t test --all",
+    "test:ci": "nx run-many -t test --all --configuration=ci",
+    "lint": "nx run-many -t lint --all",
+    "version:bump": "nx run changelog-engine:version-bump",
+    "sync:figma:mcp": "node packages/figma-sync/dist/src/write-mcp-snapshot.js",
+    "merge:mcp-exports": "node packages/figma-sync/dist/src/merge-mcp-exports.js packages/figma-sync/snapshots/mcp-exports",
+    "export:variables": "nx run figma-sync:build && node packages/figma-sync/dist/src/export-variables-to-mcp.js",
+    "export:component-color": "nx run figma-sync:build && node packages/figma-sync/dist/src/export-component-color-to-mcp.js",
+    "merge:mcp-pages": "nx run figma-sync:build && node packages/figma-sync/dist/src/merge-mcp-pages-and-write-exports.js",
+    "reorganize:mcp-exports": "nx run figma-sync:build && node packages/figma-sync/dist/src/reorganize-mcp-exports.js",
+    "sync:variables": "pnpm export:variables && pnpm merge:mcp-exports && pnpm sync:figma"
+  },
+  "devDependencies": {
+    "@nx/js": "20.8.4",
+    "@nx/node": "20.8.4",
+    "@nx/workspace": "20.8.4",
+    "@nx/next": "20.8.4",
+    "nx": "20.8.4",
+    "typescript": "5.6.3"
+  }
+}

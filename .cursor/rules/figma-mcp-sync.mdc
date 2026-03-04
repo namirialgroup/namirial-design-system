@@ -1,0 +1,59 @@
+---
+description: Preferire Figma Console MCP per estrarre token e componenti da Design System 2026
+alwaysApply: true
+---
+
+# Sync da Figma: usare Figma Console MCP
+
+Quando devi **estrarre variables/token o componenti** dal file Figma **Design System 2026** (file key in `design-system.config.json`), usa **sempre Figma Console MCP** come canale principale. File key: `onY6xoWkmPGv6Zp4b1jEzn` — URL: `https://www.figma.com/design/onY6xoWkmPGv6Zp4b1jEzn`.
+
+## Sync variabili: solo MCP (un solo comando in chat)
+
+**Non usare mai** `FIGMA_ACCESS_TOKEN` / REST per le variables: l'utente non ha scope `file_variables:read`. Usare **solo Figma Console MCP** e Cursor.
+
+Quando l'utente chiede di **sincronizzare le variabili da Figma** (es. "sync variabili", "aggiorna variables", "leggi tutte le collection da Figma e mettile in mcp-exports"):
+
+1. **Summary**  
+   Chiama **`figma_get_variables`** (server `user-figma-console`) con `fileUrl: "https://www.figma.com/design/onY6xoWkmPGv6Zp4b1jEzn"`, `resolveAliases: true`, `format: "summary"`. Dalla risposta ricava **totalVariables** e **totalPages** (es. da `pagination.totalPages` o da 6 se pageSize 100 e 584 variabili).
+
+2. **Paginazione completa**  
+   Per **ogni pagina da 1 a totalPages** (es. 1..6): chiama **`figma_get_variables`** con `format: "filtered"`, `page: i`, `pageSize: 100`, stesso fileUrl e resolveAliases. **Salva l’intera risposta JSON** in `packages/figma-sync/snapshots/_mcp-page-{i}.json` (i = 1, 2, … N). Scrivi il file con il corpo della risposta MCP così com’è (include `data.variables` e `data.variableCollections`).
+
+3. **Merge pagine e scrittura mcp-exports**  
+   Esegui da root: **`pnpm merge:mcp-pages`**. Lo script legge tutti i `_mcp-page-*.json`, unisce variables e collections (per id, unendo `resolvedValuesByMode` quando la stessa variabile compare in più pagine), e scrive **mcp-exports** con la struttura concordata:
+   - collection con 0/1 mode → file in root `{slug-collection}.json`
+   - collection con più mode → cartella `{slug-collection}/` e file `{slug-mode}_{slug-collection}.json`  
+   Include tutte le collection presenti nei dati (Primitives, Semantic, Theme, **Component color**, Component intent, Component dimension, Component no-modes).
+
+4. **Merge e sync progetto**  
+   Esegui **`pnpm merge:mcp-exports`** (genera `figma-variables-export.json` da mcp-exports), poi **`pnpm sync:figma`** per aggiornare token e manifest nella webapp.
+
+5. **Pulizia**  
+   Elimina i file temporanei `packages/figma-sync/snapshots/_mcp-page-*.json`.
+
+**Comando unico per l’utente**: in chat chiedi **"Sincronizza le variabili da Figma"** (o equivalente). L’agent esegue i passi 1–5 sopra senza usare token REST.
+
+## Token / Variables
+
+1. Chiama **`figma_get_variables`** con:
+   - `fileUrl`: `https://www.figma.com/design/onY6xoWkmPGv6Zp4b1jEzn` (o leggi `figma.tokenLibraryId` da `design-system.config.json`)
+   - `resolveAliases`: `true` per valori risolti (es. hex per i colori)
+   - Se la risposta è paginata, raccogli tutte le pagine (parametri `page`, `pageSize`).
+
+2. Per **scrivere gli snapshot** nel repo:
+   - **Opzione A**: Salva l’output MCP in un file JSON (es. `packages/figma-sync/snapshots/mcp-variables-export.json`), poi esegui `pnpm sync:figma:mcp path/to/file.json` (dopo `pnpm exec nx run figma-sync:build`). Lo script usa `mcpVariablesToFigmaTokens` e scrive `current-tokens.json` e aggiorna `manifest.json`.
+   - **Opzione B**: Usa la funzione `mcpVariablesToFigmaTokens` da `@namirial/figma-sync` (modulo `mcp-to-snapshot`) per trasformare il payload MCP in array `FigmaToken[]` e scrivi tu stesso `packages/figma-sync/snapshots/current-tokens.json` e aggiorna il manifest (tokenCount, timestamp).
+
+3. Dopo aver aggiornato gli snapshot, esegui il **build dei token** (`pnpm build` o `nx run tokens:build`) per rigenerare `tokens.json` e `tokens.css`.
+
+## Componenti
+
+- Per **elenco o dettagli componenti** usa **`figma_search_components`**, **`figma_get_component`**, **`figma_get_component_for_development`** o **`figma_get_file_data`** / **`figma_get_design_system_summary`**.
+- Per allineare il **manifest** (stableComponents / experimentalComponents) con i componenti Figma, il sync REST (`pnpm sync:figma`) resta la via che popola `current-components.json` e le liste nel manifest; in alternativa puoi usare l’output MCP per costruire un manifest minimale (solo token) e lasciare i componenti come già presenti nel manifest esistente.
+
+## Quando usare il sync REST
+
+- **CI / GitHub Actions**: il sync REST (`pnpm sync:figma` con `FIGMA_ACCESS_TOKEN`) resta necessario perché in pipeline non c’è Figma Desktop né MCP.
+- **Build senza Cursor**: chi non usa Cursor può continuare a usare `pnpm sync:figma`.
+
+In sintesi: **MCP first** quando sei in Cursor e hai Figma (e MCP) disponibili; **REST** per automazione e CI.

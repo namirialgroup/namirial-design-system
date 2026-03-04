@@ -1,0 +1,68 @@
+{
+  "components": [
+    {
+      "slug": "button",
+      "label": "Button"
+    },
+    {
+      "slug": "icon",
+      "label": "Icon"
+    },
+    {
+      "slug": "alert",
+      "label": "Alert"
+    },
+    {
+      "slug": "badge",
+      "label": "Badge"
+    },
+    {
+      "slug": "code",
+      "label": "Code"
+    },
+    {
+      "slug": "confirmation-dialog",
+      "label": "Confirmation Dialog"
+    },
+    {
+      "slug": "input",
+      "label": "Input"
+    },
+    {
+      "slug": "message",
+      "label": "Message"
+    },
+    {
+      "slug": "modal-dialog",
+      "label": "Modal-dialog"
+    },
+    {
+      "slug": "nav-children",
+      "label": "Nav-children"
+    },
+    {
+      "slug": "nav-divider",
+      "label": "Nav-divider"
+    },
+    {
+      "slug": "nav-parent-collapsed",
+      "label": "Nav-parent-collapsed"
+    },
+    {
+      "slug": "pager-nav",
+      "label": "Pager-nav"
+    },
+    {
+      "slug": "search-input",
+      "label": "Search-input"
+    },
+    {
+      "slug": "tag",
+      "label": "Tag"
+    },
+    {
+      "slug": "toast",
+      "label": "Toast"
+    }
+  ]
+}

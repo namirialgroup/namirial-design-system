@@ -1,0 +1,53 @@
+# Promotion: when a component moves from Experimental page to Stable in Figma.
+# Run after Figma publish; treats newly stable components as MINOR bump.
+name: Promotion — Experimental to Stable
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for promotion"
+        required: false
+        type: string
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Re-sync from Figma (stable)
+        env:
+          DS_SCOPE: stable
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+          FIGMA_TOKEN_LIBRARY_ID: ${{ vars.FIGMA_TOKEN_LIBRARY_ID }}
+          FIGMA_COMPONENT_LIBRARY_ID: ${{ vars.FIGMA_COMPONENT_LIBRARY_ID }}
+        run: |
+          pnpm exec nx run figma-sync:build
+          node packages/figma-sync/dist/src/cli.js
+      - name: Store previous snapshot for diff
+        run: |
+          cp packages/figma-sync/snapshots/manifest.json packages/figma-sync/snapshots/previous-manifest.json || true
+          cp packages/figma-sync/snapshots/current-tokens.json packages/figma-sync/snapshots/previous-tokens.json || true
+          cp packages/figma-sync/snapshots/current-components.json packages/figma-sync/snapshots/previous-components.json || true
+      - name: Changelog + version bump (MINOR for new stable components)
+        run: |
+          pnpm exec nx run changelog-engine:build
+          node tools/changelog-engine/dist/cli-generate.js
+          node tools/changelog-engine/dist/cli-version-bump.js
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add CHANGELOG.md apps/docs/public/changelog.json packages/figma-sync/snapshots/ package.json packages/*/package.json
+          git diff --staged --quiet || (git commit -m "chore: promote experimental to stable" && git push)

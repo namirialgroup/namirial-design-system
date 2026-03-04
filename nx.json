@@ -1,0 +1,41 @@
+{
+  "$schema": "https://nx.dev/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": []
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/.next"],
+      "configurations": {
+        "stable": {
+          "env": { "DS_SCOPE": "stable" }
+        },
+        "experimental": {
+          "env": { "DS_SCOPE": "experimental" }
+        }
+      }
+    },
+    "test": {
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "configurations": {
+        "ci": {}
+      }
+    },
+    "lint": {
+      "cache": true,
+      "inputs": ["default", "^default"]
+    }
+  },
+  "defaultBase": "main",
+  "generators": {
+    "@nx/workspace:run-commands": {
+      "env": {
+        "DS_SCOPE": "stable"
+      }
+    }
+  }
+}

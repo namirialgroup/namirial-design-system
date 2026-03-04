@@ -1,0 +1,19 @@
+{
+  "name": "@namirial/changelog-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "generate": "node dist/cli-generate.js",
+    "version-bump": "node dist/cli-version-bump.js"
+  },
+  "dependencies": {
+    "@namirial/schema-diff": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3"
+  }
+}

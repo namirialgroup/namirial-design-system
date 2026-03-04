@@ -1,0 +1,21 @@
+{
+  "name": "@namirial/design-system",
+  "version": "0.0.0",
+  "description": "Namirial Design System — design tokens and core styles",
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/src/index.d.ts", "default": "./dist/src/index.js" },
+    "./tokens.json": "./dist/tokens.json",
+    "./tokens.css": "./dist/tokens.css"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node dist/build-tokens.js",
+    "test": "node --test dist/**/*.test.js"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3"
+  }
+}

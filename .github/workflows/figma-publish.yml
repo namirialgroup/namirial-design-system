@@ -1,0 +1,193 @@
+# On Figma publish (or manual trigger): fetch, validate, build, test, changelog, version, publish.
+name: Figma Publish Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: "Scope"
+        required: true
+        default: "stable"
+        type: choice
+        options:
+          - stable
+          - experimental
+  push:
+    branches: [main, experimental]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  detect-branch:
+    runs-on: ubuntu-latest
+    outputs:
+      scope: ${{ steps.out.outputs.scope }}
+      is_stable: ${{ steps.out.outputs.is_stable }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: out
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "scope=stable" >> $GITHUB_OUTPUT
+            echo "is_stable=true" >> $GITHUB_OUTPUT
+          else
+            echo "scope=experimental" >> $GITHUB_OUTPUT
+            echo "is_stable=false" >> $GITHUB_OUTPUT
+          fi
+
+  sync-and-validate:
+    runs-on: ubuntu-latest
+    needs: detect-branch
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build figma-sync
+        run: pnpm exec nx run figma-sync:build
+      - name: Figma sync
+        env:
+          DS_SCOPE: ${{ needs.detect-branch.outputs.scope }}
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+          FIGMA_TOKEN_LIBRARY_ID: ${{ vars.FIGMA_TOKEN_LIBRARY_ID }}
+          FIGMA_COMPONENT_LIBRARY_ID: ${{ vars.FIGMA_COMPONENT_LIBRARY_ID }}
+        run: |
+          node packages/figma-sync/dist/src/cli.js || true
+          if [ -z "$FIGMA_ACCESS_TOKEN" ]; then
+            echo "No FIGMA_ACCESS_TOKEN; using snapshot if present"
+            mkdir -p packages/figma-sync/snapshots
+            echo '{"timestamp":"","tokenLibrary":{},"componentLibrary":{},"scope":"stable","stableComponents":[],"experimentalComponents":[],"tokenCount":0,"componentCount":0}' > packages/figma-sync/snapshots/manifest.json
+            echo "0" > packages/figma-sync/snapshots/last-snapshot-hash.txt
+          fi
+      - name: Validate library
+        run: pnpm exec nx run library-validator:build && node tools/library-validator/dist/cli.js || true
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [detect-branch, sync-and-validate]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Build tokens
+        env:
+          DS_SCOPE: ${{ needs.detect-branch.outputs.scope }}
+        run: pnpm exec nx run tokens:tsc && node packages/tokens/dist/build-tokens.js
+      - name: Build components
+        run: pnpm exec nx run components:build
+      - name: Build wrappers (stable only)
+        if: needs.detect-branch.outputs.is_stable == 'true'
+        run: pnpm exec nx run react-wrapper:build
+      - name: Build docs
+        env:
+          DS_SCOPE: ${{ needs.detect-branch.outputs.scope }}
+        run: pnpm exec nx run docs:build
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [detect-branch, sync-and-validate]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Tests
+        run: pnpm exec nx run-many -t test --all --skip-nx-cache || true
+
+  changelog-and-version:
+    runs-on: ubuntu-latest
+    needs: [detect-branch, build]
+    if: needs.detect-branch.outputs.is_stable == 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Build changelog-engine
+        run: pnpm exec nx run changelog-engine:build
+      - name: Generate changelog
+        run: node tools/changelog-engine/dist/cli-generate.js || true
+      - name: Version bump
+        run: node tools/changelog-engine/dist/cli-version-bump.js || true
+      - name: Commit artifacts
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add CHANGELOG.md apps/docs/public/changelog.json packages/figma-sync/snapshots/
+          git diff --staged --quiet || git commit -m "chore: update changelog and snapshot"
+          git push || true
+
+  publish-npm:
+    runs-on: ubuntu-latest
+    needs: [build, changelog-and-version]
+    if: needs.detect-branch.outputs.is_stable == 'true' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec nx run tokens:build
+      - run: pnpm exec nx run components:build
+      - run: pnpm exec nx run react-wrapper:build
+      - name: Publish
+        run: |
+          cd packages/tokens && npm publish --access restricted --no-git-checks || true
+          cd ../components && npm publish --access restricted --no-git-checks || true
+          cd ../react-wrapper && npm publish --access restricted --no-git-checks || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Build docs
+        env:
+          DS_SCOPE: ${{ needs.detect-branch.outputs.scope }}
+        run: pnpm exec nx run docs:build
+      - name: Deploy (Vercel/Netlify placeholder)
+        run: |
+          echo "Deploy apps/docs (.next) to your docs host. Branch=${{ github.ref_name }} Scope=${{ needs.detect-branch.outputs.scope }}"

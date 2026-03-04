@@ -1,0 +1,185 @@
+{
+  "button": {
+    "displayName": "Button",
+    "variantAxes": {
+      "Status": [
+        "Active",
+        "Default",
+        "Hover"
+      ],
+      "Style": [
+        "Full-radius",
+        "Ghost",
+        "Standard"
+      ],
+      "Icon-only": [
+        "False",
+        "True"
+      ]
+    },
+    "variants": [
+      {
+        "figmaName": "Status=Active, Style=Full-radius, Icon-only=False",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Active",
+          "Style": "Full-radius",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Active, Style=Full-radius, Icon-only=True",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Active",
+          "Style": "Full-radius",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Active, Style=Ghost, Icon-only=False",
+        "ndsVariant": "ghost",
+        "properties": {
+          "Status": "Active",
+          "Style": "Ghost",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Active, Style=Ghost, Icon-only=True",
+        "ndsVariant": "ghost",
+        "properties": {
+          "Status": "Active",
+          "Style": "Ghost",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Active, Style=Standard, Icon-only=False",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Active",
+          "Style": "Standard",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Active, Style=Standard, Icon-only=True",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Active",
+          "Style": "Standard",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Default, Style=Full-radius, Icon-only=False",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Default",
+          "Style": "Full-radius",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Default, Style=Full-radius, Icon-only=True",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Default",
+          "Style": "Full-radius",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Default, Style=Ghost, Icon-only=False",
+        "ndsVariant": "ghost",
+        "properties": {
+          "Status": "Default",
+          "Style": "Ghost",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Default, Style=Ghost, Icon-only=True",
+        "ndsVariant": "ghost",
+        "properties": {
+          "Status": "Default",
+          "Style": "Ghost",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Default, Style=Standard, Icon-only=False",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Default",
+          "Style": "Standard",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Default, Style=Standard, Icon-only=True",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Default",
+          "Style": "Standard",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Hover, Style=Full-radius, Icon-only=False",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Hover",
+          "Style": "Full-radius",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Hover, Style=Full-radius, Icon-only=True",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Hover",
+          "Style": "Full-radius",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Hover, Style=Ghost, Icon-only=False",
+        "ndsVariant": "ghost",
+        "properties": {
+          "Status": "Hover",
+          "Style": "Ghost",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Hover, Style=Ghost, Icon-only=True",
+        "ndsVariant": "ghost",
+        "properties": {
+          "Status": "Hover",
+          "Style": "Ghost",
+          "Icon-only": "True"
+        }
+      },
+      {
+        "figmaName": "Status=Hover, Style=Standard, Icon-only=False",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Hover",
+          "Style": "Standard",
+          "Icon-only": "False"
+        }
+      },
+      {
+        "figmaName": "Status=Hover, Style=Standard, Icon-only=True",
+        "ndsVariant": "primary",
+        "properties": {
+          "Status": "Hover",
+          "Style": "Standard",
+          "Icon-only": "True"
+        }
+      }
+    ]
+  }
+}

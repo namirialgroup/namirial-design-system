@@ -1,0 +1,16 @@
+{
+  "name": "schema-diff",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/schema-diff/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "tools/schema-diff/dist",
+        "main": "tools/schema-diff/src/index.ts",
+        "tsConfig": "tools/schema-diff/tsconfig.json"
+      }
+    }
+  }
+}

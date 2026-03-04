@@ -1,0 +1,16 @@
+{
+  "name": "react-wrapper",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/react-wrapper/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "packages/react-wrapper/dist",
+        "main": "packages/react-wrapper/src/index.ts",
+        "tsConfig": "packages/react-wrapper/tsconfig.json"
+      }
+    }
+  }
+}

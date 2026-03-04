@@ -1,0 +1,16 @@
+{
+  "name": "vue-wrapper",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/vue-wrapper/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "packages/vue-wrapper/dist",
+        "main": "packages/vue-wrapper/src/index.ts",
+        "tsConfig": "packages/vue-wrapper/tsconfig.json"
+      }
+    }
+  }
+}

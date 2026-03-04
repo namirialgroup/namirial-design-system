@@ -1,0 +1,32 @@
+{
+  "name": "figma-sync",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/figma-sync/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "packages/figma-sync/dist",
+        "main": "packages/figma-sync/src/index.ts",
+        "tsConfig": "packages/figma-sync/tsconfig.json"
+      },
+      "configurations": {
+        "stable": {},
+        "experimental": {}
+      }
+    },
+    "sync": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node packages/figma-sync/dist/src/cli.js",
+        "cwd": "{workspaceRoot}"
+      },
+      "configurations": {
+        "stable": { "env": { "DS_SCOPE": "stable" } },
+        "experimental": { "env": { "DS_SCOPE": "experimental" } }
+      },
+      "dependsOn": ["build"]
+    }
+  }
+}

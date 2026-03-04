@@ -1,0 +1,26 @@
+{
+  "name": "@namirial/figma-sync",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "sync": "node dist/src/cli.js",
+    "export:variables": "node dist/src/export-variables-to-mcp.js",
+    "export:component-color": "node dist/src/export-component-color-to-mcp.js",
+    "merge:mcp-pages": "node dist/src/merge-mcp-pages-and-write-exports.js",
+    "reorganize:mcp-exports": "node dist/src/reorganize-mcp-exports.js",
+    "test": "node --test dist/**/*.test.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3"
+  }
+}

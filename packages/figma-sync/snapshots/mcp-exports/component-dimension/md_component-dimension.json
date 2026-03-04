@@ -1,0 +1,774 @@
+{
+  "fileKey": "onY6xoWkmPGv6Zp4b1jEzn",
+  "source": "mcp-pages",
+  "format": "filtered",
+  "timestamp": 1772579943007,
+  "data": {
+    "variables": [
+      {
+        "id": "VariableID:1105:2733",
+        "name": "stone/text",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40311"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40308"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40307"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40333"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40310"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 16,
+            "aliasTo": "font/size/md"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1105:2734",
+        "name": "stone/padding-vertical",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 8,
+            "aliasTo": "spacing/xs"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1105:2735",
+        "name": "stone/padding-horizontal",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2377"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2378"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2378"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 16,
+            "aliasTo": "spacing/md"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1105:2736",
+        "name": "stone/gap",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2377"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 12,
+            "aliasTo": "spacing/sm"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1105:2737",
+        "name": "stone/corner/corner-radius",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:96"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:98"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:99"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:99"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:97"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 10,
+            "aliasTo": "radius/sm"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1105:2738",
+        "name": "stone/inner-height",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:87"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:89"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:89"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:322:2445"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:87"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 24,
+            "aliasTo": "size/element/lg"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1165:3770",
+        "name": "stone/corner/full",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:104"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:104"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:104"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:104"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:104"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 999,
+            "aliasTo": "radius/full"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1194:5260",
+        "name": "stone/padding-horizontal-only-icon",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 8,
+            "aliasTo": "spacing/xs"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1328:13",
+        "name": "dialog/width",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:244:3943"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:332:2376"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:1328:12"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:332:2377"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:244:3943"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 560,
+            "aliasTo": "size/layout/lg"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1735:264",
+        "name": "stone/text-small",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40311"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40310"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40309"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40307"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40311"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 14,
+            "aliasTo": "font/size/sm"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1904:6",
+        "name": "pager/padding-horizontal",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:1132:4030"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 8,
+            "aliasTo": "spacing/xs"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1904:20",
+        "name": "pager/padding-vertical",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2376"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 12,
+            "aliasTo": "spacing/sm"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1904:826",
+        "name": "stone/tag/inner-height",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:87"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:87"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:87"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:87"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:87"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 16,
+            "aliasTo": "size/element/sm"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1904:1012",
+        "name": "stone/tag/text",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40311"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40310"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40310"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40310"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40311"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 14,
+            "aliasTo": "font/size/sm"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1914:235",
+        "name": "stone/tag/corner-radius",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:96"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:96"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:96"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:96"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:76:96"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 6,
+            "aliasTo": "radius/2xs"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1914:357",
+        "name": "stone/tag/gap",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 8,
+            "aliasTo": "spacing/xs"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1914:364",
+        "name": "stone/tag/padding-horizontal",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2383"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2375"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2383"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 8,
+            "aliasTo": "spacing/xs"
+          }
+        }
+      },
+      {
+        "id": "VariableID:1939:368",
+        "name": "stone/tag/padding-vertical",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:1132:4030"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2374"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:1132:4030"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 4,
+            "aliasTo": "spacing/3xs"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2255:1292",
+        "name": "stone/code-input/text",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40307"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40307"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40331"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40331"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:175:40307"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 20,
+            "aliasTo": "font/size/xl"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2256:1333",
+        "name": "stone/code-input/width",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:322:2445"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:322:2445"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:329:2363"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:335:2380"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:322:2445"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 32,
+            "aliasTo": "size/element/xl"
+          }
+        }
+      },
+      {
+        "id": "VariableID:2258:1634",
+        "name": "stone/code-input/height",
+        "resolvedType": "FLOAT",
+        "valuesByMode": {
+          "171:6": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:329:2363"
+          },
+          "1107:0": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:329:2363"
+          },
+          "1107:1": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:332:2375"
+          },
+          "1107:2": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:332:2375"
+          },
+          "1111:3": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:329:2363"
+          }
+        },
+        "description": "",
+        "variableCollectionId": "VariableCollectionId:171:69",
+        "resolvedValuesByMode": {
+          "md": {
+            "value": 40,
+            "aliasTo": "size/element/2xl"
+          }
+        }
+      }
+    ],
+    "variableCollections": [
+      {
+        "id": "VariableCollectionId:171:69",
+        "name": "Component dimension",
+        "modes": [
+          {
+            "name": "sm",
+            "modeId": "1111:3"
+          },
+          {
+            "name": "xs",
+            "modeId": "171:6"
+          },
+          {
+            "name": "md",
+            "modeId": "1107:0"
+          },
+          {
+            "name": "lg",
+            "modeId": "1107:1"
+          },
+          {
+            "name": "xl",
+            "modeId": "1107:2"
+          }
+        ],
+        "defaultModeId": "1111:3"
+      }
+    ]
+  }
+}

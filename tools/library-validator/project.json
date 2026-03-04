@@ -1,0 +1,23 @@
+{
+  "name": "library-validator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/library-validator/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "tools/library-validator/dist",
+        "main": "tools/library-validator/src/index.ts",
+        "tsConfig": "tools/library-validator/tsconfig.json"
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/library-validator/dist/cli.js",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}

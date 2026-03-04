@@ -1,0 +1,19 @@
+{
+  "name": "Namirial Design System",
+  "figma": {
+    "tokenLibraryId": "onY6xoWkmPGv6Zp4b1jEzn",
+    "componentLibraryId": "onY6xoWkmPGv6Zp4b1jEzn",
+    "experimentalPageName": "Experimental",
+    "tokenNamePrefix": ""
+  },
+  "docs": {
+    "additionalComponents": [
+      { "slug": "badge", "label": "Badge" },
+      { "slug": "tag", "label": "Tag" }
+    ]
+  },
+  "github": {
+    "stableBranch": "main",
+    "experimentalBranch": "experimental"
+  }
+}

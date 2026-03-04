@@ -1,0 +1,21 @@
+{
+  "name": "@namirial/angular",
+  "version": "0.0.0",
+  "description": "Namirial Design System — Angular wrapper",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "peerDependencies": {
+    "@angular/core": ">=17.0.0"
+  },
+  "dependencies": {
+    "@namirial/components": "workspace:*"
+  },
+  "devDependencies": {
+    "@angular/core": "^19.0.0",
+    "typescript": "5.6.3"
+  }
+}

@@ -1,0 +1,23 @@
+node_modules
+dist
+.next
+.nx
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+access-token-id.env
+.DS_Store
+coverage
+*.log
+.vercel
+.turbo
+
+# Figma sync: generati a ogni sync, non versionare
+packages/figma-sync/snapshots/previous-*.json
+packages/figma-sync/snapshots/last-snapshot-hash.txt
+# Pagine MCP temporanee (sync variabili solo via MCP)
+packages/figma-sync/snapshots/_mcp-page-*.json
+# Export MCP: file raw/temporanei (il merge ignora già .raw e _*)
+packages/figma-sync/snapshots/mcp-exports/*.raw.json
+packages/figma-sync/snapshots/mcp-exports/_*

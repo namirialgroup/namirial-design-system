@@ -1,0 +1,30 @@
+{
+  "name": "changelog-engine",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/changelog-engine/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "tools/changelog-engine/dist",
+        "main": "tools/changelog-engine/src/index.ts",
+        "tsConfig": "tools/changelog-engine/tsconfig.json"
+      }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/changelog-engine/dist/cli-generate.js",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "version-bump": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/changelog-engine/dist/cli-version-bump.js",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}

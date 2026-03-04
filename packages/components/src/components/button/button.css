@@ -1,0 +1,257 @@
+/* Button — 100% allineato a Figma Design System 2026 (stone + component color tokens). */
+.nds-button {
+  font-family: var(--nds-font-family, inherit);
+  font-weight: var(--nds-font-weight-semibold, 600);
+  cursor: pointer;
+  border: calc(var(--nds-border-regular, 1) * 1px) solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Gap e dimensioni per size sono definiti sotto (stone/gap, stone/padding-*, stone/inner-height). */
+
+/* Icone: size = stone/inner-height (xs/sm→16, md/lg→24, xl→32), stroke 2px */
+.nds-button ::slotted(svg),
+.nds-button ::slotted([slot="leading"] svg),
+.nds-button ::slotted([slot="trailing"] svg) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  stroke-width: 2;
+}
+.nds-button--xs ::slotted(svg),
+.nds-button--xs ::slotted([slot="leading"] svg),
+.nds-button--xs ::slotted([slot="trailing"] svg) {
+  width: calc(var(--nds-size-element-sm, 16) * 1px);
+  height: calc(var(--nds-size-element-sm, 16) * 1px);
+}
+.nds-button--sm ::slotted(svg),
+.nds-button--sm ::slotted([slot="leading"] svg),
+.nds-button--sm ::slotted([slot="trailing"] svg) {
+  width: calc(var(--nds-size-element-sm, 16) * 1px);
+  height: calc(var(--nds-size-element-sm, 16) * 1px);
+}
+.nds-button--md ::slotted(svg),
+.nds-button--md ::slotted([slot="leading"] svg),
+.nds-button--md ::slotted([slot="trailing"] svg) {
+  width: calc(var(--nds-size-element-lg, 24) * 1px);
+  height: calc(var(--nds-size-element-lg, 24) * 1px);
+}
+.nds-button--lg ::slotted(svg),
+.nds-button--lg ::slotted([slot="leading"] svg),
+.nds-button--lg ::slotted([slot="trailing"] svg) {
+  width: calc(var(--nds-size-element-lg, 24) * 1px);
+  height: calc(var(--nds-size-element-lg, 24) * 1px);
+}
+.nds-button--xl ::slotted(svg),
+.nds-button--xl ::slotted([slot="leading"] svg),
+.nds-button--xl ::slotted([slot="trailing"] svg) {
+  width: calc(var(--nds-size-element-xl, 32) * 1px);
+  height: calc(var(--nds-size-element-xl, 32) * 1px);
+}
+.nds-button ::slotted([slot="leading"]),
+.nds-button ::slotted([slot="trailing"]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Radius: Figma stone/corner per size (Standard); Full-radius = pill */
+.nds-button--xs.nds-button--radius-standard {
+  border-radius: calc(var(--nds-radius-2xs, 6) * 1px);
+}
+.nds-button--sm.nds-button--radius-standard {
+  border-radius: calc(var(--nds-radius-xs, 8) * 1px);
+}
+.nds-button--md.nds-button--radius-standard {
+  border-radius: calc(var(--nds-radius-sm, 10) * 1px);
+}
+.nds-button--lg.nds-button--radius-standard,
+.nds-button--xl.nds-button--radius-standard {
+  border-radius: calc(var(--nds-radius-md, 12) * 1px);
+}
+.nds-button--radius-full {
+  border-radius: calc(var(--nds-radius-full, 999) * 1px);
+}
+
+/*
+  Component dimension — valori esatti da Figma stone.
+  Altezza totale Figma = padding-vertical*2 + inner-height (il bordo 1px è incluso nel frame).
+  In CSS con border 1px il box totale diventa 2px in più; quindi min-height = target - 2.
+*/
+.nds-button--xs {
+  font-size: calc(var(--nds-font-size-xs, 12) * 1px);
+  padding: calc(var(--nds-spacing-3xs, 4) * 1px) calc(var(--nds-spacing-xs, 8) * 1px);
+  gap: calc(var(--nds-spacing-xs, 8) * 1px);
+  min-height: calc((var(--nds-spacing-3xs, 4) * 2 + var(--nds-size-element-sm, 16) - 2) * 1px);
+}
+.nds-button--sm {
+  font-size: calc(var(--nds-font-size-sm, 14) * 1px);
+  padding: calc(var(--nds-spacing-xs, 8) * 1px) calc(var(--nds-spacing-sm, 12) * 1px);
+  gap: calc(var(--nds-spacing-xs, 8) * 1px);
+  min-height: calc((var(--nds-spacing-xs, 8) * 2 + var(--nds-size-element-sm, 16) - 2) * 1px);
+}
+.nds-button--md {
+  font-size: calc(var(--nds-font-size-md, 16) * 1px);
+  padding: calc(var(--nds-spacing-xs, 8) * 1px) calc(var(--nds-spacing-md, 16) * 1px);
+  gap: calc(var(--nds-spacing-sm, 12) * 1px);
+  min-height: calc((var(--nds-spacing-xs, 8) * 2 + var(--nds-size-element-lg, 24) - 2) * 1px);
+}
+.nds-button--lg {
+  font-size: calc(var(--nds-font-size-xl, 20) * 1px);
+  padding: calc(var(--nds-spacing-sm, 12) * 1px) calc(var(--nds-spacing-lg, 24) * 1px);
+  gap: calc(var(--nds-spacing-sm, 12) * 1px);
+  min-height: calc((var(--nds-spacing-sm, 12) * 2 + var(--nds-size-element-lg, 24) - 2) * 1px);
+}
+.nds-button--xl {
+  font-size: calc(var(--nds-font-size-150, 24) * 1px);
+  padding: calc(var(--nds-spacing-sm, 12) * 1px) calc(var(--nds-spacing-lg, 24) * 1px);
+  gap: calc(var(--nds-spacing-md, 16) * 1px);
+  min-height: calc((var(--nds-spacing-sm, 12) * 2 + var(--nds-size-element-xl, 32) - 2) * 1px);
+}
+
+/*
+  Icon-only — stone/padding-horizontal-only-icon per size (Figma):
+  xs=4 (3xs), sm/md=8 (xs), lg/xl=12 (sm). Vertical padding invariato; gap=0.
+*/
+.nds-button--icon-only.nds-button--xs {
+  padding-left: calc(var(--nds-spacing-3xs, 4) * 1px);
+  padding-right: calc(var(--nds-spacing-3xs, 4) * 1px);
+  gap: 0;
+}
+.nds-button--icon-only.nds-button--sm,
+.nds-button--icon-only.nds-button--md {
+  padding-left: calc(var(--nds-spacing-xs, 8) * 1px);
+  padding-right: calc(var(--nds-spacing-xs, 8) * 1px);
+  gap: 0;
+}
+.nds-button--icon-only.nds-button--lg,
+.nds-button--icon-only.nds-button--xl {
+  padding-left: calc(var(--nds-spacing-sm, 12) * 1px);
+  padding-right: calc(var(--nds-spacing-sm, 12) * 1px);
+  gap: 0;
+}
+
+/* Primary — token button/primary da Figma */
+.nds-button--primary {
+  background: var(--nds-button-primary-default-background, #3A4646);
+  border: calc(var(--nds-border-regular, 1) * 1px) solid var(--nds-button-primary-default-border, #3A4646);
+  color: var(--nds-button-primary-foreground, #ffffff);
+}
+.nds-button--primary:hover:not(:disabled) {
+  background: var(--nds-button-primary-hover-background, #4F5B5B);
+  border-color: var(--nds-button-primary-hover-border, #4F5B5B);
+}
+.nds-button--primary:active:not(:disabled) {
+  background: var(--nds-button-primary-active-background, #1A2424);
+  border-color: var(--nds-button-primary-active-border, #1A2424);
+}
+
+/* Secondary — token button/secondary: bordo sempre visibile default/hover/active (Figma) */
+.nds-button--secondary {
+  background: var(--nds-button-secondary-default-background, #ffffff);
+  border: calc(var(--nds-border-regular, 1) * 1px) solid var(--nds-button-secondary-default-border, #3A4646);
+  color: var(--nds-button-secondary-foreground, #0A1111);
+}
+.nds-button--secondary:hover:not(:disabled) {
+  background: var(--nds-button-secondary-hover-background, #E4F2F2);
+  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+}
+.nds-button--secondary:active:not(:disabled) {
+  background: var(--nds-button-secondary-active-background, #CDDBDB);
+  border-color: var(--nds-button-secondary-active-border, #3A4646);
+}
+
+/* Ghost — default senza bordo; hover/active con bordo come in Figma */
+.nds-button--ghost {
+  background: transparent;
+  border: calc(var(--nds-border-regular, 1) * 1px) solid transparent;
+  color: var(--nds-button-primary-ghost-primary, #0A1111);
+}
+.nds-button--ghost:hover:not(:disabled) {
+  background: var(--nds-button-secondary-hover-background, #E4F2F2);
+  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+}
+.nds-button--ghost:active:not(:disabled) {
+  background: var(--nds-button-secondary-active-background, #CDDBDB);
+  border-color: var(--nds-button-secondary-active-border, #3A4646);
+}
+
+/* Accent, Info, Positive, Negative, Warning — token button/* da Figma, bordo da token */
+.nds-button--accent {
+  background: var(--nds-button-accent-default-background);
+  border: calc(var(--nds-border-regular, 1) * 1px) solid var(--nds-button-accent-default-border);
+  color: var(--nds-button-accent-foreground);
+}
+.nds-button--accent:hover:not(:disabled) {
+  background: var(--nds-button-accent-hover-background);
+  border-color: var(--nds-button-accent-hover-border);
+}
+.nds-button--accent:active:not(:disabled) {
+  background: var(--nds-button-accent-active-background);
+  border-color: var(--nds-button-accent-active-border);
+}
+
+.nds-button--info {
+  background: var(--nds-button-info-default-background);
+  border: calc(var(--nds-border-regular, 1) * 1px) solid var(--nds-button-info-default-border);
+  color: var(--nds-button-info-foreground);
+}
+.nds-button--info:hover:not(:disabled) {
+  background: var(--nds-button-info-hover-background);
+  border-color: var(--nds-button-info-hover-border);
+}
+.nds-button--info:active:not(:disabled) {
+  background: var(--nds-button-info-active-background);
+  border-color: var(--nds-button-info-active-border);
+}
+
+.nds-button--positive {
+  background: var(--nds-button-positive-default-background);
+  border: calc(var(--nds-border-regular, 1) * 1px) solid var(--nds-button-positive-default-border);
+  color: var(--nds-button-positive-foreground);
+}
+.nds-button--positive:hover:not(:disabled) {
+  background: var(--nds-button-positive-hover-background);
+  border-color: var(--nds-button-positive-hover-border);
+}
+.nds-button--positive:active:not(:disabled) {
+  background: var(--nds-button-positive-active-background);
+  border-color: var(--nds-button-positive-active-border);
+}
+
+.nds-button--negative {
+  background: var(--nds-button-negative-default-background);
+  border: calc(var(--nds-border-regular, 1) * 1px) solid var(--nds-button-negative-default-border);
+  color: var(--nds-button-negative-foreground);
+}
+.nds-button--negative:hover:not(:disabled) {
+  background: var(--nds-button-negative-hover-background);
+  border-color: var(--nds-button-negative-hover-border);
+}
+.nds-button--negative:active:not(:disabled) {
+  background: var(--nds-button-negative-active-background);
+  border-color: var(--nds-button-negative-active-border);
+}
+
+.nds-button--warning {
+  background: var(--nds-button-warning-default-background);
+  border: calc(var(--nds-border-regular, 1) * 1px) solid var(--nds-button-warning-default-border);
+  color: var(--nds-button-warning-foreground);
+}
+.nds-button--warning:hover:not(:disabled) {
+  background: var(--nds-button-warning-hover-background);
+  border-color: var(--nds-button-warning-hover-border);
+}
+.nds-button--warning:active:not(:disabled) {
+  background: var(--nds-button-warning-active-background);
+  border-color: var(--nds-button-warning-active-border);
+}
+
+.nds-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

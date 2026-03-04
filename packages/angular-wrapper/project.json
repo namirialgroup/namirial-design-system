@@ -1,0 +1,16 @@
+{
+  "name": "angular-wrapper",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/angular-wrapper/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "packages/angular-wrapper/dist",
+        "main": "packages/angular-wrapper/src/index.ts",
+        "tsConfig": "packages/angular-wrapper/tsconfig.json"
+      }
+    }
+  }
+}
