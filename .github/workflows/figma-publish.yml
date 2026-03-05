@@ -68,7 +68,7 @@ jobs:
             echo "0" > packages/figma-sync/snapshots/last-snapshot-hash.txt
           fi
       - name: Validate library
-        run: pnpm exec nx run library-validator:build && node tools/library-validator/dist/cli.js || true
+        run: pnpm exec nx run library-validator:build && node tools/library-validator/dist/src/cli.js || true
 
   build:
     runs-on: ubuntu-latest

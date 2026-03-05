@@ -23,6 +23,6 @@ jobs:
           pnpm exec nx run figma-sync:build
           pnpm exec nx run library-validator:build
       - name: Validate — fail if mismatch
-        run: node tools/library-validator/dist/cli.js
+        run: node tools/library-validator/dist/src/cli.js
         env:
           GITHUB_WORKSPACE: ${{ github.workspace }}
