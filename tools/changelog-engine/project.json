@@ -10,19 +10,20 @@
         "outputPath": "tools/changelog-engine/dist",
         "main": "tools/changelog-engine/src/index.ts",
         "tsConfig": "tools/changelog-engine/tsconfig.json"
-      }
+      },
+      "dependsOn": ["schema-diff:build"]
     },
     "generate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/changelog-engine/dist/cli-generate.js",
+        "command": "node tools/changelog-engine/dist/src/cli-generate.js",
         "cwd": "{workspaceRoot}"
       }
     },
     "version-bump": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/changelog-engine/dist/cli-version-bump.js",
+        "command": "node tools/changelog-engine/dist/src/cli-version-bump.js",
         "cwd": "{workspaceRoot}"
       }
     }

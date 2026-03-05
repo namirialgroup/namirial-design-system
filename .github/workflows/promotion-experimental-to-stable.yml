@@ -41,8 +41,8 @@ jobs:
       - name: Changelog + version bump (MINOR for new stable components)
         run: |
           pnpm exec nx run changelog-engine:build
-          node tools/changelog-engine/dist/cli-generate.js
-          node tools/changelog-engine/dist/cli-version-bump.js
+          node tools/changelog-engine/dist/src/cli-generate.js
+          node tools/changelog-engine/dist/src/cli-version-bump.js
       - name: Commit and push
         run: |
           git config user.name "github-actions"

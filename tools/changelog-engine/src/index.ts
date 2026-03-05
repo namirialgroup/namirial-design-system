@@ -9,6 +9,8 @@ import {
   runSchemaDiff,
   type SchemaDiffResult,
   type ChangeType,
+  type TokenChange,
+  type ComponentChange,
 } from "@namirial/schema-diff";
 
 const ROOT = process.env.GITHUB_WORKSPACE ?? process.cwd();
@@ -43,13 +45,13 @@ export function generateChangelogFromDiff(
     date: new Date().toISOString().slice(0, 10),
     figmaPublishDate,
     changeType: diff.recommendedBump,
-    tokenChanges: diff.tokenChanges.map((t) => ({
+    tokenChanges: diff.tokenChanges.map((t: TokenChange) => ({
       name: t.name,
       type: t.type,
       oldValue: t.oldValue,
       newValue: t.newValue,
     })),
-    componentChanges: diff.componentChanges.map((c) => ({
+    componentChanges: diff.componentChanges.map((c: ComponentChange) => ({
       name: c.name,
       type: c.type,
       details: c.details,
