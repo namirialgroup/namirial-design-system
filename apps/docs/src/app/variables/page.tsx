@@ -153,8 +153,9 @@ function getVariablesData(): { variables: unknown[]; variableCollections: unknow
     if (existsSync(p)) {
       try {
         const raw = readFileSync(p, "utf-8");
-        const data = JSON.parse(raw) as { data?: { variables?: RawVariable[]; variableCollections?: Collection[] } };
-        const d = data.data ?? data;
+        type Payload = { variables?: RawVariable[]; variableCollections?: Collection[] };
+        const data = JSON.parse(raw) as { data?: Payload } | Payload;
+        const d: Payload = "data" in data && data.data != null ? data.data : (data as Payload);
         const variables = (d.variables ?? []) as RawVariable[];
         const collections = (d.variableCollections ?? []) as Collection[];
         const normalized = resolveAliases(normalizeVariables(variables, collections));
