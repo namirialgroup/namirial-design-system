@@ -2,7 +2,7 @@
  * @namirial/react — React wrappers for NDS web components.
  * Re-exports Stencil components with React-friendly props.
  */
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 export interface NdsButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost";
@@ -11,7 +11,7 @@ export interface NdsButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "nds-button": NdsButtonProps & { children?: React.ReactNode };
+      "nds-button": NdsButtonProps & { children?: ReactNode };
     }
   }
 }
