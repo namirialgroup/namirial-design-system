@@ -47,5 +47,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add CHANGELOG.md apps/docs/public/changelog.json packages/figma-sync/snapshots/ package.json packages/*/package.json
+          git add CHANGELOG.md packages/figma-sync/snapshots/ package.json packages/*/package.json
+          [ -f apps/docs/public/changelog.json ] && git add apps/docs/public/changelog.json
           git diff --staged --quiet || (git commit -m "chore: promote experimental to stable" && git push)

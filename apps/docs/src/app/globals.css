@@ -786,6 +786,53 @@ body {
   border-bottom-left-radius: var(--nds-playground-slot-radius-inner);
   border-bottom-right-radius: var(--nds-playground-slot-radius-inner);
 }
+
+/* Layout compatto: main (select + testo) a sinistra, toggle (leading/trailing/icon only) a destra */
+.nds-playground-controls-grid--compact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: calc(var(--nds-spacing-md, 16) * 1px) calc(var(--nds-spacing-xl, 32) * 1px);
+}
+.nds-playground-controls-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: calc(var(--nds-spacing-sm, 12) * 1px) calc(var(--nds-spacing-md, 16) * 1px);
+  flex: 1;
+  min-width: 0;
+}
+.nds-playground-controls-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: calc(var(--nds-spacing-sm, 12) * 1px) calc(var(--nds-spacing-lg, 24) * 1px);
+}
+
+/* Controlli compatti: select e input più piccoli */
+.nds-playground-controls-grid--compact .nds-playground-control-label {
+  font-size: 0.75rem;
+}
+.nds-playground-controls-grid--compact .nds-playground-control--select .nds-playground-select-trigger,
+.nds-playground-controls-grid--compact .nds-playground-control--select .nds-playground-select-button {
+  min-height: 32px;
+}
+.nds-playground-controls-grid--compact .nds-playground-select-button {
+  padding: 4px 8px;
+  font-size: 0.8125rem;
+}
+.nds-playground-controls-grid--compact .nds-playground-control input[type="text"] {
+  min-height: 32px;
+  padding: 4px 8px;
+  font-size: 0.8125rem;
+}
+.nds-playground-controls-grid--compact .nds-playground-select-option {
+  padding: 4px 8px;
+  font-size: 0.8125rem;
+}
+.nds-playground-controls-grid--compact .nds-playground-select-chevron {
+  width: 14px;
+  height: 14px;
+}
 .nds-playground-control {
   display: flex;
   flex-direction: column;
@@ -949,6 +996,61 @@ body {
 }
 .nds-playground-control--checkbox input[type="checkbox"]:disabled ~ .nds-playground-checkbox-box {
   opacity: 0.6;
+}
+
+/* Toggle (switch): track + thumb, compatto nella colonna destra */
+.nds-playground-control--toggle {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--nds-spacing-sm, 12) * 1px);
+}
+.nds-playground-control--toggle .nds-playground-control-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+}
+.nds-playground-control--toggle input[type="checkbox"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+.nds-playground-toggle-track {
+  display: inline-flex;
+  align-items: center;
+  width: 2.25rem;
+  height: 1.25rem;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--nds-docs-border);
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+.nds-playground-toggle-thumb {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--nds-docs-bg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+.nds-playground-control--toggle input[type="checkbox"]:checked ~ .nds-playground-toggle-track {
+  background: var(--nds-docs-accent);
+}
+.nds-playground-control--toggle input[type="checkbox"]:checked ~ .nds-playground-toggle-track .nds-playground-toggle-thumb {
+  transform: translateX(calc(2.25rem - 1rem - 4px));
+}
+.nds-playground-control--toggle input[type="checkbox"]:focus-visible ~ .nds-playground-toggle-track {
+  box-shadow: 0 0 0 2px var(--nds-docs-bg), 0 0 0 4px var(--nds-docs-accent);
+}
+.nds-playground-control--toggle .nds-playground-control-label {
+  font-size: 0.75rem;
 }
 
 /* Light mode: contrasto e leggibilità per Controlli e slot */

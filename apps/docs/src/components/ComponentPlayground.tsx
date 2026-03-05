@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
-import { Check, ChevronDown, Copy } from "lucide-react";
+import { ChevronDown, Copy } from "lucide-react";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
 import { PreviewThemeWrapper, usePreviewTheme } from "@/components/PreviewThemeWrapper";
 
@@ -75,6 +75,43 @@ function PlaygroundSelect<T extends string>({
         )}
       </div>
     </div>
+  );
+}
+
+/** Toggle (switch) per opzioni on/off: icon only, leading, trailing. */
+function PlaygroundToggle({
+  id,
+  label,
+  checked,
+  onChange,
+  ariaLabel,
+}: {
+  id: string;
+  label: string;
+  checked: boolean;
+  onChange: (on: boolean) => void;
+  ariaLabel: string;
+}) {
+  return (
+    <label className="nds-playground-control nds-playground-control--toggle" htmlFor={id}>
+      <span className="nds-playground-control-label" id={`${id}-label`}>
+        {label}
+      </span>
+      <span className="nds-playground-control-input">
+        <input
+          id={id}
+          type="checkbox"
+          role="switch"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          aria-label={ariaLabel}
+          aria-labelledby={`${id}-label`}
+        />
+        <span className="nds-playground-toggle-track" aria-hidden>
+          <span className="nds-playground-toggle-thumb" />
+        </span>
+      </span>
+    </label>
   );
 }
 
@@ -246,33 +283,33 @@ export function ButtonPlayground() {
       </PreviewThemeWrapper>
       <div className="nds-playground-controls">
         <p className="nds-playground-controls-label">Controlli</p>
-        <div className="nds-playground-controls-grid">
-          <PlaygroundSelect
-            id="pg-style"
-            label="Style"
-            value={state.style}
-            options={STYLES}
-            onChange={(v) => setState((s) => ({ ...s, style: v }))}
-            ariaLabel="Stile bottone"
-          />
-          <PlaygroundSelect
-            id="pg-intent"
-            label="Intent"
-            value={state.intent}
-            options={INTENTS.map((i) => ({ value: i, label: i }))}
-            onChange={(v) => setState((s) => ({ ...s, intent: v }))}
-            ariaLabel="Intent bottone"
-          />
-          <PlaygroundSelect
-            id="pg-size"
-            label="Size"
-            value={state.size}
-            options={SIZES.map((s) => ({ value: s, label: s }))}
-            onChange={(v) => setState((s) => ({ ...s, size: v }))}
-            ariaLabel="Dimensione bottone"
-          />
-          {!state.iconOnly && (
-            <>
+        <div className="nds-playground-controls-grid nds-playground-controls-grid--compact">
+          <div className="nds-playground-controls-main">
+            <PlaygroundSelect
+              id="pg-style"
+              label="Style"
+              value={state.style}
+              options={STYLES}
+              onChange={(v) => setState((s) => ({ ...s, style: v }))}
+              ariaLabel="Stile bottone"
+            />
+            <PlaygroundSelect
+              id="pg-intent"
+              label="Intent"
+              value={state.intent}
+              options={INTENTS.map((i) => ({ value: i, label: i }))}
+              onChange={(v) => setState((s) => ({ ...s, intent: v }))}
+              ariaLabel="Intent bottone"
+            />
+            <PlaygroundSelect
+              id="pg-size"
+              label="Size"
+              value={state.size}
+              options={SIZES.map((s) => ({ value: s, label: s }))}
+              onChange={(v) => setState((s) => ({ ...s, size: v }))}
+              ariaLabel="Dimensione bottone"
+            />
+            {!state.iconOnly && (
               <label className="nds-playground-control" htmlFor="pg-text">
                 <span className="nds-playground-control-label">Testo</span>
                 <input
@@ -284,53 +321,31 @@ export function ButtonPlayground() {
                   aria-label="Testo del bottone"
                 />
               </label>
-              <label className="nds-playground-control nds-playground-control--checkbox" htmlFor="pg-leading">
-                <span className="nds-playground-control-label">Leading icon</span>
-                <span className="nds-playground-control-input">
-                  <input
-                    id="pg-leading"
-                    type="checkbox"
-                    checked={state.leadingIcon}
-                    onChange={(e) => setState((s) => ({ ...s, leadingIcon: e.target.checked }))}
-                    aria-label="Icona leading"
-                  />
-                  <span className="nds-playground-checkbox-box" aria-hidden>
-                    {state.leadingIcon && <Check size={14} strokeWidth={2.5} className="nds-playground-checkbox-check" aria-hidden />}
-                  </span>
-                </span>
-              </label>
-              <label className="nds-playground-control nds-playground-control--checkbox" htmlFor="pg-trailing">
-                <span className="nds-playground-control-label">Trailing icon</span>
-                <span className="nds-playground-control-input">
-                  <input
-                    id="pg-trailing"
-                    type="checkbox"
-                    checked={state.trailingIcon}
-                    onChange={(e) => setState((s) => ({ ...s, trailingIcon: e.target.checked }))}
-                    aria-label="Icona trailing"
-                  />
-                  <span className="nds-playground-checkbox-box" aria-hidden>
-                    {state.trailingIcon && <Check size={14} strokeWidth={2.5} className="nds-playground-checkbox-check" aria-hidden />}
-                  </span>
-                </span>
-              </label>
-            </>
-          )}
-          <label className="nds-playground-control nds-playground-control--checkbox" htmlFor="pg-icon-only">
-            <span className="nds-playground-control-label">Icon only (Figma)</span>
-            <span className="nds-playground-control-input">
-              <input
-                id="pg-icon-only"
-                type="checkbox"
-                checked={state.iconOnly}
-                onChange={(e) => setState((s) => ({ ...s, iconOnly: e.target.checked }))}
-                aria-label="Solo icona"
-              />
-              <span className="nds-playground-checkbox-box" aria-hidden>
-                {state.iconOnly && <Check size={14} strokeWidth={2.5} className="nds-playground-checkbox-check" aria-hidden />}
-              </span>
-            </span>
-          </label>
+            )}
+          </div>
+          <div className="nds-playground-controls-toggles">
+            <PlaygroundToggle
+              id="pg-leading"
+              label="Leading icon"
+              checked={state.leadingIcon}
+              onChange={(v) => setState((s) => ({ ...s, leadingIcon: v }))}
+              ariaLabel="Icona leading"
+            />
+            <PlaygroundToggle
+              id="pg-trailing"
+              label="Trailing icon"
+              checked={state.trailingIcon}
+              onChange={(v) => setState((s) => ({ ...s, trailingIcon: v }))}
+              ariaLabel="Icona trailing"
+            />
+            <PlaygroundToggle
+              id="pg-icon-only"
+              label="Icon only"
+              checked={state.iconOnly}
+              onChange={(v) => setState((s) => ({ ...s, iconOnly: v }))}
+              ariaLabel="Solo icona"
+            />
+          </div>
         </div>
       </div>
       <div className="nds-playground-code nds-playground-code--dark">

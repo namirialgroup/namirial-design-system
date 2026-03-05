@@ -133,7 +133,8 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add CHANGELOG.md apps/docs/public/changelog.json packages/figma-sync/snapshots/
+          git add CHANGELOG.md packages/figma-sync/snapshots/
+          [ -f apps/docs/public/changelog.json ] && git add apps/docs/public/changelog.json
           git diff --staged --quiet || git commit -m "chore: update changelog and snapshot"
           git push || true
 

@@ -174,13 +174,13 @@
 }
 .nds-button--ghost:hover:not(:disabled),
 .nds-button--ghost-primary:hover:not(:disabled) {
-  background: var(--nds-button-secondary-hover-background, #E4F2F2);
-  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+  background: var(--nds-button-primary-hover-background, #4F5B5B);
+  border-color: var(--nds-button-primary-hover-border, #3A4646);
 }
 .nds-button--ghost:active:not(:disabled),
 .nds-button--ghost-primary:active:not(:disabled) {
-  background: var(--nds-button-secondary-active-background, #CDDBDB);
-  border-color: var(--nds-button-secondary-active-border, #3A4646);
+  background: var(--nds-button-primary-active-background, #1A2424);
+  border-color: var(--nds-button-primary-active-border, #1A2424);
 }
 
 .nds-button--ghost-secondary {
@@ -203,12 +203,12 @@
   color: var(--nds-button-accent-ghost-foreground, var(--nds-button-accent-foreground));
 }
 .nds-button--ghost-accent:hover:not(:disabled) {
-  background: var(--nds-button-secondary-hover-background, #E4F2F2);
-  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+  background: var(--nds-button-accent-hover-background);
+  border-color: var(--nds-button-accent-hover-border);
 }
 .nds-button--ghost-accent:active:not(:disabled) {
-  background: var(--nds-button-secondary-active-background, #CDDBDB);
-  border-color: var(--nds-button-secondary-active-border, #3A4646);
+  background: var(--nds-button-accent-active-background);
+  border-color: var(--nds-button-accent-active-border);
 }
 
 .nds-button--ghost-info {
@@ -217,12 +217,12 @@
   color: var(--nds-button-info-ghost-foreground, var(--nds-button-info-foreground));
 }
 .nds-button--ghost-info:hover:not(:disabled) {
-  background: var(--nds-button-secondary-hover-background, #E4F2F2);
-  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+  background: var(--nds-button-info-hover-background);
+  border-color: var(--nds-button-info-hover-border);
 }
 .nds-button--ghost-info:active:not(:disabled) {
-  background: var(--nds-button-secondary-active-background, #CDDBDB);
-  border-color: var(--nds-button-secondary-active-border, #3A4646);
+  background: var(--nds-button-info-active-background);
+  border-color: var(--nds-button-info-active-border);
 }
 
 .nds-button--ghost-positive {
@@ -231,12 +231,12 @@
   color: var(--nds-button-positive-ghost-foreground, var(--nds-button-positive-foreground));
 }
 .nds-button--ghost-positive:hover:not(:disabled) {
-  background: var(--nds-button-secondary-hover-background, #E4F2F2);
-  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+  background: var(--nds-button-positive-hover-background);
+  border-color: var(--nds-button-positive-hover-border);
 }
 .nds-button--ghost-positive:active:not(:disabled) {
-  background: var(--nds-button-secondary-active-background, #CDDBDB);
-  border-color: var(--nds-button-secondary-active-border, #3A4646);
+  background: var(--nds-button-positive-active-background);
+  border-color: var(--nds-button-positive-active-border);
 }
 
 .nds-button--ghost-negative {
@@ -245,12 +245,12 @@
   color: var(--nds-button-negative-ghost-foreground, var(--nds-button-negative-foreground));
 }
 .nds-button--ghost-negative:hover:not(:disabled) {
-  background: var(--nds-button-secondary-hover-background, #E4F2F2);
-  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+  background: var(--nds-button-negative-hover-background);
+  border-color: var(--nds-button-negative-hover-border);
 }
 .nds-button--ghost-negative:active:not(:disabled) {
-  background: var(--nds-button-secondary-active-background, #CDDBDB);
-  border-color: var(--nds-button-secondary-active-border, #3A4646);
+  background: var(--nds-button-negative-active-background);
+  border-color: var(--nds-button-negative-active-border);
 }
 
 .nds-button--ghost-warning {
@@ -259,12 +259,12 @@
   color: var(--nds-button-warning-ghost-foreground, var(--nds-button-warning-foreground));
 }
 .nds-button--ghost-warning:hover:not(:disabled) {
-  background: var(--nds-button-secondary-hover-background, #E4F2F2);
-  border-color: var(--nds-button-secondary-hover-border, #3A4646);
+  background: var(--nds-button-warning-hover-background);
+  border-color: var(--nds-button-warning-hover-border);
 }
 .nds-button--ghost-warning:active:not(:disabled) {
-  background: var(--nds-button-secondary-active-background, #CDDBDB);
-  border-color: var(--nds-button-secondary-active-border, #3A4646);
+  background: var(--nds-button-warning-active-background);
+  border-color: var(--nds-button-warning-active-border);
 }
 
 /* Accent, Info, Positive, Negative, Warning — token button/* da Figma, bordo da token */
