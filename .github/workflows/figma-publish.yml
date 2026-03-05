@@ -84,7 +84,7 @@ jobs:
       - name: Build tokens
         env:
           DS_SCOPE: ${{ needs.detect-branch.outputs.scope }}
-        run: pnpm exec nx run tokens:tsc && node packages/tokens/dist/build-tokens.js
+        run: pnpm exec nx run tokens:build
       - name: Build components
         run: pnpm exec nx run components:build
       - name: Build wrappers (stable only)
