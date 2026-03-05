@@ -1226,6 +1226,11 @@ body {
   --nds-button-secondary-active-border: #3a4646;
   --nds-button-secondary-foreground: #0a1111;
   --nds-button-primary-ghost-primary: #0a1111;
+  --nds-button-accent-ghost-foreground: #006660;
+  --nds-button-info-ghost-foreground: #002538;
+  --nds-button-positive-ghost-foreground: #002a11;
+  --nds-button-negative-ghost-foreground: #460009;
+  --nds-button-warning-ghost-foreground: #2f1e00;
   /* Intent: bordi Figma Light (palette *-500) così non ereditano dark dal documento */
   --nds-button-info-default-border: #4189b2;
   --nds-button-info-hover-border: #4189b2;
@@ -1262,6 +1267,11 @@ body {
   --nds-button-secondary-active-border: #e4f2f2;
   --nds-button-secondary-foreground: #ffffff;
   --nds-button-primary-ghost-primary: #ffffff;
+  --nds-button-accent-ghost-foreground: #73f0e5;
+  --nds-button-info-ghost-foreground: #aedfff;
+  --nds-button-positive-ghost-foreground: #97f7b3;
+  --nds-button-negative-ghost-foreground: #ffc8c5;
+  --nds-button-warning-ghost-foreground: #fcd086;
   /* Accent / Info / Positive / Negative / Warning — token Dark da Figma */
   --nds-button-accent-foreground: #0a1111;
   --nds-button-accent-default-background: #59d8ce;

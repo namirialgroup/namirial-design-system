@@ -182,7 +182,8 @@ export function ButtonPlayground() {
       .catch(() => setReady(true));
   }, []);
 
-  const variant = state.style === "ghost" ? "ghost" : state.intent;
+  const variant =
+    state.style === "ghost" ? (`ghost-${state.intent}` as const) : state.intent;
   const radiusStyle = state.style === "full" ? "full" : "standard";
 
   const snippet = state.iconOnly
@@ -254,16 +255,14 @@ export function ButtonPlayground() {
             onChange={(v) => setState((s) => ({ ...s, style: v }))}
             ariaLabel="Stile bottone"
           />
-          {state.style !== "ghost" && (
-            <PlaygroundSelect
-              id="pg-intent"
-              label="Intent"
-              value={state.intent}
-              options={INTENTS.map((i) => ({ value: i, label: i }))}
-              onChange={(v) => setState((s) => ({ ...s, intent: v }))}
-              ariaLabel="Intent bottone"
-            />
-          )}
+          <PlaygroundSelect
+            id="pg-intent"
+            label="Intent"
+            value={state.intent}
+            options={INTENTS.map((i) => ({ value: i, label: i }))}
+            onChange={(v) => setState((s) => ({ ...s, intent: v }))}
+            ariaLabel="Intent bottone"
+          />
           <PlaygroundSelect
             id="pg-size"
             label="Size"

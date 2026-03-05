@@ -172,6 +172,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
+      - name: Build tokens
+        env:
+          DS_SCOPE: ${{ needs.detect-branch.outputs.scope }}
+        run: pnpm exec nx run tokens:build
+      - name: Build components
+        run: pnpm exec nx run components:build
       - name: Build docs
         env:
           DS_SCOPE: ${{ needs.detect-branch.outputs.scope }}

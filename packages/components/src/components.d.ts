@@ -35,10 +35,24 @@ export namespace Components {
          */
         "type": "button" | "submit";
         /**
-          * Component intent (Variable mode): primary, secondary, ghost, accent, info, positive, negative, warning
+          * Component intent (Variable mode): primary, secondary, ghost (+ intent), accent, info, positive, negative, warning
           * @default "primary"
          */
-        "variant": "primary" | "secondary" | "ghost" | "accent" | "info" | "positive" | "negative" | "warning";
+        "variant": | "primary"
+    | "secondary"
+    | "ghost"
+    | "ghost-primary"
+    | "ghost-secondary"
+    | "ghost-accent"
+    | "ghost-info"
+    | "ghost-positive"
+    | "ghost-negative"
+    | "ghost-warning"
+    | "accent"
+    | "info"
+    | "positive"
+    | "negative"
+    | "warning";
     }
     /**
      * Icon — web component del design system Namirial.
@@ -117,10 +131,24 @@ declare namespace LocalJSX {
          */
         "type"?: "button" | "submit";
         /**
-          * Component intent (Variable mode): primary, secondary, ghost, accent, info, positive, negative, warning
+          * Component intent (Variable mode): primary, secondary, ghost (+ intent), accent, info, positive, negative, warning
           * @default "primary"
          */
-        "variant"?: "primary" | "secondary" | "ghost" | "accent" | "info" | "positive" | "negative" | "warning";
+        "variant"?: | "primary"
+    | "secondary"
+    | "ghost"
+    | "ghost-primary"
+    | "ghost-secondary"
+    | "ghost-accent"
+    | "ghost-info"
+    | "ghost-positive"
+    | "ghost-negative"
+    | "ghost-warning"
+    | "accent"
+    | "info"
+    | "positive"
+    | "negative"
+    | "warning";
     }
     /**
      * Icon — web component del design system Namirial.
@@ -142,7 +170,21 @@ declare namespace LocalJSX {
     }
 
     interface NdsButtonAttributes {
-        "variant": "primary" | "secondary" | "ghost" | "accent" | "info" | "positive" | "negative" | "warning";
+        "variant": | "primary"
+    | "secondary"
+    | "ghost"
+    | "ghost-primary"
+    | "ghost-secondary"
+    | "ghost-accent"
+    | "ghost-info"
+    | "ghost-positive"
+    | "ghost-negative"
+    | "ghost-warning"
+    | "accent"
+    | "info"
+    | "positive"
+    | "negative"
+    | "warning";
         "size": "xs" | "sm" | "md" | "lg" | "xl";
         "radiusStyle": "standard" | "full";
         "iconOnly": boolean;

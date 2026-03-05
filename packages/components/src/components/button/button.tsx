@@ -10,8 +10,23 @@ import { Component, Host, h, Prop } from "@stencil/core";
   shadow: true,
 })
 export class NdsButton {
-  /** Component intent (Variable mode): primary, secondary, ghost, accent, info, positive, negative, warning */
-  @Prop() variant: "primary" | "secondary" | "ghost" | "accent" | "info" | "positive" | "negative" | "warning" = "primary";
+  /** Component intent (Variable mode): primary, secondary, ghost (+ intent), accent, info, positive, negative, warning */
+  @Prop() variant:
+    | "primary"
+    | "secondary"
+    | "ghost"
+    | "ghost-primary"
+    | "ghost-secondary"
+    | "ghost-accent"
+    | "ghost-info"
+    | "ghost-positive"
+    | "ghost-negative"
+    | "ghost-warning"
+    | "accent"
+    | "info"
+    | "positive"
+    | "negative"
+    | "warning" = "primary";
   /** Component dimension (Variable mode): xs, sm, md, lg, xl */
   @Prop() size: "xs" | "sm" | "md" | "lg" | "xl" = "md";
   /** Style = Standard → radius md; Style = Full-radius → radius full (pill) */
