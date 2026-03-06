@@ -37,6 +37,9 @@ export function ComponentDocButton() {
         </p>
         <ButtonPlayground />
       </section>
+      <section className="nds-section">
+        <h2 className="nds-section-title">Accessibility Test</h2>
+      </section>
       {figmaVariants.length > 0 && (
         <section className="nds-section">
           <h2 className="nds-section-title">Varianti in Figma</h2>
