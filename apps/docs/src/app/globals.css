@@ -801,11 +801,23 @@ body {
   flex: 1;
   min-width: 0;
 }
+
 .nds-playground-controls-toggles {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-end;
+  padding: 1rem;
+  border-radius: calc(var(--nds-radius-sm, 10) * 1px);
   gap: calc(var(--nds-spacing-sm, 12) * 1px) calc(var(--nds-spacing-lg, 24) * 1px);
+}
+
+[data-theme="dark"] .nds-playground-controls-toggles {
+  background-color: var(--nds-color-basic-basic-950, #0a1111);
+}
+
+[data-theme="light"] .nds-playground-controls-toggles {
+  background-color: var(--nds-color-basic-basic-100, #f0f3f8);
 }
 
 /* Controlli compatti: select e input più piccoli */
