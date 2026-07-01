@@ -1,0 +1,14 @@
+{
+  "title": "Components",
+  "root": true,
+  "pages": [
+    "index",
+    "actions",
+    "messaging",
+    "form",
+    "navigation",
+    "data-display",
+    "wrapper",
+    "process"
+  ]
+}

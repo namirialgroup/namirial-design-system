@@ -1,0 +1,13 @@
+{
+  "title": "Foundation",
+  "root": true,
+  "pages": [
+    "index",
+    "color-system",
+    "typography",
+    "radius",
+    "shadow-status",
+    "visuals",
+    "icons"
+  ]
+}

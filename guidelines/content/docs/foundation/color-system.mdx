@@ -1,0 +1,51 @@
+---
+title: Color System
+description: A closer description of Namirial's official color palette.
+---
+
+import { PaletteGrid } from '@/components/nm/palette-grid';
+
+A closer description of Namirial's official color palette.
+
+## What is the aim?
+
+Basically, we provide our main software solutions white-labeled, which means we want to stick to **Black / White / Gray** and add an **accent color** that can be exchanged by any company if they want to. Our accent color is **Teal**, which stands for nature and sustainability — highlighting the mission of Namirial: making business greener.
+
+For eCommerce, Social Marketing and Employer Branding we use Teal in a richer way, which makes us more visible as a company.
+
+## How to use the color palette?
+
+### Brand colors
+
+Used for logo design, typography, icons, graphics and highlighting UI elements.
+
+<PaletteGrid families={['accent', 'neutral', 'surface']} />
+
+### Functional colors
+
+Used for **status messages** like notifications, errors, warnings and success messages. In general, colors should follow basic color conventions: green for success, blue for info/help, orange for warning, red for errors.
+
+<PaletteGrid families={['info', 'positive', 'negative', 'warning', 'focus']} />
+
+### Index colors
+
+Additional contextual colors used to dynamically group, identify, and map attributes, actions, or fields belonging to the same specific subject (e.g., matching all signature fields to a specific recipient).
+
+<PaletteGrid indexAuto />
+
+## Accessibility of colors
+
+- Normal text, text in images and important elements without text (e.g. icons) require a contrast ratio of at least **4.5:1** (Level AA). For larger text — starting from 18pt, or 14pt bold — a ratio of **3:1** is required. (WCAG 2.1 — 1.4.3)
+- Graphics and user interface components (such as form input borders) require a contrast ratio of at least **3:1**. (WCAG 2.1 — 1.4.11)
+- Excluded from color-contrast requirements are mouse-over and interactive elements that are not required to understand the UI, as well as disabled elements.
+
+**Tools for checking color contrast:**
+
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- Chrome color picker in the developer tools
+- Figma plugin: A11y — Color Contrast Checker
+
+**Designing for color blindness**
+
+- Color should not be used as the only method of conveying information, indicating a reaction to an action, or distinguishing a visual element.
+- The Namirial color palette is color-blind safe. Tool used: [Adobe Color Accessibility](https://color.adobe.com/create/color-accessibility).

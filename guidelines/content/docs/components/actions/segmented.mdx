@@ -1,0 +1,381 @@
+---
+title: Segmented
+description: A segmented control is a single-select switch with a sliding indicator.
+---
+
+import { Ic } from '@/components/nm/icon';
+import { Seg } from '@/components/nm/segmented';
+import { SegmentedSandbox } from '@/components/nm/segmented-sandbox';
+
+<p className="eyebrow">Components · Actions</p>
+
+<p className="lede">A segmented control is a single-select switch: two to five mutually exclusive options laid out in a rounded track, with a sliding indicator that marks the active choice. Built from <code>.nm-segmented</code> wrapping transparent <code>nm-button</code> items, it's the styled, track-backed sibling of the button group — use it to flip a view, mode, or filter where exactly one option is always on.</p>
+
+<div className="hero-stage">
+  <Seg ariaLabel="View" size="lg" start={0} options={[{label:'List',icon:'list'},{label:'Board',icon:'layout-grid'},{label:'Calendar',icon:'calendar'}]} />
+  <Seg ariaLabel="Range" size="lg" start={1} options={[{label:'Day'},{label:'Week'},{label:'Month'}]} />
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A segmented control answers one question: *which of these mutually exclusive options is active right now?* Every option sits in a shared track; selecting one slides a filled indicator beneath it and flips its label to the active colour. There is always exactly one selection — the control has no empty state.
+
+It looks like a button group, but the two solve different problems:
+
+- A **segmented control** is a *single-select switch* — a styled track with a sliding indicator. The selection is the point.
+- A **button group** is a *cluster of connected buttons* — it can be single-select, but it's just as happy holding independent commands (paginate, zoom, undo). No track, no sliding indicator.
+
+### When to use
+
+- To switch a view or layout (`List` / `Board` / `Calendar`)
+- To pick one mode or scope (`All` / `Mine` / `Shared`, `Monthly` / `Yearly`)
+- To filter a list by one mutually exclusive facet (`Active` / `Archived`)
+
+### When not to use
+
+- For independent commands or steppers — use a **button group**.
+- For more than ~5 options, or long labels that won't fit on one line — use a **select** or **tabs**.
+- To navigate between pages or sub-sections of content — use **tabs** or a **secondary nav**.
+- For multi-select (more than one option on at once) — use **checkboxes** or **toggle chips**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A segmented control is a positioned flex track holding an absolutely-positioned indicator and a row of transparent buttons. The buttons sit above the indicator (`z-index:1`); the indicator slides under the active one with a 0.2s ease-out transition on `top` / `left` / `width` / `height`.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="giant"><Seg frozen ariaLabel="Anatomy" size="md" start={0} options={[{label:'Day'},{label:'Week'},{label:'Month'}]} /></div>
+  <div className="labelpoint" style={{top:'30px',left:'40px'}}>1 · <b>Track (container)</b></div>
+  <div className="dot" style={{top:'58px',left:'150px'}}></div>
+  <div className="labelpoint" style={{top:'30px',right:'40px'}}>2 · <b>Indicator (slides)</b></div>
+  <div className="dot" style={{top:'58px',right:'150px'}}></div>
+  <div className="labelpoint" style={{bottom:'44px',left:'72px'}}>3 · <b>Selected item</b></div>
+  <div className="dot" style={{bottom:'78px',left:'160px'}}></div>
+  <div className="labelpoint" style={{bottom:'44px',right:'72px'}}>4 · <b>Unselected item</b></div>
+  <div className="dot" style={{bottom:'78px',right:'160px'}}></div>
+</div>
+
+#### What drives each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Track | Fill behind all items | `--nm-segmented-bg` |
+| Track | Border | `--nm-segmented-border` |
+| Track | Gap / padding / radius | `gap:2px`, `padding:2/4px`, `border-radius` per size |
+| Indicator | Fill of the active slot | `--nm-segmented-item-active-bg` |
+| Indicator | Border | `--nm-segmented-item-active-border` |
+| Indicator | Motion | `transition: top/left/width/height 0.2s ease-out` |
+| Item label | Colour at rest | `--nm-segmented-item-fg` |
+| Item label | Colour when selected | `--nm-segmented-item-active-fg` |
+| Item | Fill / border | always `transparent` — the indicator does the work |
+
+</section>
+
+<section className="block" id="select">
+
+## Selection & the indicator
+
+The selected item carries `aria-pressed="true"` (or `.is-selected`), which flips its label to `--nm-segmented-item-active-fg`. The visible "pill" behind it is the separate `.nm-segmented__indicator` element — and **its position is set in JavaScript**, not CSS. On selection (and on mount/resize), measure the active button and write the indicator's `top` / `left` / `width` / `height`; the 0.2s transition animates the slide for you.
+
+<div className="example">
+  <Seg ariaLabel="Sort order" size="md" start={1} options={[{label:'Newest'},{label:'Popular'},{label:'Oldest'}]} />
+</div>
+
+<p className="caption">Click between options to watch the indicator slide. Exactly one item is selected at all times.</p>
+
+- Keep one option selected at all times — a segmented control never sits empty.
+- Reposition the indicator on selection **and** on resize, font load, or container width change, or it will drift out of alignment.
+- Order options by how the user reasons about them (chronological, small→large), not alphabetically.
+- Two to five options. Beyond that, labels crowd and the slide stops feeling crisp.
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+Five sizes, set with `nm-segmented--{size}` on the track. Each pairs a `nm-button--{size}` item with matching track radius, padding, and indicator radius. Total control height is the item height plus the track padding on both sides.
+
+<div className="scale-row"><span className="sz">xs</span><div><Seg frozen size="xs" options={[{label:'Day'},{label:'Week'},{label:'Month'}]} /></div><div className="metric">h <b>28px</b> · pad <b>2</b> · track r <b>8</b> · item r <b>6</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><Seg frozen size="sm" options={[{label:'Day'},{label:'Week'},{label:'Month'}]} /></div><div className="metric">h <b>36px</b> · pad <b>2</b> · track r <b>10</b> · item r <b>8</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div><Seg frozen size="md" options={[{label:'Day'},{label:'Week'},{label:'Month'}]} /></div><div className="metric">h <b>44px</b> · pad <b>2</b> · track r <b>12</b> · item r <b>10</b></div></div>
+<div className="scale-row"><span className="sz">lg</span><div><Seg frozen size="lg" options={[{label:'Day'},{label:'Week'},{label:'Month'}]} /></div><div className="metric">h <b>56px</b> · pad <b>4</b> · track r <b>16</b> · item r <b>12</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div><Seg frozen size="xl" options={[{label:'Day'},{label:'Week'},{label:'Month'}]} /></div><div className="metric">h <b>64px</b> · pad <b>4</b> · track r <b>16</b> · item r <b>12</b></div></div>
+
+#### Choosing a size
+
+- `xs` / `sm` — toolbars, table headers, dense filter bars
+- `md` — default for panels, cards, page-level view switchers
+- `lg` / `xl` — settings pages, marketing surfaces, touch-first kiosks
+
+</section>
+
+<section className="block" id="icons">
+
+## Icon variants
+
+Items take the same icon options as buttons: label-only, leading icon + label, or icon-only. Keep the treatment consistent across the whole control — don't mix an icon-only segment with labelled ones.
+
+#### Icon + label
+
+<div className="example">
+  <Seg ariaLabel="Layout" size="md" start={0} options={[{label:'List',icon:'list'},{label:'Grid',icon:'layout-grid'},{label:'Columns',icon:'columns-3'}]} />
+</div>
+
+#### Icon only
+
+Reserve for universally understood glyphs. Every segment still needs a label for assistive tech — pass it via `aria-label`.
+
+<div className="example">
+  <Seg ariaLabel="Alignment" size="md" start={0} options={[{icon:'align-left',aria:'Align left'},{icon:'align-center',aria:'Align center'},{icon:'align-right',aria:'Align right'},{icon:'align-justify',aria:'Justify'}]} />
+</div>
+
+<p className="caption">Icon-only segments · md · each labelled for screen readers.</p>
+
+</section>
+
+<section className="block" id="states">
+
+## States
+
+The track and items respond to interaction without ever changing the selection model.
+
+<div className="example">
+  <Seg ariaLabel="States demo" size="md" start={1} options={[{label:'Default'},{label:'Selected'},{label:'Hover me'}]} />
+</div>
+
+<p className="caption">md · the middle segment is selected; hover and focus any other to see the resting states.</p>
+
+#### Selected vs. hover
+
+- **Selected** is persistent: the indicator sits under the active item and its label uses the active colour. It survives focus moving away.
+- **Hover** on an unselected item is a soft affordance only — it does not move the indicator. The indicator moves on **click**, then animates into place.
+
+#### Focus
+
+Each item is a real `<button>`, so it shows the standard `:focus-visible` ring. Because items sit above the indicator (`z-index:1`), the ring is never clipped. Never suppress it.
+
+#### No disabled state
+
+Like buttons, segmented controls don't ship a disabled appearance. If an option isn't currently valid, keep the control live and surface the reason inline rather than greying out a segment — a dead segment leaves users guessing.
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+The `--nm-segmented-*` tokens remap under `data-theme`. In light theme the indicator is near-black with light text; in dark theme it inverts to a light pill with dark text. Track, indicator, and label colours all flip automatically.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <Seg ariaLabel="Light view" size="md" start={0} options={[{label:'List'},{label:'Board'},{label:'Calendar'}]} />
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <Seg ariaLabel="Dark view" size="md" start={0} options={[{label:'List'},{label:'Board'},{label:'Calendar'}]} />
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked to their theme — toggle the page theme to see the rest of the docs cascade.</p>
+
+</section>
+
+<section className="block" id="context">
+
+## Segmented in context
+
+Where a segmented control fits naturally. These are layout recommendations, not rigid rules.
+
+### List header — view switcher
+
+<div className="example" style={{justifyContent:'space-between'}}>
+  <div style={{fontSize:'20px',fontWeight:700}}>Documents</div>
+  <div style={{display:'flex',gap:'12px',alignItems:'center'}}>
+    <Seg ariaLabel="View" size="sm" start={0} options={[{icon:'list',aria:'List view'},{icon:'layout-grid',aria:'Grid view'}]} />
+    <button className="nm-button nm-button--accent nm-button--sm"><Ic n="plus" />New</button>
+  </div>
+</div>
+
+<p className="caption">A quiet segmented switch for the view, a single loud accent button for the primary action.</p>
+
+### Filter scope
+
+<div className="example" style={{justifyContent:'flex-start'}}>
+  <Seg ariaLabel="Scope" size="md" start={0} options={[{label:'All'},{label:'Mine'},{label:'Shared'}]} />
+</div>
+
+### Pricing toggle
+
+<div className="example stacked" style={{alignItems:'center',padding:'40px',textAlign:'center'}}>
+  <div style={{fontSize:'20px',fontWeight:700,marginBottom:'4px'}}>Choose a billing period</div>
+  <div style={{color:'var(--nm-foreground-muted)',fontSize:'14px',marginBottom:'16px'}}>Save 20% when you pay annually</div>
+  <div style={{display:'flex',justifyContent:'center'}}>
+    <Seg ariaLabel="Billing period" size="lg" start={1} options={[{label:'Monthly'},{label:'Yearly'}]} />
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+The rules that keep a segmented control crisp and unambiguous.
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><Seg frozen size="md" options={[{label:'Day'},{label:'Week'},{label:'Month'}]} /></div><div className="desc">Use 2–5 short, parallel options that read as one set. Keep exactly one selected.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><Seg frozen size="md" options={[{label:'Drafts'},{label:'Awaiting signature'},{label:'Completed & archived'}]} /></div><div className="desc">Don't pack long labels into segments — they crowd the track and the control stops reading at a glance. Use tabs or a select.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><Seg frozen size="md" options={[{label:'List'},{label:'Board'}]} /></div><div className="desc">Use a segmented control to switch one view or mode where every option is mutually exclusive.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md" aria-label="Previous"><Ic n="chevron-left" /></button><button className="nm-button nm-button--secondary nm-button--md">1</button><button className="nm-button nm-button--secondary nm-button--md">2</button><button className="nm-button nm-button--secondary nm-button--md" aria-label="Next"><Ic n="chevron-right" /></button></div></div><div className="desc">Don't use a segmented control for independent commands like pagination — that's a button group.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><Seg frozen size="md" start={1} options={[{label:'Newest'},{label:'Oldest'}]} /></div><div className="desc">Always keep one segment selected — the indicator tells users which mode they're in.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-segmented nm-segmented--md" role="group" aria-label="None selected" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Newest</button><button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Oldest</button></div></div><div className="desc">Don't leave the control with nothing selected — the indicator vanishes and the current mode is unreadable.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><Seg frozen size="md" options={[{label:'List',icon:'list'},{label:'Grid',icon:'layout-grid'}]} /></div><div className="desc">Keep the icon treatment uniform — either every segment has a leading icon or none do.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-segmented nm-segmented--md" role="group" aria-label="Mixed" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true"><Ic n="list" />List</button><button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Board</button><button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false" aria-label="Calendar"><Ic n="calendar" /></button></div></div><div className="desc">Don't mix icon-only, icon+label, and label-only segments in one control — the row reads as broken.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+A segmented control is a single-select widget. Get the role and the selected-state attribute right and the rest follows from the native buttons.
+
+#### Choosing a role
+
+- **Toggle-button pattern** (used here): `role="group"` with an `aria-label` on the track, and `aria-pressed="true|false"` on each `<button>`. Simple and robust.
+- **Radio pattern** (stricter): `role="radiogroup"` on the track, `role="radio"` + `aria-checked` on each item, with arrow-key roving focus so the control is a single Tab stop. Prefer this when the segmented control behaves exactly like a radio group.
+
+Pick one and apply it consistently — don't mix `aria-pressed` with `role="radio"`.
+
+#### Keyboard
+
+- In the toggle pattern, Tab moves between segments and Space / Enter selects the focused one.
+- In the radio pattern, Tab enters the group once; arrow keys move and select within it, per the WAI-ARIA radio pattern.
+
+#### Labeling
+
+- Give the track an `aria-label` (or `aria-labelledby`) naming what it controls (`"View"`, `"Billing period"`).
+- Icon-only segments each need their own `aria-label` describing the option, not the glyph.
+- Reflect the choice with `aria-pressed` / `aria-checked` — never rely on the indicator's colour alone. The indicator is `aria-hidden`.
+
+#### Contrast & motion
+
+- Selected and unselected labels meet WCAG 2.2 **AA** against their backgrounds in both themes.
+- The 0.2s indicator slide is a short, non-essential transition; respect `prefers-reduced-motion` by disabling it for users who ask.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+Click a segment to slide the indicator. The markup updates live — copy it straight into your product (and wire up the indicator positioning in JS).
+
+<SegmentedSandbox />
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+The track and indicator own a dedicated set of `--nm-segmented-*` custom properties; geometry comes from the size modifier classes.
+
+#### Colour tokens
+
+| Token | Role | Light | Dark |
+|-------|------|-------|------|
+| `--nm-segmented-bg` | Track fill | `surface-100` | `neutral-950` |
+| `--nm-segmented-border` | Track border | `neutral-500` | `neutral-50` |
+| `--nm-segmented-item-active-bg` | Indicator fill | `neutral-950` | `neutral-50` |
+| `--nm-segmented-item-active-border` | Indicator border | `neutral-950` | `neutral-50` |
+| `--nm-segmented-item-fg` | Label at rest | `surface-950` | `surface-50` |
+| `--nm-segmented-item-active-fg` | Selected label | `surface-50` | `surface-950` |
+
+#### Per-size geometry
+
+| Property | xs | sm | md | lg | xl |
+|----------|----|----|----|----|----|
+| Item height | 24px | 32px | 40px | 48px | 56px |
+| Track padding | 2px | 2px | 2px | 4px | 4px |
+| Track radius | 8px | 10px | 12px | 16px | 16px |
+| Indicator / item radius | 6px | 8px | 10px | 12px | 12px |
+| Track gap | 2px | 2px | 2px | 2px | 2px |
+
+<p className="caption">Values are baked into <code>.nm-segmented--{'{'}size{'}'}</code> and the child <code>.nm-button--{'{'}size{'}'}</code> — use a different size class rather than overriding them.</p>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+Wrap a row of transparent `nm-button` items in `.nm-segmented`, add a single `.nm-segmented__indicator` element, and mark the active item with `aria-pressed="true"`. The CSS handles colours and the slide transition; **you position the indicator in JavaScript** by measuring the active button.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-segmented nm-segmented--md" role="group" aria-label="View">
+  <span class="nm-segmented__indicator"></span>
+  <button class="nm-button nm-button--secondary nm-button--md" aria-pressed="true">List</button>
+  <button class="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Board</button>
+  <button class="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Calendar</button>
+</div>
+```
+
+```js
+// Position the indicator under the active segment, then on every change.
+function moveIndicator(root) {
+  const active = root.querySelector('[aria-pressed="true"]');
+  const bar = root.querySelector('.nm-segmented__indicator');
+  if (!active || !bar) return;
+  bar.style.left   = active.offsetLeft + 'px';
+  bar.style.top    = active.offsetTop + 'px';
+  bar.style.width  = active.offsetWidth + 'px';
+  bar.style.height = active.offsetHeight + 'px';
+}
+
+document.querySelectorAll('.nm-segmented').forEach(root => {
+  moveIndicator(root);
+  root.addEventListener('click', e => {
+    const btn = e.target.closest('.nm-button');
+    if (!btn) return;
+    root.querySelectorAll('.nm-button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+    moveIndicator(root);
+  });
+  window.addEventListener('resize', () => moveIndicator(root));
+});
+```
+
+#### CSS classes
+
+| Class | Applies to | Effect |
+|-------|-----------|--------|
+| `nm-segmented` | container | Track: background, border, padding, gap, positioning context |
+| `nm-segmented--{size}` | container | Track radius & padding — `xs` · `sm` · `md` · `lg` · `xl` |
+| `nm-segmented__indicator` | one child | The sliding pill; position it in JS |
+| `nm-button nm-button--secondary nm-button--{size}` | each item | Transparent button; match the size to the track |
+| `aria-pressed="true"` / `is-selected` | one item | Marks the active segment and flips its label colour |
+
+</section>

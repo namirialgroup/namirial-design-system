@@ -1,4 +1,4 @@
-export const appName = 'My App';
+export const appName = 'Namirial Design System';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';

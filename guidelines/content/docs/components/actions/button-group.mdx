@@ -1,0 +1,470 @@
+---
+title: Button Group
+description: A button group joins a set of related buttons into a single, edge-to-edge control.
+---
+
+import { Ic } from '@/components/nm/icon';
+import { ButtonGroupSandbox } from '@/components/nm/button-group-sandbox';
+
+<p className="eyebrow">Components · Actions</p>
+
+<p className="lede">A button group joins a set of related buttons into a single, edge-to-edge control. Built by wrapping <code>nm-button</code> elements in <code>.nm-button-group</code>, it collapses the inner corners and overlaps borders so the buttons read as one segmented unit — for switching a view, paging through results, or clustering commands that belong together.</p>
+
+<div className="hero-stage">
+  <div className="nm-button-group" role="group" aria-label="View">
+    <button className="nm-button nm-button--secondary nm-button--lg is-selected" aria-pressed="true"><Ic n="list" />List</button>
+    <button className="nm-button nm-button--secondary nm-button--lg" aria-pressed="false"><Ic n="layout-grid" />Board</button>
+    <button className="nm-button nm-button--secondary nm-button--lg" aria-pressed="false"><Ic n="calendar" />Calendar</button>
+  </div>
+  <div className="nm-button-group nm-button-group--pill" role="group" aria-label="Zoom">
+    <button className="nm-button nm-button--secondary nm-button--lg" aria-label="Zoom out"><Ic n="minus" /></button>
+    <button className="nm-button nm-button--secondary nm-button--lg">100%</button>
+    <button className="nm-button nm-button--secondary nm-button--lg" aria-label="Zoom in"><Ic n="plus" /></button>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A button group takes two or more buttons that share a purpose and binds them into one control. The inner corners square off, adjacent borders overlap into a single hairline, and the whole thing reads as a connected toolbar segment rather than a row of loose chips.
+
+There are two jobs it does well:
+
+- **Single-select** — a small set of mutually exclusive options where one is always active (a view switcher, a date range, a sort order). The selected button stays visibly pressed.
+- **Action cluster** — a handful of related, independent commands sitting side by side (zoom in / reset / out, undo / redo, alignment).
+
+### When to use
+
+- To switch between 2–5 mutually exclusive views or modes (`List` / `Board` / `Calendar`)
+- To group tightly related commands in a toolbar (`–` / `100%` / `+`)
+- For pagination and stepper controls (`Prev` / `1` / `2` / `3` / `Next`)
+
+### When not to use
+
+- For a styled, track-backed single-select with a sliding indicator — use a **segmented control** instead. A button group is the squarer, more utilitarian sibling.
+- For one standalone action — use a plain **button**.
+- When the options need to wrap to multiple lines or carry long labels — use stacked buttons or a **list**. A group is meant to stay on one line.
+- For navigation between unrelated pages — use **links** or a **tab bar**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A button group is a flex container (`.nm-button-group`) wrapping ordinary `.nm-button` elements. The group does no styling of its own beyond layout — it overlaps each button's leading edge by `-1px` so shared borders never double up, then strips the inner corners so only the two end caps stay rounded.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="nm-button-group giant" style={{pointerEvents:'none'}}>
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">Day</button>
+    <button className="nm-button nm-button--secondary nm-button--md">Week</button>
+    <button className="nm-button nm-button--secondary nm-button--md">Month</button>
+  </div>
+  <div className="labelpoint" style={{top:'30px',left:'40px'}}>1 · <b>Group container</b></div>
+  <div className="dot" style={{top:'56px',left:'150px'}}></div>
+  <div className="labelpoint" style={{top:'30px',right:'40px'}}>2 · <b>Selected item</b></div>
+  <div className="dot" style={{top:'56px',right:'150px'}}></div>
+  <div className="labelpoint" style={{bottom:'44px',left:'50%',transform:'translateX(-50%)'}}>3 · <b>Shared border (–1px overlap)</b></div>
+  <div className="dot" style={{bottom:'78px',left:'50%',transform:'translateX(-50%)'}}></div>
+  <div className="labelpoint" style={{bottom:'44px',left:'72px'}}>4 · <b>End cap (rounded)</b></div>
+  <div className="dot" style={{bottom:'78px',left:'150px'}}></div>
+</div>
+
+#### What each part is driven by
+
+| Part | Behaviour | Source |
+|------|-----------|--------|
+| Group container | `display:inline-flex` — keeps items on one line | `.nm-button-group` |
+| Shared border | Each item after the first shifts `margin-inline-start:-1px` so borders collapse to one | `.nm-button-group .nm-button:not(:first-child)` |
+| Inner corners | First item loses its right corners, last loses its left, middles go fully square | `:first-child` / `:not(:first-child):not(:last-child)` / `:last-child` |
+| Hover / focus lift | Hovered, focused, or active item gets `position:relative; z-index:1` so its full border paints over neighbours | `.nm-button-group .nm-button:hover, …:focus-visible, …:active` |
+| Selected item | Secondary buttons marked `aria-pressed="true"` / `.is-selected` take the active fill | `.nm-button-group .nm-button--secondary[aria-pressed=true]` |
+| End cap radius | Outer corners inherit each button's own `border-radius` (size-dependent) | `.nm-button--{size}` |
+
+</section>
+
+<section className="block" id="shapes">
+
+## Square & pill
+
+Two end-cap shapes. The default squares the inner corners and keeps the outer corners at the button's own radius. Add `.nm-button-group--pill` to round the two end caps into a fully capsule-shaped control.
+
+### Square (default)
+
+<div className="example">
+  <div className="nm-button-group" role="group" aria-label="Alignment">
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true" aria-label="Align left"><Ic n="align-left" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false" aria-label="Align center"><Ic n="align-center" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false" aria-label="Align right"><Ic n="align-right" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false" aria-label="Justify"><Ic n="align-justify" /></button>
+  </div>
+</div>
+
+### Pill
+
+<div className="example">
+  <div className="nm-button-group nm-button-group--pill" role="group" aria-label="Range">
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">Day</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Week</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Month</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Year</button>
+  </div>
+</div>
+
+<p className="caption">Pill end caps read softer — reach for them on filter bars and date pickers; keep square for dense editing toolbars.</p>
+
+</section>
+
+<section className="block" id="select">
+
+## Single-select
+
+The most common use: a set of mutually exclusive options where exactly one is active at all times. Mark the active button with `aria-pressed="true"` (or add `.is-selected`) — the selection styling is wired for **secondary** buttons, which is the intent a group should almost always use.
+
+<div className="example">
+  <div className="nm-button-group" role="group" aria-label="Sort order">
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Newest</button>
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">Popular</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Oldest</button>
+  </div>
+</div>
+
+<p className="caption">Exactly one button carries <code>aria-pressed="true"</code>. Selection is a state of the group, not of any single button.</p>
+
+- Keep one — and only one — option selected at all times. A single-select group has no empty state.
+- Use **secondary** intent so the unselected buttons stay quiet and the active one reads clearly against them.
+- Order options the way a user thinks about them (chronological, small→large), not alphabetically.
+
+</section>
+
+<section className="block" id="actions">
+
+## Action groups
+
+When the buttons are independent commands rather than a single choice, drop the pressed state — every button is just a regular button that happens to be joined to its neighbours. Use this for steppers, paging, and command clusters.
+
+#### Stepper
+
+<div className="example">
+  <div className="nm-button-group nm-button-group--pill" role="group" aria-label="Quantity">
+    <button className="nm-button nm-button--secondary nm-button--md" aria-label="Decrease"><Ic n="minus" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md" style={{minWidth:'56px'}}>3</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-label="Increase"><Ic n="plus" /></button>
+  </div>
+</div>
+
+#### Pagination
+
+<div className="example">
+  <div className="nm-button-group" role="group" aria-label="Pagination">
+    <button className="nm-button nm-button--secondary nm-button--md" aria-label="Previous"><Ic n="chevron-left" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md">1</button>
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">2</button>
+    <button className="nm-button nm-button--secondary nm-button--md">3</button>
+    <button className="nm-button nm-button--secondary nm-button--md">4</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-label="Next"><Ic n="chevron-right" /></button>
+  </div>
+</div>
+
+#### Undo / redo
+
+<div className="example">
+  <div className="nm-button-group" role="group" aria-label="History">
+    <button className="nm-button nm-button--secondary nm-button--md"><Ic n="undo-2" />Undo</button>
+    <button className="nm-button nm-button--secondary nm-button--md">Redo<Ic n="redo-2" /></button>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+A group inherits its height, padding, font size, and corner radius from the `nm-button--{size}` class on its children — there is no separate group size. Use the **same size on every button** in a group; mixing sizes breaks the shared border. The five steps mirror the button scale.
+
+<div className="scale-row"><span className="sz">xs</span><div><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--xs is-selected" aria-pressed="true">Day</button><button className="nm-button nm-button--secondary nm-button--xs">Week</button><button className="nm-button nm-button--secondary nm-button--xs">Month</button></div></div><div className="metric">h <b>24px</b> · pad <b>8</b> · r <b>6</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--sm is-selected" aria-pressed="true">Day</button><button className="nm-button nm-button--secondary nm-button--sm">Week</button><button className="nm-button nm-button--secondary nm-button--sm">Month</button></div></div><div className="metric">h <b>32px</b> · pad <b>12</b> · r <b>8</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">Day</button><button className="nm-button nm-button--secondary nm-button--md">Week</button><button className="nm-button nm-button--secondary nm-button--md">Month</button></div></div><div className="metric">h <b>40px</b> · pad <b>16</b> · r <b>10</b></div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--lg is-selected" aria-pressed="true">Day</button><button className="nm-button nm-button--secondary nm-button--lg">Week</button><button className="nm-button nm-button--secondary nm-button--lg">Month</button></div></div><div className="metric">h <b>48px</b> · pad <b>24</b> · r <b>12</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--xl is-selected" aria-pressed="true">Day</button><button className="nm-button nm-button--secondary nm-button--xl">Week</button><button className="nm-button nm-button--secondary nm-button--xl">Month</button></div></div><div className="metric">h <b>56px</b> · pad <b>24</b> · r <b>12</b></div></div>
+
+#### Choosing a size
+
+- `xs` / `sm` — dense toolbars, table headers, filter rows
+- `md` — default for panels, cards, page-level view switchers
+- `lg` / `xl` — marketing surfaces, touch-first kiosks, signing screens
+
+</section>
+
+<section className="block" id="icons">
+
+## Icon groups
+
+Buttons in a group take the same icon options as standalone buttons: leading icon, trailing icon, or icon-only. Icon-only groups are the workhorse of editing toolbars — keep them to universally understood glyphs and give every button an `aria-label`.
+
+<div className="example">
+  <div className="nm-button-group" role="group" aria-label="Text style">
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true" aria-label="Bold"><Ic n="bold" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false" aria-label="Italic"><Ic n="italic" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false" aria-label="Underline"><Ic n="underline" /></button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false" aria-label="Strikethrough"><Ic n="strikethrough" /></button>
+  </div>
+</div>
+
+<p className="caption">Icon-only group · md · every button labelled. Match the icon weight across the group so the row reads evenly.</p>
+
+#### Icon + label
+
+<div className="example">
+  <div className="nm-button-group" role="group" aria-label="Layout">
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true"><Ic n="list" />List</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false"><Ic n="layout-grid" />Grid</button>
+    <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false"><Ic n="columns-3" />Columns</button>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="states">
+
+## States
+
+Each button in a group keeps its own interaction states. The group adds one rule: a hovered, focused, or active button is lifted with `z-index:1` so its full border paints cleanly over the overlapped neighbours — no broken seams.
+
+<div className="example">
+  <div className="nm-button-group" role="group" aria-label="States demo">
+    <button className="nm-button nm-button--secondary nm-button--md">Default</button>
+    <button className="nm-button nm-button--secondary nm-button--md" data-state="hover">Hover</button>
+    <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">Selected</button>
+    <button className="nm-button nm-button--secondary nm-button--md" data-state="active">Active</button>
+  </div>
+</div>
+
+<p className="caption">Secondary · md · default, hover, selected, and active within one group.</p>
+
+#### Selected vs. active
+
+- **Selected** (`aria-pressed="true"` / `.is-selected`) is a persistent state — the option the user has chosen. It survives focus moving elsewhere.
+- **Active** is the momentary press while the pointer is down. Don't conflate them: a single-select group shows exactly one *selected* button, and any button can be *active* for the instant it's clicked.
+
+#### Focus
+
+Focus uses the button's own `:focus-visible` ring. Inside a group the focused button lifts above its neighbours so the full ring is visible on every side. Never suppress it.
+
+#### No disabled state
+
+Like buttons, groups don't ship a disabled appearance. If an option isn't available, leave the rest of the group enabled and explain the constraint inline rather than greying a segment out.
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Groups inherit every colour from the button tokens, so they remap automatically under `data-theme`. Fill, selected state, border, and focus ring all adapt — author once.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-button-group" role="group" aria-label="Light view">
+        <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">List</button>
+        <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Board</button>
+        <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Calendar</button>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-button-group" role="group" aria-label="Dark view">
+        <button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">List</button>
+        <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Board</button>
+        <button className="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Calendar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked to their theme — toggle the page theme to see the rest of the docs cascade.</p>
+
+</section>
+
+<section className="block" id="context">
+
+## Groups in context
+
+Where button groups earn their keep. These are layout recommendations, not rigid rules.
+
+### List header — view switcher
+
+<div className="example" style={{justifyContent:'space-between'}}>
+  <div style={{fontSize:'20px',fontWeight:700}}>Documents</div>
+  <div style={{display:'flex',gap:'12px',alignItems:'center'}}>
+    <div className="nm-button-group" role="group" aria-label="View">
+      <button className="nm-button nm-button--secondary nm-button--sm is-selected" aria-pressed="true" aria-label="List view"><Ic n="list" /></button>
+      <button className="nm-button nm-button--secondary nm-button--sm" aria-pressed="false" aria-label="Grid view"><Ic n="layout-grid" /></button>
+    </div>
+    <button className="nm-button nm-button--accent nm-button--sm"><Ic n="plus" />New</button>
+  </div>
+</div>
+
+<p className="caption">A quiet secondary group for switching the view, a single loud accent button for the primary action. Don't let the group compete with it.</p>
+
+### Filter bar — date range
+
+<div className="example" style={{justifyContent:'flex-start',gap:'12px'}}>
+  <div className="nm-button-group nm-button-group--pill" role="group" aria-label="Range">
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-pressed="false">24h</button>
+    <button className="nm-button nm-button--secondary nm-button--sm is-selected" aria-pressed="true">7d</button>
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-pressed="false">30d</button>
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-pressed="false">90d</button>
+  </div>
+</div>
+
+### Editor toolbar
+
+<div className="example tight" style={{justifyContent:'flex-start',gap:'8px'}}>
+  <div className="nm-button-group" role="group" aria-label="Format">
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-label="Bold"><Ic n="bold" /></button>
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-label="Italic"><Ic n="italic" /></button>
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-label="Underline"><Ic n="underline" /></button>
+  </div>
+  <div className="nm-button-group" role="group" aria-label="Align">
+    <button className="nm-button nm-button--secondary nm-button--sm is-selected" aria-pressed="true" aria-label="Align left"><Ic n="align-left" /></button>
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-pressed="false" aria-label="Align center"><Ic n="align-center" /></button>
+    <button className="nm-button nm-button--secondary nm-button--sm" aria-pressed="false" aria-label="Align right"><Ic n="align-right" /></button>
+  </div>
+</div>
+
+<p className="caption">Break a long toolbar into several short groups by function. The gaps between groups do the visual grouping for you.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+The rules that keep a group reading as one clean control.
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">Day</button><button className="nm-button nm-button--secondary nm-button--md">Week</button><button className="nm-button nm-button--secondary nm-button--md">Month</button></div></div><div className="desc">Use secondary intent across the whole group and let one selected segment carry the emphasis.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--accent nm-button--md">Day</button><button className="nm-button nm-button--positive nm-button--md">Week</button><button className="nm-button nm-button--negative nm-button--md">Month</button></div></div><div className="desc">Don't mix loud intents inside a group. Members of a set should look like siblings, not rivals.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">List</button><button className="nm-button nm-button--secondary nm-button--md">Board</button></div></div><div className="desc">Keep groups to 2–5 short, parallel options that fit on one line.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none',flexWrap:'wrap'}}><button className="nm-button nm-button--secondary nm-button--md">Drafts</button><button className="nm-button nm-button--secondary nm-button--md">Awaiting signature</button><button className="nm-button nm-button--secondary nm-button--md">Completed archive</button></div></div><div className="desc">Don't pack long labels or six-plus options into a group — it wraps and the connected look falls apart. Use a select or tabs.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md is-selected" aria-pressed="true">Newest</button><button className="nm-button nm-button--secondary nm-button--md">Oldest</button></div></div><div className="desc">In a single-select group, always keep exactly one option selected.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md">Newest</button><button className="nm-button nm-button--secondary nm-button--md">Oldest</button></div></div><div className="desc">Don't leave a single-select group with nothing chosen — the user can't tell which mode they're in.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--md" aria-label="Bold"><Ic n="bold" /></button><button className="nm-button nm-button--secondary nm-button--md" aria-label="Italic"><Ic n="italic" /></button></div></div><div className="desc">Give every icon-only button in the group an <code>aria-label</code>.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-button-group" style={{pointerEvents:'none'}}><button className="nm-button nm-button--secondary nm-button--xs">A</button><button className="nm-button nm-button--secondary nm-button--lg">B</button><button className="nm-button nm-button--secondary nm-button--sm">C</button></div></div><div className="desc">Don't mix sizes within a group. Different heights break the shared border and the unit stops reading as one.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+A button group is a layout wrapper — semantics live on the buttons and on the role you give the container.
+
+#### Choosing a role
+
+- **Single-select** (mutually exclusive, one always active): wrap in `role="group"` with an `aria-label`, and mark each button with `aria-pressed="true|false"`. For a stricter radio-style relationship, use `role="radiogroup"` on the container and `role="radio"` + `aria-checked` on the buttons.
+- **Action cluster** (independent commands): use `role="group"` with an `aria-label` that names the cluster (`"Pagination"`, `"Text formatting"`). Each button stays a normal `<button type="button">`.
+
+#### Keyboard
+
+- Tab moves into the group and Tab moves out — every button is individually focusable by default.
+- Space and Enter trigger the focused button.
+- For `role="radiogroup"`, manage arrow-key roving focus so the group is a single Tab stop, per the WAI-ARIA radio pattern.
+
+#### Labeling
+
+- Always give the container an `aria-label` (or `aria-labelledby`) so assistive tech announces what the group controls.
+- Icon-only buttons each require their own `aria-label` describing the action, not the glyph (`"Align left"`, not `"left icon"`).
+- Reflect selection with `aria-pressed` (toggle buttons) or `aria-checked` (radio pattern) — never rely on the fill colour alone.
+
+#### Contrast
+
+- Selected and unselected segments both meet WCAG 2.2 **AA** for label-over-fill in light and dark themes.
+- The focus ring keeps ≥ 3:1 contrast against the button and the page, and lifts above neighbours so it's never clipped.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+Click a segment to select it. The markup updates live — copy it straight into your product.
+
+<ButtonGroupSandbox />
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+A button group has no colour tokens of its own — every fill, border, and selected state resolves through the **button** tokens. The group layer only owns layout and corner behaviour.
+
+#### Inherited from button
+
+| Token | Role |
+|-------|------|
+| `--nm-button-secondary-default-bg` | Segment fill at rest |
+| `--nm-button-secondary-active-bg` | Fill of the selected segment (`aria-pressed` / `.is-selected`) |
+| `--nm-button-secondary-default-border` | Shared segment border |
+| `--nm-button-secondary-fg` | Label + icon colour |
+| `--palette-focus-700` / `--palette-focus-300` | Focus ring (light / dark) |
+
+#### Group-layer behaviour (no custom properties)
+
+| Aspect | Value | Source |
+|--------|-------|--------|
+| Layout | `display:inline-flex` | `.nm-button-group` |
+| Border overlap | `margin-inline-start:-1px` on every item after the first | `.nm-button-group .nm-button:not(:first-child)` |
+| Inner corners | squared; outer corners keep the button's own radius | first / middle / last child rules |
+| Pill end caps | `border-radius:999px` on the two outer corners | `.nm-button-group--pill` |
+| Hover / focus / active lift | `position:relative; z-index:1` | `.nm-button-group .nm-button:hover, …:focus-visible, …:active` |
+
+<p className="caption">Geometry comes entirely from the <code>nm-button--{'{'}size{'}'}</code> class on the children — there's nothing to override on the group itself.</p>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+Wrap a row of `nm-button` elements in `.nm-button-group`. No JavaScript is required for layout; you only wire up click handling and the `aria-pressed` toggle for single-select behaviour.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-button-group" role="group" aria-label="View">
+  <button class="nm-button nm-button--secondary nm-button--md" aria-pressed="true">List</button>
+  <button class="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Board</button>
+  <button class="nm-button nm-button--secondary nm-button--md" aria-pressed="false">Calendar</button>
+</div>
+```
+
+#### CSS classes
+
+| Class | Applies to | Effect |
+|-------|-----------|--------|
+| `nm-button-group` | container | Joins children edge-to-edge, collapses inner borders & corners |
+| `nm-button-group--pill` | container | Rounds the two end caps into a capsule |
+| `nm-button--secondary` | each button | The intent groups should use; wires up the selected fill |
+| `nm-button--{size}` | each button | Sets height, padding, font size, radius — keep identical across the group |
+| `aria-pressed="true"` / `is-selected` | one button | Marks the selected segment in a single-select group |
+
+</section>
