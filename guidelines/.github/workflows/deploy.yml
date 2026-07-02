@@ -1,3 +1,4 @@
+# GitHub Pages deploy for guidelines docs
 name: Deploy docs to GitHub Pages
 
 on:
