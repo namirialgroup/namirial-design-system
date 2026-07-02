@@ -12,9 +12,27 @@ import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
+import Link from 'next/link';
 
 export default async function Page(props: PageProps<'/[[...slug]]'>) {
   const params = await props.params;
+  
+  // If no slug, render the home page
+  if (!params.slug || params.slug.length === 0) {
+    return (
+      <div className="flex flex-col justify-center text-center flex-1">
+        <h1 className="text-2xl font-bold mb-4">Hello World</h1>
+        <p>
+          You can open{' '}
+          <Link href="/docs" className="font-medium underline">
+            /docs
+          </Link>{' '}
+          and see the documentation.
+        </p>
+      </div>
+    );
+  }
+
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
@@ -50,6 +68,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: PageProps<'/[[...slug]]'>): Promise<Metadata> {
   const params = await props.params;
+  
+  if (!params.slug || params.slug.length === 0) {
+    return {
+      title: 'Home',
+      description: 'Welcome to Namirial Design System',
+    };
+  }
+
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
