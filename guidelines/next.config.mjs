@@ -9,6 +9,8 @@ const config = {
   images: {
     unoptimized: true,
   },
+  basePath: '/namirial-design-system',
+  assetPrefix: '/namirial-design-system/',
 };
 
 export default withMDX(config);
