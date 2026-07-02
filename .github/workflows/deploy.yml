@@ -40,6 +40,25 @@ jobs:
         working-directory: ./guidelines
         run: npm run build
 
+      - name: Inspect built site
+        working-directory: ./guidelines
+        run: |
+          echo "CWD: $(pwd)"
+          echo "Listing ./out"
+          ls -la out || (echo "ERROR: ./out does not exist — adjust build output path" && exit 1)
+          echo "--- Top-level files ---"
+          ls -la out | sed -n '1,200p'
+          echo "--- Find index.html ---"
+          if [ -f out/index.html ]; then
+            echo "index.html found, head:"
+            head -n 20 out/index.html
+          else
+            echo "ERROR: out/index.html not found"
+            echo "Contents of out (tree):"
+            find out -maxdepth 3 -type f -print
+            exit 1
+          fi
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
