@@ -1,7 +1,18 @@
-import { source } from '@/lib/source';
-import { createFromSource } from 'fumadocs-core/search/server';
+import { createMDX } from 'fumadocs-mdx/next';
 
-export const { GET } = createFromSource(source, {
-  // https://docs.orama.com/docs/orama-js/supported-languages
-  language: 'english',
-});
+const withMDX = createMDX();
+
+const repo = 'namirial-design-system';
+
+/** @type {import('next').NextConfig} */
+const config = {
+  reactStrictMode: true,
+  output: 'export',
+  basePath: `/${repo}`,
+  assetPrefix: `/${repo}/`,
+  images: {
+    unoptimized: true,
+  },
+};
+
+export default withMDX(config);
