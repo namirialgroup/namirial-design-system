@@ -1,0 +1,164 @@
+---
+title: Icons
+description: Namirial uses Lucide as its icon library.
+---
+
+import { Activity, Bell, Calendar, Check, ChevronRight, Download, FileText, Home, Search, Settings, Trash2, User } from 'lucide-react';
+
+Our design system uses [**Lucide**](https://lucide.dev) as its icon library. Lucide is an open-source collection of more than 1,500 simple, consistent and highly readable icons, designed on a unified grid so they sit naturally next to text and UI elements at any size.
+
+This page explains what Lucide is, why we adopted it, and how to use it correctly in product interfaces.
+
+## What is Lucide?
+
+Lucide is a community-maintained fork of the well-known Feather icon set, expanded into a much larger and actively developed library. Every icon shares the same design language:
+
+- **Drawn on a 24×24 grid**, so proportions and spacing stay consistent across the whole set.
+- **Outline (stroke-based) style**, with a default stroke width of `2px` and rounded line caps and joins.
+- **Distributed as SVG**, which means icons stay crisp at any resolution and can be styled with CSS — color, size and stroke are all controllable.
+- **Open source** under the ISC license, free to use in commercial and personal projects.
+
+Because every icon follows the same rules, you can mix and match freely without the set ever looking inconsistent.
+
+## Why we use Lucide
+
+| Benefit | What it means for us |
+| --- | --- |
+| **Consistency** | A single, coherent visual language across every product and screen. |
+| **Scalability** | SVG icons render sharply on any display, from mobile to 4K. |
+| **Themeable** | Icons inherit text color and can be resized via standard CSS. |
+| **Lightweight** | Tree-shakeable — only the icons you import are shipped in the bundle. |
+| **Large catalog** | 1,500+ icons covering most common UI and domain needs. |
+| **Framework-friendly** | First-party packages for React, Vue, Svelte, Angular and plain SVG. |
+
+## Live preview
+
+A small selection of Lucide icons, rendered at the size we use most often in the interface (`24px`):
+
+<div style={{display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'center', padding: '1.25rem', border: '1px solid var(--palette-neutral-100)', borderRadius: '8px'}}>
+  <Home /> <Search /> <Settings /> <Bell /> <User /> <Calendar /> <FileText /> <Download /> <Trash2 /> <Activity /> <Check /> <ChevronRight />
+</div>
+
+## Using Lucide in code
+
+Lucide is already installed in this project through the `lucide-react` package, so you don't need to add anything to start using it.
+
+### Basic usage
+
+Import the icon you need by name and render it like any other React component:
+
+```jsx
+import { Camera } from 'lucide-react';
+
+function Example() {
+  return <Camera />;
+}
+```
+
+Each icon is its own named export, which keeps bundles small: only the icons you actually import end up in the final build.
+
+### Customization
+
+Every icon accepts a set of props to control its appearance. They are all optional and fall back to sensible defaults.
+
+```jsx
+<Camera
+  size={32}          // width & height in px (default: 24)
+  color="#0050ff"    // any CSS color (default: currentColor)
+  strokeWidth={1.5}  // line thickness (default: 2)
+  absoluteStrokeWidth // keep stroke width constant regardless of size
+/>
+```
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `number \| string` | `24` | Sets both width and height of the icon. |
+| `color` | `string` | `currentColor` | Stroke color. Inherits the surrounding text color by default. |
+| `strokeWidth` | `number` | `2` | Thickness of the icon's lines. |
+| `absoluteStrokeWidth` | `boolean` | `false` | Keeps the visual stroke width fixed even when the icon is scaled. |
+| `className` | `string` | — | Applies CSS classes, useful for theming and animation. |
+
+Because icons default to `currentColor`, the simplest way to color them is to set the `color` on a parent element — the icon will follow automatically:
+
+```jsx
+<button style={{ color: 'var(--brand-primary)' }}>
+  <Settings /> Settings
+</button>
+```
+
+## Usage guidelines
+
+### Sizing
+
+Pick a size that matches the surrounding context and aligns to the spacing scale. Common steps:
+
+| Context | Recommended size |
+| --- | --- |
+| Inline with body text / dense lists | `16px` |
+| Buttons, inputs, default UI | `20px`–`24px` |
+| Section headers, empty states | `32px`+ |
+
+Avoid arbitrary sizes — stick to the steps above so icons line up consistently with type and components.
+
+### Color
+
+- Let icons **inherit text color** wherever possible (`currentColor`) so they adapt automatically to themes, hover and disabled states.
+- Use brand or semantic colors (success, warning, danger) only to reinforce meaning, not for decoration.
+- Maintain sufficient contrast against the background for legibility.
+
+### Stroke width
+
+Keep the default `2px` stroke for most uses. Only adjust `strokeWidth` deliberately — for example a lighter `1.5px` stroke for large display icons — and apply it consistently rather than per-icon.
+
+### Pairing icons with labels
+
+Whenever possible, pair an icon with a text label. Icons clarify and speed up scanning, but a label removes ambiguity. Reserve icon-only controls for universally understood actions (close, search, menu).
+
+## Accessibility
+
+Icons are decorative or meaningful depending on context, and they should be marked accordingly:
+
+- **Decorative icon** (next to a visible label) — hide it from assistive technology:
+
+  ```jsx
+  <button>
+    <Trash2 aria-hidden="true" /> Delete
+  </button>
+  ```
+
+- **Meaningful icon** (icon-only control) — give it an accessible name:
+
+  ```jsx
+  <button aria-label="Delete item">
+    <Trash2 aria-hidden="true" />
+  </button>
+  ```
+
+Never rely on an icon alone to convey critical information without a text alternative.
+
+## Finding icons
+
+Browse and search the full catalog at [lucide.dev/icons](https://lucide.dev/icons). Each icon page shows its exact component name and offers copy-ready code snippets.
+
+Component names use **PascalCase** (`ArrowRight`, `FileText`, `Trash2`), which is the name you import in code. The same icon is also available as a `*Icon`-suffixed alias (e.g. `CameraIcon`) if you prefer to disambiguate from other components.
+
+## Do's and don'ts
+
+✅ **Do**
+
+- Reuse existing icons before introducing new ones.
+- Keep size, stroke and color consistent within a view.
+- Provide accessible names for icon-only controls.
+
+❌ **Don't**
+
+- Mix Lucide with icons from other libraries — it breaks visual consistency.
+- Stretch or distort icons by setting width and height independently.
+- Use icons purely for decoration where they add visual noise without meaning.
+
+## Resources
+
+- [Lucide website](https://lucide.dev)
+- [Icon catalog & search](https://lucide.dev/icons)
+- [`lucide-react` documentation](https://lucide.dev/guide/packages/lucide-react)
+- [Lucide on GitHub](https://github.com/lucide-icons/lucide)

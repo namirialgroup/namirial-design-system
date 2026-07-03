@@ -1,0 +1,22 @@
+---
+title: Language & Country Switcher
+description: Guidance for building multilingual and multi-country switchers.
+---
+
+## Multilingual system (website, application, software)
+
+If the system supports more than one language and is **not** country-based, the best practice is to use a **text label**.
+
+The text label can be either the two-letter code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) or the complete language name written in its native language (endonym). You can find both on Wikipedia, in the **639-1** and **Native name (endonym)** columns.
+
+## Multi-country system (website, application, software)
+
+If the system changes its behaviour based on the user's country, the best practice is to use **country flags** paired with a text label — or, at the very least, an alternative text. The text should be the country name.
+
+## Examples of use
+
+<img
+  src="/img/language-country-switcher-examples.png"
+  alt="Don't and Do examples of language and country switchers. Don't: a row of bare flags labelled 'Languages', flags used as language labels (Italiano, Română), and a language dropdown listing languages by English exonym (German, Spanish, Italian, Romanian). Do: a language dropdown listing languages by their native endonym (Deutsch, Español, Italiano, Română), and a country switcher pairing each flag with its country name (Italia, România)."
+  style={{maxWidth: '760px', width: '100%', height: 'auto', display: 'block', margin: '1.5rem auto'}}
+/>

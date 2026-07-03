@@ -1,0 +1,546 @@
+---
+title: Button
+description: Buttons are the primary way to trigger actions in an interface.
+---
+
+import { Ic } from '@/components/nm/icon';
+import { ButtonSandbox } from '@/components/nm/button-sandbox';
+
+<p className="eyebrow">Components · Actions</p>
+
+<p className="lede">Buttons are the primary way to trigger actions in an interface. Namirial buttons are built from <code>--nm-button-*</code> tokens defined in <code>namirial-theme.css</code>, and ship in seven intents, two styles, and five sizes — geometry (height, padding, radius, gap) is baked into the size modifier classes.</p>
+
+<div className="hero-stage">
+  <button className="nm-button nm-button--accent nm-button--lg">Get started<Ic n="arrow-right" /></button>
+  <button className="nm-button nm-button--secondary nm-button--lg">View examples</button>
+  <button className="nm-button nm-button--primary nm-button--lg nm-button--ghost"><Ic n="github" />Source</button>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A button invokes an action. Every button should communicate three things at a glance: that it is clickable, what it will do, and how important the action is relative to its neighbors. Use intent to set the action's weight, size to match its container, and style (solid vs. ghost) to control how loudly it sits on the page.
+
+### When to use
+
+- To commit a change or submit a form (`Save`, `Create`, `Sign document`)
+- To advance a user through a flow (`Continue`, `Next step`)
+- To trigger an immediate, self-contained action (`Send`, `Download`, `Copy link`)
+
+### When not to use
+
+- For navigation between pages — use a **link** instead. Buttons do things; links go places.
+- To toggle a setting on or off — use a **switch** or **checkbox**.
+- For a choice between a small set of options — use a **segmented control**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A button is a single focusable element: a label framed by geometry, with optional icons flanking the label. Color properties (fill, border, label) are driven by `--nm-button-*` custom properties. Geometry (height, padding, gap, radius) is baked directly into the size modifier classes (`nm-button--xs` through `nm-button--xl`).
+
+<div className="anatomy" aria-hidden="true">
+  <button className="nm-button nm-button--primary nm-button--md giant" style={{pointerEvents:'none'}}>
+    <Ic n="arrow-left" />Continue<Ic n="arrow-right" />
+  </button>
+  <div className="labelpoint" style={{top:'22px',left:'48px'}}>1 · <b>Container</b></div>
+  <div className="dot" style={{top:'44px',left:'120px'}}></div>
+  <div className="labelpoint" style={{top:'22px',right:'48px'}}>2 · <b>Border</b></div>
+  <div className="dot" style={{top:'44px',right:'120px'}}></div>
+  <div className="labelpoint" style={{bottom:'36px',left:'96px'}}>3 · <b>Leading icon</b></div>
+  <div className="dot" style={{bottom:'70px',left:'180px'}}></div>
+  <div className="labelpoint" style={{bottom:'36px',left:'50%',transform:'translateX(-50%)'}}>4 · <b>Label</b></div>
+  <div className="dot" style={{bottom:'70px',left:'50%',transform:'translateX(-50%)'}}></div>
+  <div className="labelpoint" style={{bottom:'36px',right:'96px'}}>5 · <b>Trailing icon</b></div>
+  <div className="dot" style={{bottom:'70px',right:'180px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill | `--nm-button-{intent}-default-bg` |
+| Container | Horizontal padding | `padding-inline` — 8 / 12 / 16 / 24 / 24 px (xs → xl) |
+| Container | Height | `height` — 24 / 32 / 40 / 48 / 56 px (xs → xl) |
+| Container | Radius | `border-radius` — 6 / 8 / 10 / 12 / 12 px (xs → xl) |
+| Border | Color | `--nm-button-{intent}-default-border` |
+| Border | Width | `border-width: 1px` (fixed) |
+| Label | Color (solid) | `--nm-button-{intent}-fg` |
+| Label | Color (ghost) | `--nm-button-ghost-{intent}-fg` |
+| Label | Size | `font-size` — 12 / 14 / 16 / 20 / 24 px (xs → xl) |
+| Icons | Gap | `gap` — 8 / 8 / 12 / 12 / 16 px (xs → xl) |
+| Focus ring | Color | `--palette-focus-700` (light) / `--palette-focus-300` (dark), 2px outline 2px offset |
+
+</section>
+
+<section className="block" id="intents">
+
+## Intents
+
+Intent communicates what an action means. Pick the one that matches the semantic weight, not the color you want. Each intent owns a full triple of default / hover / active tokens in both solid and ghost style — nothing else needs customizing.
+
+<div className="intents-catalog">
+
+<div className="intent-row">
+  <div className="meta">
+    <h4>Primary</h4>
+    <div className="swatch-row">
+      <span className="swatch" style={{background:'var(--nm-button-primary-default-bg)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-primary-hover-bg)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-primary-active-bg)'}}></span>
+    </div>
+    <p className="use">The most important action on the screen. Neutral-dark so it reads as "default" rather than branded. Use exactly <strong>one per view</strong>.</p>
+  </div>
+  <div className="demos">
+    <div className="state-row"><span className="state-label">default</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--primary nm-button--md">Save changes</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--primary nm-button--md nm-button--ghost">Save changes</button></div></div>
+    <div className="state-row"><span className="state-label">hover</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--primary nm-button--md" data-state="hover">Save changes</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--primary nm-button--md nm-button--ghost" data-state="hover">Save changes</button></div></div>
+    <div className="state-row"><span className="state-label">active</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--primary nm-button--md" data-state="active">Save changes</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--primary nm-button--md nm-button--ghost" data-state="active">Save changes</button></div></div>
+  </div>
+</div>
+
+<div className="intent-row">
+  <div className="meta">
+    <h4>Secondary</h4>
+    <div className="swatch-row">
+      <span className="swatch" style={{background:'var(--nm-button-secondary-default-bg)',borderColor:'var(--nm-button-secondary-default-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-secondary-hover-bg)',borderColor:'var(--nm-button-secondary-default-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-secondary-active-bg)',borderColor:'var(--nm-button-secondary-default-border)'}}></span>
+    </div>
+    <p className="use">A supporting action next to the primary — "Cancel", "Back", "Discard". Outlined so it never competes with primary or accent for attention.</p>
+  </div>
+  <div className="demos">
+    <div className="state-row"><span className="state-label">default</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--secondary nm-button--md">Cancel</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button></div></div>
+    <div className="state-row"><span className="state-label">hover</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--secondary nm-button--md" data-state="hover">Cancel</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--secondary nm-button--md nm-button--ghost" data-state="hover">Cancel</button></div></div>
+    <div className="state-row"><span className="state-label">active</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--secondary nm-button--md" data-state="active">Cancel</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--secondary nm-button--md nm-button--ghost" data-state="active">Cancel</button></div></div>
+  </div>
+</div>
+
+<div className="intent-row">
+  <div className="meta">
+    <h4>Accent</h4>
+    <div className="swatch-row">
+      <span className="swatch" style={{background:'var(--nm-button-accent-default-bg)',borderColor:'var(--nm-button-accent-default-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-accent-hover-bg)',borderColor:'var(--nm-button-accent-hover-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-accent-active-bg)',borderColor:'var(--nm-button-accent-active-border)'}}></span>
+    </div>
+    <p className="use">Namirial teal — reserved for brand moments or calls-to-action that should feel distinctly "Namirial" (onboarding, conversion).</p>
+  </div>
+  <div className="demos">
+    <div className="state-row"><span className="state-label">default</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--accent nm-button--md">Sign document</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--accent nm-button--md nm-button--ghost">Sign document</button></div></div>
+    <div className="state-row"><span className="state-label">hover</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--accent nm-button--md" data-state="hover">Sign document</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--accent nm-button--md nm-button--ghost" data-state="hover">Sign document</button></div></div>
+    <div className="state-row"><span className="state-label">active</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--accent nm-button--md" data-state="active">Sign document</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--accent nm-button--md nm-button--ghost" data-state="active">Sign document</button></div></div>
+  </div>
+</div>
+
+<div className="intent-row">
+  <div className="meta">
+    <h4>Positive</h4>
+    <div className="swatch-row">
+      <span className="swatch" style={{background:'var(--nm-button-positive-default-bg)',borderColor:'var(--nm-button-positive-default-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-positive-hover-bg)',borderColor:'var(--nm-button-positive-hover-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-positive-active-bg)',borderColor:'var(--nm-button-positive-active-border)'}}></span>
+    </div>
+    <p className="use">Confirms, approves, or completes. Use sparingly — only when the outcome is reversible success (<code>Approve</code>, <code>Publish</code>).</p>
+  </div>
+  <div className="demos">
+    <div className="state-row"><span className="state-label">default</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--positive nm-button--md">Approve</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--positive nm-button--md nm-button--ghost">Approve</button></div></div>
+    <div className="state-row"><span className="state-label">hover</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--positive nm-button--md" data-state="hover">Approve</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--positive nm-button--md nm-button--ghost" data-state="hover">Approve</button></div></div>
+    <div className="state-row"><span className="state-label">active</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--positive nm-button--md" data-state="active">Approve</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--positive nm-button--md nm-button--ghost" data-state="active">Approve</button></div></div>
+  </div>
+</div>
+
+<div className="intent-row">
+  <div className="meta">
+    <h4>Negative</h4>
+    <div className="swatch-row">
+      <span className="swatch" style={{background:'var(--nm-button-negative-default-bg)',borderColor:'var(--nm-button-negative-default-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-negative-hover-bg)',borderColor:'var(--nm-button-negative-hover-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-negative-active-bg)',borderColor:'var(--nm-button-negative-active-border)'}}></span>
+    </div>
+    <p className="use">Destructive or irreversible actions — delete, revoke, reject. Always pair with a confirmation dialog.</p>
+  </div>
+  <div className="demos">
+    <div className="state-row"><span className="state-label">default</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--negative nm-button--md">Delete account</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--negative nm-button--md nm-button--ghost">Delete account</button></div></div>
+    <div className="state-row"><span className="state-label">hover</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--negative nm-button--md" data-state="hover">Delete account</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--negative nm-button--md nm-button--ghost" data-state="hover">Delete account</button></div></div>
+    <div className="state-row"><span className="state-label">active</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--negative nm-button--md" data-state="active">Delete account</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--negative nm-button--md nm-button--ghost" data-state="active">Delete account</button></div></div>
+  </div>
+</div>
+
+<div className="intent-row">
+  <div className="meta">
+    <h4>Warning</h4>
+    <div className="swatch-row">
+      <span className="swatch" style={{background:'var(--nm-button-warning-default-bg)',borderColor:'var(--nm-button-warning-default-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-warning-hover-bg)',borderColor:'var(--nm-button-warning-hover-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-warning-active-bg)',borderColor:'var(--nm-button-warning-active-border)'}}></span>
+    </div>
+    <p className="use">Proceed-with-caution actions. The outcome is recoverable but deserves a second look — override, force-publish, dismiss warning.</p>
+  </div>
+  <div className="demos">
+    <div className="state-row"><span className="state-label">default</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--warning nm-button--md">Override checks</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--warning nm-button--md nm-button--ghost">Override checks</button></div></div>
+    <div className="state-row"><span className="state-label">hover</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--warning nm-button--md" data-state="hover">Override checks</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--warning nm-button--md nm-button--ghost" data-state="hover">Override checks</button></div></div>
+    <div className="state-row"><span className="state-label">active</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--warning nm-button--md" data-state="active">Override checks</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--warning nm-button--md nm-button--ghost" data-state="active">Override checks</button></div></div>
+  </div>
+</div>
+
+<div className="intent-row">
+  <div className="meta">
+    <h4>Info</h4>
+    <div className="swatch-row">
+      <span className="swatch" style={{background:'var(--nm-button-info-default-bg)',borderColor:'var(--nm-button-info-default-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-info-hover-bg)',borderColor:'var(--nm-button-info-hover-border)'}}></span>
+      <span className="swatch" style={{background:'var(--nm-button-info-active-bg)',borderColor:'var(--nm-button-info-active-border)'}}></span>
+    </div>
+    <p className="use">Informational, non-committal triggers inside an info panel or help surface — <code>Learn more</code>, <code>View details</code>.</p>
+  </div>
+  <div className="demos">
+    <div className="state-row"><span className="state-label">default</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--info nm-button--md">Learn more</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--info nm-button--md nm-button--ghost">Learn more</button></div></div>
+    <div className="state-row"><span className="state-label">hover</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--info nm-button--md" data-state="hover">Learn more</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--info nm-button--md nm-button--ghost" data-state="hover">Learn more</button></div></div>
+    <div className="state-row"><span className="state-label">active</span><div className="sample"><span className="style-tag">solid</span><button className="nm-button nm-button--info nm-button--md" data-state="active">Learn more</button></div><div className="sample"><span className="style-tag">ghost</span><button className="nm-button nm-button--info nm-button--md nm-button--ghost" data-state="active">Learn more</button></div></div>
+  </div>
+</div>
+
+</div>
+</section>
+
+<section className="block" id="styles">
+
+## Solid & ghost
+
+Every intent is available as **solid** (filled container with border) or **ghost** (transparent until hovered). Choose by hierarchy, not by taste.
+
+### Solid
+
+Filled buttons command attention. Use them for the action a user is expected to take — one primary on any given view, with secondaries alongside.
+
+<div className="example">
+  <button className="nm-button nm-button--primary nm-button--md">Save</button>
+  <button className="nm-button nm-button--secondary nm-button--md">Cancel</button>
+  <button className="nm-button nm-button--accent nm-button--md">Continue<Ic n="arrow-right" /></button>
+  <button className="nm-button nm-button--negative nm-button--md">Delete</button>
+</div>
+
+### Ghost
+
+Ghost buttons sit lighter on the canvas. Use them for tertiary actions, table-row actions, toolbar commands, and anywhere the filled chip would be visual noise.
+
+<div className="example">
+  <button className="nm-button nm-button--primary nm-button--md nm-button--ghost"><Ic n="share-2" />Share</button>
+  <button className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Skip</button>
+  <button className="nm-button nm-button--accent nm-button--md nm-button--ghost">Buy</button>
+  <button className="nm-button nm-button--negative nm-button--md nm-button--ghost"><Ic n="trash-2" />Delete</button>
+</div>
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+Five sizes, each defined by the `nm-button--{size}` modifier class. Match the size to the density of the surrounding UI, not to the importance of the action — importance is communicated by intent.
+
+<div className="scale-row"><span className="sz">xs</span><div><button className="nm-button nm-button--primary nm-button--xs"><Ic n="plus" />Add tag</button></div><div className="metric"><b>12px</b> · h <b>16px</b> · r <b>6</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><button className="nm-button nm-button--primary nm-button--sm"><Ic n="plus" />Add tag</button></div><div className="metric"><b>14px</b> · h <b>16px</b> · r <b>8</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div><button className="nm-button nm-button--primary nm-button--md"><Ic n="plus" />Add tag</button></div><div className="metric"><b>16px</b> · h <b>24px</b> · r <b>10</b></div></div>
+<div className="scale-row"><span className="sz">lg</span><div><button className="nm-button nm-button--primary nm-button--lg"><Ic n="plus" />Add tag</button></div><div className="metric"><b>20px</b> · h <b>24px</b> · r <b>12</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div><button className="nm-button nm-button--primary nm-button--xl"><Ic n="plus" />Add tag</button></div><div className="metric"><b>24px</b> · h <b>32px</b> · r <b>12</b></div></div>
+
+#### Choosing a size
+
+- `xs` — inline chips, table-cell actions, filter bars
+- `sm` — dense toolbars, compact dialogs
+- `md` — default for forms, cards, panel footers
+- `lg` — marketing hero, onboarding CTAs, empty states
+- `xl` — signing surfaces, fullscreen confirmations, touch-first kiosks
+
+</section>
+
+<section className="block" id="icons">
+
+## Icon variants
+
+A button can appear as label-only, label + leading icon, label + trailing icon, or icon-only. Icons clarify intent — they never replace clear language.
+
+<div className="example">
+  <button className="nm-button nm-button--primary nm-button--md">Label only</button>
+  <button className="nm-button nm-button--primary nm-button--md"><Ic n="download" />Leading icon</button>
+  <button className="nm-button nm-button--primary nm-button--md">Trailing icon<Ic n="arrow-right" /></button>
+  <button className="nm-button nm-button--primary nm-button--icon-only nm-button--md" aria-label="Settings"><Ic n="settings" /></button>
+</div>
+
+<p className="caption">Solid primary · md · four configurations</p>
+
+#### Leading icon
+
+Use when the icon adds concrete meaning to the label (`↓ Download`, `+ Add user`, `↻ Refresh`). The icon sits to the left of the label.
+
+#### Trailing icon
+
+Use when the icon indicates direction or state — `Continue →`, `Open menu ▾`, `External ↗`. Don't use trailing icons to decorate an already-clear verb.
+
+#### Icon-only
+
+Reserve for actions that are universally recognized (✕ close, ⋯ more, ◀ back) or that sit inside a dense bar where a label would break the layout. Icon-only buttons **must** have an `aria-label`.
+
+<div className="example">
+  <button className="nm-button nm-button--primary nm-button--icon-only nm-button--md nm-button--ghost" aria-label="Close"><Ic n="x" /></button>
+  <button className="nm-button nm-button--primary nm-button--icon-only nm-button--md nm-button--ghost" aria-label="More"><Ic n="more-horizontal" /></button>
+  <button className="nm-button nm-button--accent nm-button--icon-only nm-button--md" aria-label="Add"><Ic n="plus" /></button>
+  <button className="nm-button nm-button--negative nm-button--icon-only nm-button--md nm-button--ghost" aria-label="Delete"><Ic n="trash-2" /></button>
+  <button className="nm-button nm-button--primary nm-button--icon-only nm-button--md" aria-label="Settings"><Ic n="settings" /></button>
+</div>
+
+</section>
+
+<section className="block" id="states">
+
+## States
+
+Every button responds to four interaction states. Hover and active colors come pre-baked from the tokens — you never hand-pick them.
+
+<div className="example">
+  <button className="nm-button nm-button--primary nm-button--md">Default</button>
+  <button className="nm-button nm-button--primary nm-button--md" data-state="hover">Hover</button>
+  <button className="nm-button nm-button--primary nm-button--md" data-state="active">Active</button>
+  <button className="nm-button nm-button--primary nm-button--md" data-state="focus">Focus</button>
+</div>
+
+<p className="caption">Primary · md · four states</p>
+
+#### Focus
+
+Focus is rendered by a 2px `--theme-focus` outline, 2px offset from the button, that respects `:focus-visible`. Never suppress the focus ring. In dark theme the focus color shifts to a lighter blue for contrast — handled automatically by the theme layer.
+
+#### No disabled state
+
+Namirial buttons never ship a disabled appearance. A button that can be clicked but can't act is a dead end — users don't know what's wrong or how to fix it. Instead, keep the button enabled and let it trigger an inline error, field-level validation, or a toast that explains what needs to change.
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+All button tokens are remapped under `data-theme="light"` and `data-theme="dark"`. Contrast, hover directionality, and focus color are all handled for you — author buttons once, they adapt.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <button className="nm-button nm-button--primary nm-button--md">Primary</button>
+      <button className="nm-button nm-button--secondary nm-button--md">Secondary</button>
+      <button className="nm-button nm-button--accent nm-button--md">Accent</button>
+      <button className="nm-button nm-button--positive nm-button--md">Positive</button>
+      <button className="nm-button nm-button--negative nm-button--md">Negative</button>
+      <button className="nm-button nm-button--warning nm-button--md">Warning</button>
+      <button className="nm-button nm-button--info nm-button--md">Info</button>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <button className="nm-button nm-button--primary nm-button--md">Primary</button>
+      <button className="nm-button nm-button--secondary nm-button--md">Secondary</button>
+      <button className="nm-button nm-button--accent nm-button--md">Accent</button>
+      <button className="nm-button nm-button--positive nm-button--md">Positive</button>
+      <button className="nm-button nm-button--negative nm-button--md">Negative</button>
+      <button className="nm-button nm-button--warning nm-button--md">Warning</button>
+      <button className="nm-button nm-button--info nm-button--md">Info</button>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher. Toggle the page theme to see the rest of the documentation cascade.</p>
+
+</section>
+
+<section className="block" id="context">
+
+## Buttons in context
+
+How buttons compose with the rest of the system. These are layout recommendations, not rigid rules — adjust to your surface.
+
+### Dialog footer
+
+<div className="example" style={{justifyContent:'flex-end'}}>
+  <button className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button>
+  <button className="nm-button nm-button--primary nm-button--md">Sign & send</button>
+</div>
+
+<p className="caption">Primary action right-aligned, ghost secondary to its left. In destructive dialogs swap the primary for negative intent.</p>
+
+### Form page footer
+
+<div className="example" style={{justifyContent:'space-between'}}>
+  <button className="nm-button nm-button--primary nm-button--md nm-button--ghost"><Ic n="arrow-left" />Back</button>
+  <div style={{display:'flex',gap:'12px'}}>
+    <button className="nm-button nm-button--secondary nm-button--md">Save draft</button>
+    <button className="nm-button nm-button--primary nm-button--md">Continue<Ic n="arrow-right" /></button>
+  </div>
+</div>
+
+### Empty state
+
+<div className="example stacked" style={{alignItems:'center',justifyContent:'center',padding:'48px',textAlign:'center'}}>
+  <div style={{color:'var(--nm-foreground-muted)',fontSize:'14px'}}>No documents yet</div>
+  <div style={{fontSize:'20px',fontWeight:700,margin:'4px 0 12px'}}>Start your first signing workflow</div>
+  <div style={{display:'flex',gap:'12px',justifyContent:'center'}}>
+    <button className="nm-button nm-button--primary nm-button--lg"><Ic n="plus" />New document</button>
+    <button className="nm-button nm-button--secondary nm-button--lg nm-button--ghost">Import from template</button>
+  </div>
+</div>
+
+### Toolbar
+
+<div className="example tight" style={{justifyContent:'flex-start'}}>
+  <button className="nm-button nm-button--primary nm-button--sm nm-button--ghost" aria-label="Bold"><Ic n="bold" /></button>
+  <button className="nm-button nm-button--primary nm-button--sm nm-button--ghost" aria-label="Italic"><Ic n="italic" /></button>
+  <button className="nm-button nm-button--primary nm-button--sm nm-button--ghost" aria-label="Underline"><Ic n="underline" /></button>
+  <div style={{width:'1px',height:'20px',background:'var(--palette-neutral-100)',margin:'0 4px'}}></div>
+  <button className="nm-button nm-button--primary nm-button--sm nm-button--ghost"><Ic n="link" />Link</button>
+  <button className="nm-button nm-button--primary nm-button--sm nm-button--ghost"><Ic n="image" />Image</button>
+  <div style={{flex:1}}></div>
+  <button className="nm-button nm-button--primary nm-button--sm">Publish</button>
+</div>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+The subtle rules that keep button hierarchy legible at a glance.
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><button className="nm-button nm-button--secondary nm-button--md">Cancel</button><button className="nm-button nm-button--primary nm-button--md">Confirm</button></div><div className="desc">Use exactly one primary or accent button per view. Pair it with a secondary or ghost to balance the group.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><button className="nm-button nm-button--primary nm-button--md">Save</button><button className="nm-button nm-button--positive nm-button--md">Confirm</button><button className="nm-button nm-button--accent nm-button--md">Finish</button></div><div className="desc">Don't stack multiple loud intents side by side. Users won't know which action to take — the emphasis cancels itself out.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><button className="nm-button nm-button--accent nm-button--md">Start free trial</button></div><div className="desc">Write the action as a verb phrase. The label should complete the sentence "I want to…"</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><button className="nm-button nm-button--primary nm-button--md">Click here</button></div><div className="desc">"Click here", "Submit", and "OK" are vague. Name the outcome so the label is self-explanatory out of context.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><button className="nm-button nm-button--negative nm-button--md">Delete document</button></div><div className="desc">Use negative intent only for truly destructive actions, and spell out what's being destroyed.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><button className="nm-button nm-button--negative nm-button--md">Log out</button></div><div className="desc">Logging out isn't destructive — use primary or secondary. Save negative intent for irreversible actions.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><button className="nm-button nm-button--primary nm-button--md">Download<Ic n="download" /></button></div><div className="desc">Keep icons single-concept: one leading or one trailing.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><button className="nm-button nm-button--primary nm-button--md"><Ic n="download" />Download<Ic n="arrow-down" /></button></div><div className="desc">Don't stack redundant icons. One icon, chosen for meaning, beats two that repeat each other.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame" style={{flexDirection:'column',gap:'8px'}}><button className="nm-button nm-button--primary nm-button--md">Save changes</button><div style={{fontSize:'12px',color:'var(--nm-foreground-negative)',display:'flex',alignItems:'center',gap:'6px'}}><Ic n="alert-circle" />Enter a valid email before saving.</div></div><div className="desc">Keep the button <strong>enabled</strong>. When the user clicks, trigger inline validation — they learn the rule by trying.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><button className="nm-button nm-button--primary nm-button--md" style={{opacity:0.4,pointerEvents:'none'}}>Save changes</button></div><div className="desc">Don't use a disabled state. A greyed-out button tells users nothing about <em>why</em> they can't proceed.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><button className="nm-button nm-button--primary nm-button--icon-only nm-button--md nm-button--ghost" aria-label="Close"><Ic n="x" /></button></div><div className="desc">Icon-only buttons require an <code>aria-label</code>. Always pair with a tooltip on first hover.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><button className="nm-button nm-button--primary nm-button--icon-only nm-button--md nm-button--ghost"><Ic n="x" /></button></div><div className="desc">No aria-label — invisible to screen readers and unclear to sighted users on unfamiliar icons.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+Namirial buttons inherit from the native `<button>` element. The tokens handle contrast; you handle semantics and labeling.
+
+#### Semantics
+
+- Use `<button type="button">` by default. Use `type="submit"` only inside a `<form>` that should submit on Enter.
+- Never style an `<a>` as a button (or vice versa). A button does; a link navigates.
+
+#### Keyboard
+
+- Tab moves focus; Shift + Tab moves backwards.
+- Space and Enter both trigger the button.
+- Focus ring uses `:focus-visible`, so it appears on keyboard focus but not on mouse click — no override needed.
+
+#### Contrast
+
+- All seven intents, in both themes, meet WCAG 2.2 **AA** contrast for label-over-container at every state.
+- Focus ring contrast is ≥ 3:1 against both the button and the surrounding background.
+
+#### Labeling
+
+- Icon-only buttons require `aria-label`. Make the label describe the action, not the icon ("Close dialog", not "X icon").
+- Toggle buttons (e.g. Bold in a toolbar) require `aria-pressed`.
+- Buttons that open a menu require `aria-haspopup` and `aria-expanded`.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+Configure every axis at once. The code snippet updates as you go — copy it straight into your product.
+
+<ButtonSandbox />
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+Every button variant resolves to a handful of custom properties. When you need a one-off tweak, override these on a wrapper — never on the `.nm-button` rule itself.
+
+#### Per-intent color tokens
+
+| Token | Role |
+|-------|------|
+| `--nm-button-{intent}-default-bg` | Container fill at rest |
+| `--nm-button-{intent}-hover-bg` | Fill on hover |
+| `--nm-button-{intent}-active-bg` | Fill while pressed |
+| `--nm-button-{intent}-default-border` | Border at rest |
+| `--nm-button-{intent}-fg` | Label + icon color (solid) |
+| `--nm-button-ghost-{intent}-fg` | Label color, ghost style |
+
+<p className="caption"><code>{'{intent}'}</code> = primary · secondary · accent · positive · negative · warning · info</p>
+
+#### Per-size geometry values
+
+| Property | Role | xs | sm | md | lg | xl |
+|----------|------|----|----|----|----|----|
+| `height` | Button height | 24px | 32px | 40px | 48px | 56px |
+| `font-size` | Label size | 12px | 14px | 16px | 20px | 24px |
+| `padding-inline` | Horizontal padding | 8px | 12px | 16px | 24px | 24px |
+| `gap` | Icon/label gap | 8px | 8px | 12px | 12px | 16px |
+| `border-radius` | Corner radius | 6px | 8px | 10px | 12px | 12px |
+
+<p className="caption">Values are baked into <code>.nm-button--{'{'+'size}'}</code> modifier classes. No custom properties to override — use a different size class instead.</p>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+The component uses BEM modifier classes. Import `namirial-theme.css` and compose classes — no data attributes, no build step.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<button class="nm-button nm-button--accent nm-button--md">
+  Continue
+  <i class="icon-arrow-right"></i>
+</button>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-button--{intent}` | primary · secondary · accent · positive · negative · warning · info | `primary` |
+| `nm-button--{style}` | ghost (omit for solid) | solid |
+| `nm-button--{size}` | xs · sm · md · lg · xl | `md` |
+| `nm-button--icon-only` | square aspect ratio, no horizontal padding | — |
+
+</section>

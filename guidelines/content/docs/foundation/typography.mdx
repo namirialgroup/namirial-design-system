@@ -1,0 +1,171 @@
+---
+title: Typography
+description: Namirial's typographic system, built on Open Sans.
+---
+
+Our approach to the typographic system uses **Open Sans** as its web typeface. It has been chosen for its legibility, neutral tone and broad availability, helping create clear hierarchies and organize information that guides users through Namirial products and experiences.
+
+## Type tokens and sets
+
+Namirial manages typography through **type sets**: pre-set configurations of typographic elements such as font size, weight and leading (line-height), calibrated for use alongside Open Sans. Selecting the appropriate type style is determined by the layout or template structure, which may require different levels of hierarchy.
+
+### Productive and expressive type sets
+
+Type sets fall into two groups:
+
+- **Productive** styles — Heading and Paragraph. Primarily used within product spaces, where a more condensed treatment keeps users focused on tasks and supports the hierarchy of information.
+- **Expressive** styles — Display. Larger, more dramatic type for editorial and marketing design. Excellent for high-impact statements, but distracting if used inside product UI.
+
+Display and Heading share a tight **line-height of 130%**; Paragraph uses a more open **line-height of 150%** for comfortable reading. The standard base text size is **16px** (Paragraph M).
+
+#### Expressive — Display
+
+| Style | Size | Line-height | Weight | Typical use |
+| --- | --- | --- | --- | --- |
+| Display 1 | 96px | 130% | 700 | Hero / landing statements |
+| Display 2 | 88px | 130% | 700 | Major page openers |
+| Display 3 | 72px | 130% | 700 | Section heroes |
+| Display 4 | 56px | 130% | 700 | Large feature titles |
+
+<div style={{display: 'grid', gap: '0.5rem', padding: '1.25rem', border: '1px solid var(--palette-neutral-100)', borderRadius: '8px', overflow: 'hidden'}}>
+  <div style={{fontSize: '96px', lineHeight: 1.3, fontWeight: 700}}>Display 1</div>
+  <div style={{fontSize: '88px', lineHeight: 1.3, fontWeight: 700}}>Display 2</div>
+  <div style={{fontSize: '72px', lineHeight: 1.3, fontWeight: 700}}>Display 3</div>
+  <div style={{fontSize: '56px', lineHeight: 1.3, fontWeight: 700}}>Display 4</div>
+</div>
+
+#### Productive — Heading
+
+| Style | Size | Line-height | Weight | Typical use |
+| --- | --- | --- | --- | --- |
+| Heading 1 | 40px | 130% | 700 | Page title |
+| Heading 2 | 32px | 130% | 700 | Section title |
+| Heading 3 | 28px | 130% | 600 | Subsection title |
+| Heading 4 | 24px | 130% | 600 | Group title |
+| Heading 5 | 20px | 130% | 600 | Minor heading |
+| Heading 6 | 16px | 130% | 600 | Smallest heading / label |
+
+<div style={{display: 'grid', gap: '0.5rem', padding: '1.25rem', border: '1px solid var(--palette-neutral-100)', borderRadius: '8px'}}>
+  <div style={{fontSize: '40px', lineHeight: 1.3, fontWeight: 700}}>Heading 1</div>
+  <div style={{fontSize: '32px', lineHeight: 1.3, fontWeight: 700}}>Heading 2</div>
+  <div style={{fontSize: '28px', lineHeight: 1.3, fontWeight: 600}}>Heading 3</div>
+  <div style={{fontSize: '24px', lineHeight: 1.3, fontWeight: 600}}>Heading 4</div>
+  <div style={{fontSize: '20px', lineHeight: 1.3, fontWeight: 600}}>Heading 5</div>
+  <div style={{fontSize: '16px', lineHeight: 1.3, fontWeight: 600}}>Heading 6</div>
+</div>
+
+#### Productive — Paragraph
+
+| Style | Size | Line-height | Weight | Typical use |
+| --- | --- | --- | --- | --- |
+| Paragraph S | 13px | 150% | 400 | Captions, helper text, metadata |
+| Paragraph M | 16px | 150% | 400 | **Base body text** |
+| Paragraph L | 20px | 150% | 400 | Lead paragraphs |
+| Paragraph XL | 24px | 150% | 400 | Intro / emphasized body text |
+
+<div style={{display: 'grid', gap: '0.75rem', padding: '1.25rem', border: '1px solid var(--palette-neutral-100)', borderRadius: '8px'}}>
+  <p style={{fontSize: '13px', lineHeight: 1.5, margin: 0}}>Paragraph S — the quick brown fox jumps over the lazy dog.</p>
+  <p style={{fontSize: '16px', lineHeight: 1.5, margin: 0}}>Paragraph M (base) — the quick brown fox jumps over the lazy dog.</p>
+  <p style={{fontSize: '20px', lineHeight: 1.5, margin: 0}}>Paragraph L — the quick brown fox jumps over the lazy dog.</p>
+  <p style={{fontSize: '24px', lineHeight: 1.5, margin: 0}}>Paragraph XL — the quick brown fox jumps over the lazy dog.</p>
+</div>
+
+## Typeface
+
+Namirial uses different typefaces depending on the context: a distinctive face for the brand mark, and neutral, widely available faces for everything else.
+
+| Role | Typeface | Notes |
+| --- | --- | --- |
+| **Brand / Logo** | HelveticaNeue LTStd 85 Heavy | Chosen for its elegance combined with a high degree of neutrality and technicality, which reflects Namirial's company philosophy. **Requires a license.** |
+| **Print fallback** | Segoe UI | Used for print when no HelveticaNeue license is available. Free and available on any Windows system. |
+| **Web / Digital** | Open Sans | The working typeface for all digital products and web communication. |
+
+On the web, the base font family is **Open Sans**, an open-source humanist sans-serif, always paired with a system fallback stack:
+
+```css
+font-family: 'Open Sans', system-ui, sans-serif;
+```
+
+## Scale
+
+The type scale is the set of sizes available across the system. It is built on a **16px base** and spans from compact reading sizes up to large display sizes.
+
+<div style={{display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'baseline', padding: '1.25rem', border: '1px solid var(--palette-neutral-100)', borderRadius: '8px'}}>
+  <span style={{fontSize: '13px'}}>13</span>
+  <span style={{fontSize: '16px'}}>16</span>
+  <span style={{fontSize: '20px'}}>20</span>
+  <span style={{fontSize: '24px'}}>24</span>
+  <span style={{fontSize: '28px'}}>28</span>
+  <span style={{fontSize: '32px'}}>32</span>
+  <span style={{fontSize: '40px'}}>40</span>
+  <span style={{fontSize: '56px'}}>56</span>
+  <span style={{fontSize: '72px'}}>72</span>
+  <span style={{fontSize: '88px'}}>88</span>
+  <span style={{fontSize: '96px'}}>96</span>
+</div>
+
+| px | Used by |
+| --- | --- |
+| 13 | Paragraph S |
+| 16 | Paragraph M (base), Heading 6 |
+| 20 | Paragraph L, Heading 5 |
+| 24 | Paragraph XL, Heading 4 |
+| 28 | Heading 3 |
+| 32 | Heading 2 |
+| 40 | Heading 1 |
+| 56 | Display 4 |
+| 72 | Display 3 |
+| 88 | Display 2 |
+| 96 | Display 1 |
+
+## Style
+
+Font weight adds emphasis and differentiates content hierarchy. Weight and size pairings must be balanced: a bold weight always carries more emphasis than a lighter weight at the same size, but a larger light-weight size can still rank higher than a smaller bold one.
+
+Namirial uses a focused subset of Open Sans weights for digital experiences:
+
+| Weight | Value | Usage |
+| --- | --- | --- |
+| Bold | 700 | Display and primary headings |
+| Semibold | 600 | Smaller headings, labels, emphasis |
+| Regular | 400 | Body text and paragraphs |
+
+Semibold is ideal for section headers but should not be used for long text.
+
+## Type color
+
+Type color should be chosen with legibility and accessibility as paramount concerns.
+
+- Keep type color **neutral** in running text (the foreground/neutral tokens from the [Color System](color-system)).
+- Use the **brand accent** color for primary actions and text links.
+- Reserve semantic colors (info, positive, warning, negative) for messages, alerts and status text.
+
+## Using typography in Namirial communication
+
+### Text alignment
+
+Alignment should support readability first and be used expressively only when it adds meaning.
+
+- **Left alignment — default.** Use it for body copy, lists and the vast majority of interface text. It is the easiest to scan and read.
+- **Center alignment — selective.** Reserve it for titles and short lead paragraphs, where the line count is low and the content is meant to feel balanced.
+- **Right alignment — emphasis only.** Use it sparingly to emphasize content, such as block quotes or a claim placed over a photo. Avoid it for running text.
+
+<div style={{display: 'grid', gap: '0.75rem', padding: '1.25rem', border: '1px solid var(--palette-neutral-100)', borderRadius: '8px'}}>
+  <div style={{textAlign: 'left'}}><strong>Left</strong> — default for body copy and UI text.</div>
+  <div style={{textAlign: 'center'}}><strong>Center</strong> — titles and short lead paragraphs.</div>
+  <div style={{textAlign: 'right'}}><strong>Right</strong> — emphasis only (quotes, claims over photos).</div>
+</div>
+
+### Text on images
+
+Headlines, sublines and text should remain readable on **every** background. Achieve this through:
+
+- **High contrast** between text and the background image.
+- **Good text sizing**, so copy stays legible at the intended viewing distance.
+- **Enough whitespace** to let the image breathe — text should not overlay the main subject of the image.
+- **A focused tone of voice** — keep text short and punchy, leaning on keywords.
+
+## Resources
+
+- [Open Sans on Google Fonts](https://fonts.google.com/specimen/Open+Sans)
+- [Color System](color-system)

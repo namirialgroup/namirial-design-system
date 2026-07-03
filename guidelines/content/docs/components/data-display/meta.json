@@ -1,0 +1,13 @@
+{
+  "title": "Data display & Filters",
+  "pages": [
+    "list",
+    "table",
+    "filters",
+    "collapse",
+    "tree-view",
+    "tag",
+    "badge",
+    "avatar"
+  ]
+}

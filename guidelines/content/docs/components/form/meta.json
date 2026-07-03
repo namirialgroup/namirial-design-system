@@ -1,0 +1,14 @@
+{
+  "title": "Form",
+  "pages": [
+    "input",
+    "select",
+    "search",
+    "code",
+    "upload",
+    "textarea",
+    "radio",
+    "checkbox",
+    "toggle"
+  ]
+}
