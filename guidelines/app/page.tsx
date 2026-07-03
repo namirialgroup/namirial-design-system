@@ -1,1 +1,0 @@
-// This file has been removed - home page is now handled by (home)/page.tsx
