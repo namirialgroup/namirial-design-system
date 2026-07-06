@@ -12,3 +12,38 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+#nd-page, #nd-toc {
+  padding-top: calc(var(--spacing) * 16);
+}
+
+:root {
+  --fd-nav-height: 56px; /* Set the actual height of your navbar if it differs. */
+}
+
+/* Force the documentation layout to drop below the home page's global bar. */
+.fd-docs-layout {
+  padding-top: var(--fd-nav-height);
+}
+
+/* Optional: If you want the mobile sidebar button to remain accessible */
+.fd-sidebar-toggle {
+  top: calc(var(--fd-nav-height) + 16px) !important;
+}
+
+#nd-subnav {
+  display: none !important;
+}
+
+@media (max-width: 48rem) {
+  header#nd-nav {
+    display: none !important;
+  }
+  #nd-subnav {
+    display: flex !important;
+    z-index: 9999;
+  }
+  aside#nd-sidebar-mobile.max-w-\[380px\] {
+    min-width: 100% !important;
+  }
+}

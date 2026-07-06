@@ -13,7 +13,7 @@
   --color-fd-popover-foreground: var(--palette-surface-950);
   --color-fd-card: var(--palette-surface-50);
   --color-fd-card-foreground: var(--palette-surface-950);
-  --color-fd-border: var(--palette-surface-200);
+  --color-fd-border: var(--palette-neutral-100);
   --color-fd-primary: var(--palette-neutral-800);
   --color-fd-primary-foreground: var(--palette-surface-50);
   --color-fd-secondary: var(--palette-neutral-50);
