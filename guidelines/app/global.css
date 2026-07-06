@@ -21,6 +21,10 @@ html > body[data-scroll-locked] {
   --fd-nav-height: 56px; /* Set the actual height of your navbar if it differs. */
 }
 
+#nd-notebook-layout.min-h-\(--fd-docs-height\) {
+  min-height: calc(var(--fd-docs-height) - var(--fd-nav-height)) !important;
+}
+
 /* Force the documentation layout to drop below the home page's global bar. */
 .fd-docs-layout {
   padding-top: var(--fd-nav-height);
