@@ -19,12 +19,14 @@ html.light #nd-home-layout main {
   background-size: cover !important;
 }
 
+/* Le variabili --home-bg-* sono iniettate su <main> in app/(home)/page.tsx,
+   così includono il basePath (che Next non applica agli url() nel CSS). */
 html.light #nd-home-layout main.with-bg {
-  background-image: url('/img/background-light.svg') !important;
+  background-image: var(--home-bg-light) !important;
 }
 
 html.dark #nd-home-layout main.with-bg {
-  background-image: url('/img/background-dark.svg') !important;
+  background-image: var(--home-bg-dark) !important;
 }
 
 #nd-page, #nd-toc {

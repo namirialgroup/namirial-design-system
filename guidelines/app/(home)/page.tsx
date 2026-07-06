@@ -1,4 +1,14 @@
 import Link from 'next/link';
+import type { CSSProperties } from 'react';
+
+// In CI viene valorizzato da GitHub Pages (es. "/namirial-design-system"); in locale resta "".
+// Il basePath NON viene applicato da Next agli url() nei CSS, quindi lo iniettiamo come
+// CSS variable sul <main> e lo referenziamo con var(...) in global.css.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+const bgVars = {
+  '--home-bg-light': `url(${basePath}/img/background-light.svg)`,
+  '--home-bg-dark': `url(${basePath}/img/background-dark.svg)`,
+} as CSSProperties;
 
 const sections = [
   {
@@ -25,7 +35,10 @@ const sections = [
 
 export default function HomePage() {
   return (
-    <main className="with-bg flex flex-1 flex-col items-center px-4 py-24 text-center">
+    <main
+      className="with-bg flex flex-1 flex-col items-center px-4 py-24 text-center"
+      style={bgVars}
+    >
       <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-fd-primary">
         Namirial
       </p>
