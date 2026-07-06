@@ -25,7 +25,7 @@ const sections = [
 
 export default function HomePage() {
   return (
-    <main className="flex flex-1 flex-col items-center px-4 py-24 text-center">
+    <main className="with-bg flex flex-1 flex-col items-center px-4 py-24 text-center">
       <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-fd-primary">
         Namirial
       </p>

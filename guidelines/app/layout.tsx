@@ -10,7 +10,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={openSans.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
-        <RootProvider>
+        <RootProvider search={{ options: { type: 'static' } }}>
           {children}
         </RootProvider>
       </body>
