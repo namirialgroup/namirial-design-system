@@ -1,8 +1,210 @@
 ---
-title: Shadow Status
-description: Coming soon.
+title: Shadow & Status
+description: Shadow tokens and related state treatments used to express depth, interaction, and status.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+<style>{`
+.nm-swatch-bg { background: var(--palette-surface-50); }
+.dark .nm-swatch-bg, [data-theme=dark] .nm-swatch-bg { background: var(--palette-surface-950); }
+.nm-swatch-border { border: 1px solid var(--palette-neutral-600); }
+.dark .nm-swatch-border, [data-theme=dark] .nm-swatch-border { border-color: var(--palette-neutral-200); }
+.nm-ring-focus { outline: 2px solid var(--palette-focus-700); outline-offset: 2px; }
+.dark .nm-ring-focus, [data-theme=dark] .nm-ring-focus { outline-color: var(--palette-focus-300); }
+.nm-ring-active { outline: 2px solid var(--palette-active-600); }
+.dark .nm-ring-active, [data-theme=dark] .nm-ring-active { outline-color: var(--palette-active-200); }
+`}</style>
+
+Shadows and status treatments work together to communicate **depth** (what's floating above what) and **state** (what's happening right now — hover, focus, success, error). Used consistently, they let people read an interface without having to think about it.
+
+## Elevation (shadow)
+
+Shadows describe how far an element sits above the surface behind it. We use a small, deliberate set of elevations rather than arbitrary blur/spread values, so depth stays predictable across the product. Always build shadows from tokens, never from raw `rgba()`/pixel values. The shadow color gets more opaque in dark mode — the same low-opacity value used in light mode would be invisible against a dark page, since the shadow is cast onto whatever sits *behind* the element, not onto the element itself.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '110px', height: '72px', borderRadius: '8px', boxShadow: '4px 4px 16px 0px var(--palette-surface-900-1)'}} />
+        <code style={{fontSize: '12px'}}>layout-shadow</code>
+      </div>
+      <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '110px', height: '72px', borderRadius: '8px', boxShadow: '0px 4px 16px 0px var(--palette-surface-900-1)'}} />
+        <code style={{fontSize: '12px'}}>first-floor-shadow</code>
+      </div>
+      <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '110px', height: '72px', borderRadius: '8px', boxShadow: '0px 2px 24px 0px var(--palette-surface-900-1)'}} />
+        <code style={{fontSize: '12px'}}>second-floor-shadow</code>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '110px', height: '72px', borderRadius: '8px', boxShadow: '4px 4px 16px 0px var(--palette-surface-1000-1)'}} />
+        <code style={{fontSize: '12px'}}>layout-shadow</code>
+      </div>
+      <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '110px', height: '72px', borderRadius: '8px', boxShadow: '0px 4px 16px 0px var(--palette-surface-1000-1)'}} />
+        <code style={{fontSize: '12px'}}>first-floor-shadow</code>
+      </div>
+      <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '110px', height: '72px', borderRadius: '8px', boxShadow: '0px 2px 24px 0px var(--palette-surface-1000-1)'}} />
+        <code style={{fontSize: '12px'}}>second-floor-shadow</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+| Token | Light | Dark | Use for |
+|-------|-------|------|---------|
+| `layout-shadow` | `4px 4px 16px 0px var(--palette-surface-900-1)` | `4px 4px 16px 0px var(--palette-surface-1000-1)` | Directional layout panels (e.g. side panels) that are pinned to an edge. |
+| `first-floor-shadow` | `0px 4px 16px 0px var(--palette-surface-900-1)` | `0px 4px 16px 0px var(--palette-surface-1000-1)` | Elements that sit one level above the page: cards, menus, popovers. |
+| `second-floor-shadow` | `0px 2px 24px 0px var(--palette-surface-900-1)` | `0px 2px 24px 0px var(--palette-surface-1000-1)` | Elements that float above other floating elements: modals, dialogs, dropdowns opened from a popover. |
+
+### Guidelines
+
+- Use only one elevation level at a time per surface — don't stack multiple shadow tokens on the same element.
+- Prefer `first-floor-shadow` as the default for anything that overlays page content; reserve `second-floor-shadow` for the small number of cases where something floats above another floating surface.
+- Shadows always use the same neutral color pair (`--palette-surface-900-1` light / `--palette-surface-1000-1` dark, matching `--nm-dropdown-shadow`) — don't tint shadows with brand or status colors, and don't reuse the light value in dark mode or the shadow will be invisible against a dark page.
+- Shadow communicates hierarchy, not decoration. If an element doesn't need to be perceived as "above" something else, it doesn't need a shadow.
+
+## Interaction rings
+
+Two tokens express interaction state as an **outline** — not a border, not a drop shadow. An outline sits outside the element's box without affecting its size, and it's a different CSS property than `border`, so it never conflicts with a status border on the same element (see below). Both tokens are 2px and swap palette step between light and dark mode:
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg nm-swatch-border nm-ring-focus" style={{width: '150px', height: '44px', borderRadius: '8px'}} />
+        <code style={{fontSize: '12px'}}>focus</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg nm-swatch-border nm-ring-active" style={{width: '150px', height: '44px', borderRadius: '8px'}} />
+        <code style={{fontSize: '12px'}}>active</code>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg nm-swatch-border nm-ring-focus" style={{width: '150px', height: '44px', borderRadius: '8px'}} />
+        <code style={{fontSize: '12px'}}>focus</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg nm-swatch-border nm-ring-active" style={{width: '150px', height: '44px', borderRadius: '8px'}} />
+        <code style={{fontSize: '12px'}}>active</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+| Token | Light | Dark | Offset | Meaning |
+|-------|-------|------|--------|---------|
+| `focus` | `outline: 2px solid var(--palette-focus-700)` | `outline: 2px solid var(--palette-focus-300)` | `2px` | Keyboard focus. The offset keeps the ring clear of the element's own border. |
+| `active` | `outline: 2px solid var(--palette-active-600)` | `outline: 2px solid var(--palette-active-200)` | none | Pressed / active state, or the selected state of an input. Sits flush against the element. |
+
+### Guidelines
+
+- `focus` must always be visible for keyboard navigation — never remove it without providing an equivalent replacement (accessibility requirement, not a style preference).
+- Don't combine `focus` and `active` on the same element at the same time; treat them as mutually exclusive interaction states.
+- These are applied as `outline`, not `border` or `box-shadow`, so they don't shift layout when the state changes.
+- The gap created by `outline-offset` on `focus` is transparent — it reveals whatever sits behind the element, it's not a painted white layer. Don't reimplement it as a second `box-shadow` with a hardcoded white color; that would look wrong on dark or colored backgrounds.
+
+## Feedback Status
+
+Status is expressed as a **border**, not an outline or a fill — it's part of the element's own box, colored to signal its state (valid, informational, needs attention, invalid) without changing the background. Because it's a `border` and interaction rings are an `outline`, the two are independent properties and can be shown together on the same element — e.g. an invalid field keeps its `negative` border even while it also shows the `focus` outline. Status colors are constant across light and dark mode. It follows standard conventions: **green for success, blue for info, orange/amber for warning, red for error**. For the underlying color values, see [Color System](/docs/foundation/color-system#accessibility-of-colors); this section is about how those colors get applied as state.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-positive-600)'}} />
+        <code style={{fontSize: '12px'}}>positive</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-info-600)'}} />
+        <code style={{fontSize: '12px'}}>info</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-warning-600)'}} />
+        <code style={{fontSize: '12px'}}>warning</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-negative-600)'}} />
+        <code style={{fontSize: '12px'}}>negative</code>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-positive-600)'}} />
+        <code style={{fontSize: '12px'}}>positive</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-info-600)'}} />
+        <code style={{fontSize: '12px'}}>info</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-warning-600)'}} />
+        <code style={{fontSize: '12px'}}>warning</code>
+      </div>
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg" style={{width: '140px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-negative-600)'}} />
+        <code style={{fontSize: '12px'}}>negative</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+Status border combined with the `focus` interaction ring on the same element — the two don't conflict:
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg nm-ring-focus" style={{width: '150px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-negative-600)'}} />
+        <code style={{fontSize: '12px'}}>negative + focus</code>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div style={{display: 'grid', gap: '16px', justifyItems: 'center'}}>
+        <div className="nm-swatch-bg nm-ring-focus" style={{width: '150px', height: '44px', borderRadius: '8px', border: '1px solid var(--palette-negative-600)'}} />
+        <code style={{fontSize: '12px'}}>negative + focus</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+| Border | Represents | Typical usage |
+|--------|-----------|----------------|
+| `positive` | Success, completion, confirmation | Valid field state, completed step |
+| `info` | Neutral information, help, in-progress | Informational field state, "in progress" state |
+| `warning` | Caution, needs attention but not blocking | Field needing review, unsaved-changes indicator |
+| `negative` | Error, destructive action, failure | Invalid field state, failed step |
+
+### Guidelines
+
+- Never rely on color alone to convey status — pair the border with an icon or text label so the meaning holds for color-blind users.
+- Use the same status color consistently across an entire flow (e.g. don't pair a `negative` icon with a `warning` border for the same field).
+- A status border and an interaction ring can and should coexist when both are true at once (e.g. a focused, invalid field) — they're different CSS properties by design.
+- Status borders follow the same contrast requirements as the rest of the palette: at least 3:1 against the adjacent background, since a border is a UI component boundary, not text (WCAG 2.1 — 1.4.11).

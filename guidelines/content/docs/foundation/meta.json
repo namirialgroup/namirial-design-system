@@ -5,9 +5,11 @@
     "index",
     "color-system",
     "typography",
+    "voice-tone",
     "radius",
     "shadow-status",
     "visuals",
-    "icons"
+    "icons",
+    "using-images"
   ]
 }
