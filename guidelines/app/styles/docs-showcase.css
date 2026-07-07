@@ -141,3 +141,17 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .nm-button--ghost.nm-button--warning[data-state="active"]   { background-color:var(--nm-button-warning-active-bg);   border-color:var(--nm-button-warning-active-border);   color:var(--nm-button-warning-fg); }
 .nm-button--ghost.nm-button--info[data-state="active"]      { background-color:var(--nm-button-info-active-bg);      border-color:var(--nm-button-info-active-border);      color:var(--nm-button-info-fg); }
 .nm-button[data-state="focus"] { outline:2px solid var(--palette-focus-700); outline-offset:2px; }
+.nm-checkbox[data-state="hover"] { pointer-events:none; background-color:var(--nm-checkbox-hover-bg); border-color:var(--nm-checkbox-hover-border); }
+.nm-checkbox:checked[data-state="hover"], .nm-checkbox:indeterminate[data-state="hover"] { background-color:var(--nm-checkbox-checked-hover-bg); border-color:var(--nm-checkbox-checked-hover-bg); }
+.nm-checkbox:checked[data-state="hover"]::after, .nm-checkbox:indeterminate[data-state="hover"]::after { background-color:var(--nm-checkbox-checked-hover-icon); }
+.nm-checkbox[data-state="focus"] { outline:2px solid var(--palette-focus-700); outline-offset:2px; }
+.nm-radio[data-state="hover"] { pointer-events:none; background-color:var(--nm-radio-hover-bg); border-color:var(--nm-radio-hover-border); }
+.nm-radio:checked[data-state="hover"]::after { background-color:var(--nm-radio-checked-hover-bullet); }
+.nm-radio[data-state="focus"] { outline:2px solid var(--palette-focus-700); outline-offset:2px; }
+.nm-switch[data-state="hover"] { pointer-events:none; background-color:var(--nm-switch-track-hover-bg); box-shadow:inset 0 0 0 1px var(--nm-switch-track-hover-border); }
+.nm-switch[data-state="hover"] .nm-switch__thumb { background-color:var(--nm-switch-thumb-hover-bg); }
+.nm-switch[data-state="hover"] .nm-switch__thumb::after { background-color:var(--nm-switch-thumb-hover-icon); }
+.nm-switch:has(.nm-switch__input:checked)[data-state="hover"] { background-color:var(--nm-switch-track-checked-hover-bg); box-shadow:inset 0 0 0 1px var(--nm-switch-track-checked-hover-bg); }
+.nm-switch:has(.nm-switch__input:checked)[data-state="hover"] .nm-switch__thumb { background-color:var(--nm-switch-thumb-checked-hover-bg); }
+.nm-switch:has(.nm-switch__input:checked)[data-state="hover"] .nm-switch__thumb::after { background-color:var(--nm-switch-thumb-checked-hover-icon); }
+.nm-switch[data-state="focus"] { outline:2px solid var(--palette-focus-700); outline-offset:2px; }

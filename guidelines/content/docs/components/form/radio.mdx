@@ -1,8 +1,261 @@
 ---
 title: Radio
-description: Coming soon.
+description: Radios let a user pick exactly one option from a small, visible set.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { RadioSandbox } from '@/components/nm/radio-sandbox';
+
+<p className="eyebrow">Components · Form</p>
+
+<p className="lede">A radio represents one option in a mutually exclusive set — selecting one always deselects the others sharing its <code>name</code>. Namirial radios are built from <code>--nm-radio-*</code> tokens defined in <code>namirial-theme.css</code>, ship at a single fixed size, and pair with the same <code>.nm-choice-field</code> label wrapper used by checkbox and switch.</p>
+
+<div className="hero-stage">
+  <label className="nm-choice-field"><input type="radio" name="hero" className="nm-radio" /><span className="nm-choice-field__label">Monthly</span></label>
+  <label className="nm-choice-field"><input type="radio" name="hero" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Annual</span></label>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A radio group forces a single choice among a small, fully-visible set of options. Unlike a checkbox, clicking a radio never toggles it off — it only becomes unselected when a sibling in the same group is selected. There is no mixed state: exactly one radio in a group is checked once a default has been set.
+
+### When to use
+
+- Exactly one choice from 2–5 mutually exclusive, always-visible options (`Monthly` / `Annual`, `Small` / `Medium` / `Large`)
+- When you want every option visible at once, so the user can compare them before choosing
+
+### When not to use
+
+- More than ~5 options — use a **select** instead so the list doesn't dominate the page.
+- Multiple options can be true at once — use **checkboxes**.
+- A compact, icon-forward mode switch with 2–4 options — a **segmented control** reads faster.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A radio is a single `<input type="radio">` styled with `appearance: none`. The selected state is a solid inner circle scaled in from `0` to `1` — there's no icon mask involved, unlike checkbox's checkmark.
+
+<div className="anatomy" aria-hidden="true">
+  <label className="nm-choice-field giant" style={{pointerEvents:'none'}}>
+    <input type="radio" name="anatomy" className="nm-radio" defaultChecked />
+    <span className="nm-choice-field__label">Annual billing</span>
+  </label>
+  <div className="labelpoint" style={{top:'30px',left:'40px'}}>1 · <b>Container</b></div>
+  <div className="dot" style={{top:'70px',left:'110px'}}></div>
+  <div className="labelpoint" style={{top:'30px',right:'200px'}}>2 · <b>Border</b></div>
+  <div className="dot" style={{top:'55px',right:'220px'}}></div>
+  <div className="labelpoint" style={{bottom:'60px',left:'70px'}}>3 · <b>Bullet</b></div>
+  <div className="dot" style={{bottom:'90px',left:'110px'}}></div>
+  <div className="labelpoint" style={{bottom:'30px',right:'80px'}}>4 · <b>Label</b></div>
+  <div className="dot" style={{bottom:'55px',right:'160px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill, unchecked | `--nm-radio-bg` |
+| Border | Color, unchecked | `--nm-radio-border` |
+| Border | Color, checked | `--nm-radio-checked-border` |
+| Bullet | Fill | `--nm-radio-checked-bullet` |
+| Bullet | Size | 16px, centered in a 24px container |
+| Container | Size / radius | 24×24px, `border-radius: 999px` (fixed — no size modifiers) |
+| Label | Typography | `.nm-choice-field__label` — 16px / 400 / Open Sans |
+| Focus ring | Color | `--palette-focus-700` (light) / `--palette-focus-300` (dark), 2px outline, 2px offset |
+
+</section>
+
+<section className="block" id="selection">
+
+## Selection
+
+A radio has only two states — there's no mixed/indeterminate state, since a radio group always resolves to exactly one selection (or none, before a default is chosen).
+
+<div className="scale-row"><span className="sz">off</span><div><input type="radio" name="selection-demo-1" className="nm-radio" /></div><div className="metric">unselected</div></div>
+<div className="scale-row"><span className="sz">on</span><div><input type="radio" name="selection-demo-2" className="nm-radio" defaultChecked /></div><div className="metric">selected</div></div>
+
+<p className="caption">Radio is fixed at 24×24px — there is no <code>--sm</code> modifier like checkbox has.</p>
+
+</section>
+
+<section className="block" id="states">
+
+## Interaction states
+
+<div className="example">
+  <input type="radio" name="states-demo" className="nm-radio" defaultChecked />
+  <input type="radio" name="states-demo-2" className="nm-radio" defaultChecked data-state="hover" />
+  <input type="radio" name="states-demo-3" className="nm-radio is-readonly" defaultChecked readOnly tabIndex={-1} aria-readonly="true" />
+  <input type="radio" name="states-demo-4" className="nm-radio" defaultChecked data-state="focus" />
+</div>
+
+<p className="caption">Checked · default → hover → read-only → focus</p>
+
+#### No disabled state
+
+Radios never ship the native "greyed out" disabled look. If an option is off the table for now, use **read-only** so its selection state stays legible and its value still submits with the form.
+
+#### Read-only implementation
+
+`readonly` has no native effect on `<input type="radio">`. Pair `.is-readonly` with `tabindex="-1"` and `aria-readonly="true"` — the class handles the visual, `pointer-events: none` blocks clicks, and removing it from the tab order blocks keyboard activation:
+
+```html
+<input type="radio" name="plan" class="nm-radio is-readonly" checked readonly tabindex="-1" aria-readonly="true">
+```
+
+</section>
+
+<section className="block" id="field">
+
+## Radio groups
+
+Radios only behave as a mutually-exclusive set when they share the same `name`. Wrap the group in a `<fieldset>` with a `<legend>` so assistive tech announces what's being chosen.
+
+<div className="example stacked">
+  <fieldset style={{border:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:'12px'}}>
+    <legend style={{fontSize:'13px',fontWeight:600,marginBottom:'4px',padding:0}}>Billing period</legend>
+    <label className="nm-choice-field"><input type="radio" name="billing" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Monthly</span></label>
+    <label className="nm-choice-field"><input type="radio" name="billing" className="nm-radio" /><span className="nm-choice-field__label">Annual <span className="nm-choice-field__optional">(save 20%)</span></span></label>
+  </fieldset>
+</div>
+
+Once one radio in a `name` group is focused, arrow keys move selection between siblings — this roving behavior is native to `<input type="radio">` and needs no JavaScript.
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <label className="nm-choice-field"><input type="radio" name="light-demo" className="nm-radio" /><span className="nm-choice-field__label">Monthly</span></label>
+      <label className="nm-choice-field"><input type="radio" name="light-demo" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Annual</span></label>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <label className="nm-choice-field"><input type="radio" name="dark-demo" className="nm-radio" /><span className="nm-choice-field__label">Monthly</span></label>
+      <label className="nm-choice-field"><input type="radio" name="dark-demo" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Annual</span></label>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame" style={{flexDirection:'column',gap:'8px'}}><label className="nm-choice-field"><input type="radio" name="dodont-1" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Card</span></label><label className="nm-choice-field"><input type="radio" name="dodont-1" className="nm-radio" /><span className="nm-choice-field__label">Bank transfer</span></label></div><div className="desc">Use radios when exactly one option applies and all options should stay visible.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{flexDirection:'column',gap:'8px'}}><label className="nm-choice-field"><input type="radio" name="dodont-2" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Email notifications</span></label><label className="nm-choice-field"><input type="radio" name="dodont-3" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">SMS notifications</span></label></div><div className="desc">Don't give each radio its own <code>name</code> when they're meant to be a group — they'll both stay selectable at once.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><input type="radio" name="dodont-4" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Standard shipping</span></label></div><div className="desc">Pre-select a sensible default so a choice is never ambiguously "none."</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><label className="nm-choice-field"><input type="radio" name="dodont-5" className="nm-radio" /><span className="nm-choice-field__label">Standard shipping</span></label></div><div className="desc">Don't leave a required single-choice group unselected by default — the user has to notice and act before they can even see a preview of their choice.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Give every radio in a group the same `name` — this is what makes them mutually exclusive and is what screen readers rely on to report "2 of 4," etc.
+- Wrap the group in `<fieldset>` + `<legend>`, naming the question being answered ("Billing period," not "Options").
+
+#### Keyboard
+
+- Tab moves to the group once, landing on the checked radio (or the first, if none is checked yet).
+- Arrow keys move selection between radios in the same group — native browser behavior, no JavaScript required.
+- Focus uses `:focus-visible`, so the ring appears on keyboard focus but not on mouse click.
+
+#### Read-only
+
+- Native `readonly` has no effect on radios. Pair `.is-readonly` with `tabindex="-1"` and `aria-readonly="true"` so it's fully inert while its value still submits with the form.
+
+#### Labeling
+
+- Never rely on color alone — the filled bullet is the primary signal, but make sure the label text also makes the selected option obvious out of context.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+<RadioSandbox />
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-radio-bg</td><td>Container fill, unchecked</td></tr>
+<tr><td className="tok">--nm-radio-border</td><td>Border, unchecked</td></tr>
+<tr><td className="tok">--nm-radio-checked-border</td><td>Border, checked</td></tr>
+<tr><td className="tok">--nm-radio-checked-bullet</td><td>Inner bullet fill, checked</td></tr>
+<tr><td className="tok">--nm-radio-hover-bg</td><td>Fill on hover</td></tr>
+<tr><td className="tok">--nm-radio-hover-border</td><td>Border on hover</td></tr>
+<tr><td className="tok">--nm-radio-checked-hover-bullet</td><td>Bullet fill on hover, checked</td></tr>
+<tr><td className="tok">--nm-radio-readonly-bg</td><td>Fill, read-only</td></tr>
+<tr><td className="tok">--nm-radio-readonly-border</td><td>Border, read-only</td></tr>
+<tr><td className="tok">--nm-radio-readonly-bullet</td><td>Bullet fill, read-only + checked</td></tr>
+<tr><td className="tok">--nm-choice-field-label-fg</td><td>Label text color</td></tr>
+<tr><td className="tok">--nm-choice-field-required</td><td>Required mark color</td></tr>
+<tr><td className="tok">--nm-choice-field-optional</td><td>Optional mark color</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+No JavaScript component is required — a radio group is a set of native `<input>` elements sharing a `name`, styled by CSS classes.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<fieldset>
+  <legend>Billing period</legend>
+  <label class="nm-choice-field">
+    <input type="radio" name="billing" class="nm-radio" checked>
+    <span class="nm-choice-field__label">Monthly</span>
+  </label>
+  <label class="nm-choice-field">
+    <input type="radio" name="billing" class="nm-radio">
+    <span class="nm-choice-field__label">Annual</span>
+  </label>
+</fieldset>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-radio` | Base class — fixed 24×24px, no size modifiers | — |
+| `:checked` | Selection = on | unchecked |
+| `[readonly]` / `.is-readonly` | Read-only — pair with `tabindex="-1"` | — |
+| `nm-choice-field__required` | Marks a field as required | — |
+| `nm-choice-field__optional` | Marks a field as optional | — |
+
+</section>

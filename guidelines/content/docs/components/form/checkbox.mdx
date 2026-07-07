@@ -1,8 +1,315 @@
 ---
 title: Checkbox
-description: Coming soon.
+description: Checkboxes capture an independent on/off setting, or a partially-selected group.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { CheckboxSandbox } from '@/components/nm/checkbox-sandbox';
+import { IndeterminateCheckbox } from '@/components/nm/indeterminate-checkbox';
+
+<p className="eyebrow">Components · Form</p>
+
+<p className="lede">A checkbox represents a single, independent binary setting — on or off — and can additionally represent a <strong>mixed</strong> state when it summarizes a partially-selected group. Namirial checkboxes are built from <code>--nm-checkbox-*</code> tokens defined in <code>namirial-theme.css</code>, ship in two sizes, and pair with the shared <code>.nm-choice-field</code> label wrapper used by radio and switch.</p>
+
+<div className="hero-stage">
+  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Unselected</span></label>
+  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Selected</span></label>
+  <label className="nm-choice-field"><IndeterminateCheckbox /><span className="nm-choice-field__label">Mixed</span></label>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A checkbox lets a user opt in or out of one thing at a time. Each checkbox in a list is independent — checking one never unchecks another. Use the **mixed** state only on a "select all" checkbox that summarizes a group of children where some, but not all, are checked.
+
+### When to use
+
+- A single, standalone yes/no setting (`Remember me`, `Send me product updates`)
+- A multi-select list where any number of items — including zero or all — can be checked
+- A "select all" control that reflects the state of a group beneath it (off / on / mixed)
+
+### When not to use
+
+- For a choice between mutually exclusive options — use a **radio** group instead.
+- For a setting that takes effect immediately with no surrounding form — use a **switch**. Checkboxes imply the change is queued until a form is submitted; switches imply it happens right away.
+- For a single always-visible on/off preference in a settings page — a **switch** reads more clearly at a glance.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A checkbox is a single `<input type="checkbox">` styled with `appearance: none`. Everything — box, border, and check glyph — is one element; the glyph is an inline SVG rendered as a `mask-image` on its `::after` pseudo-element, not a separate icon component. When labeled, it's wrapped in a `.nm-choice-field` `<label>` alongside the text.
+
+<div className="anatomy" aria-hidden="true">
+  <label className="nm-choice-field giant" style={{pointerEvents:'none'}}>
+    <input type="checkbox" className="nm-checkbox" defaultChecked />
+    <span className="nm-choice-field__label">Sign as witness<span className="nm-choice-field__required">*</span></span>
+  </label>
+  <div className="labelpoint" style={{top:'30px',left:'40px'}}>1 · <b>Container</b></div>
+  <div className="dot" style={{top:'70px',left:'110px'}}></div>
+  <div className="labelpoint" style={{top:'30px',right:'160px'}}>2 · <b>Border</b></div>
+  <div className="dot" style={{top:'55px',right:'220px'}}></div>
+  <div className="labelpoint" style={{bottom:'70px',left:'70px'}}>3 · <b>Check glyph</b></div>
+  <div className="dot" style={{bottom:'95px',left:'110px'}}></div>
+  <div className="labelpoint" style={{bottom:'30px',left:'260px'}}>4 · <b>Label</b></div>
+  <div className="dot" style={{bottom:'55px',left:'260px'}}></div>
+  <div className="labelpoint" style={{bottom:'30px',right:'60px'}}>5 · <b>Required mark</b></div>
+  <div className="dot" style={{bottom:'55px',right:'90px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill, unchecked | `--nm-checkbox-bg` |
+| Container | Fill, checked / mixed | `--nm-checkbox-checked-bg` |
+| Container | Size | `width` / `height` — 24px default, 20px `--sm` |
+| Container | Radius | `border-radius` — 8px default, 6px `--sm` |
+| Border | Color, unchecked | `--nm-checkbox-border` |
+| Border | Color, checked / mixed | `--nm-checkbox-checked-border` |
+| Check glyph | Color | `--nm-checkbox-checked-icon` |
+| Check glyph | Shape | Checkmark when `:checked`, dash when `:indeterminate` — swapped `mask-image` |
+| Label | Typography | `.nm-choice-field__label` — 16px / 400 / Open Sans |
+| Required mark | Color | `--nm-choice-field-required` |
+| Optional mark | Color | `--nm-choice-field-optional` |
+| Focus ring | Color | `--palette-focus-700` (light) / `--palette-focus-300` (dark), 2px outline, 2px offset |
+
+</section>
+
+<section className="block" id="selection">
+
+## Selection states
+
+A checkbox has three possible selection states. Off and On are set by the user; Mixed can only be set programmatically — there's no way for a person to click a checkbox into "mixed" directly.
+
+<div className="scale-row"><span className="sz">off</span><div><input type="checkbox" className="nm-checkbox" /></div><div className="metric">unselected</div></div>
+<div className="scale-row"><span className="sz">on</span><div><input type="checkbox" className="nm-checkbox" defaultChecked /></div><div className="metric">fully selected</div></div>
+<div className="scale-row"><span className="sz">mixed</span><div><IndeterminateCheckbox /></div><div className="metric">some children selected</div></div>
+
+#### Wiring "select all"
+
+Mixed is a **visual and semantic** state, not a click target — set it in code from your list's current selection:
+
+```js
+const allChecked = items.every((i) => i.checked);
+const noneChecked = items.every((i) => !i.checked);
+selectAll.indeterminate = !allChecked && !noneChecked;
+selectAll.checked = allChecked;
+selectAll.setAttribute('aria-checked', selectAll.indeterminate ? 'mixed' : String(allChecked));
+```
+
+Clicking a mixed checkbox should select **all** children, not toggle each one individually — treat it the same as clicking an unchecked box.
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+Checkbox ships in two sizes — most surfaces should default to 24px and reserve 20px for dense tables and compact filter lists.
+
+<div className="scale-row"><span className="sz">default</span><div><input type="checkbox" className="nm-checkbox" defaultChecked /></div><div className="metric"><b>24×24px</b> · r <b>8</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><input type="checkbox" className="nm-checkbox nm-checkbox--sm" defaultChecked /></div><div className="metric"><b>20×20px</b> · r <b>6</b></div></div>
+
+</section>
+
+<section className="block" id="states">
+
+## Interaction states
+
+Every checkbox responds to hover and can be placed in a read-only state that keeps its value visible but locks it against further changes.
+
+<div className="example">
+  <input type="checkbox" className="nm-checkbox" defaultChecked />
+  <input type="checkbox" className="nm-checkbox" defaultChecked data-state="hover" />
+  <input type="checkbox" className="nm-checkbox is-readonly" defaultChecked readOnly tabIndex={-1} aria-readonly="true" />
+  <input type="checkbox" className="nm-checkbox" defaultChecked data-state="focus" />
+</div>
+
+<p className="caption">Checked · default → hover → read-only → focus</p>
+
+#### No disabled state
+
+Like buttons, Namirial checkboxes never ship a browser-default "greyed out and dead" disabled look. If a setting truly can't be changed right now, use **read-only** instead: the value stays legible, the control stays in the layout, and — unlike `disabled` — its value still submits with the form.
+
+#### Read-only implementation
+
+The `readonly` attribute has no native effect on `<input type="checkbox">`, so the `.is-readonly` class does the visual work while you pair it with `tabIndex={-1}` and `aria-readonly="true"` to make it genuinely non-interactive:
+
+```html
+<input type="checkbox" class="nm-checkbox is-readonly" checked readonly tabindex="-1" aria-readonly="true">
+```
+
+`pointer-events: none` (baked into `.is-readonly`) blocks clicks; `tabindex="-1"` removes it from the tab order so Space/Enter can't reach it either.
+
+#### Focus
+
+Focus is rendered by a 2px outline, 2px offset, using the same focus color as the rest of the system. Never suppress the focus ring — it's the only way keyboard users can tell which checkbox is about to be toggled.
+
+</section>
+
+<section className="block" id="field">
+
+## Checkbox field
+
+Pair a checkbox with a label using `.nm-choice-field`. The label is clickable and toggles the input — you don't need a separate `for`/`id` wire-up as long as the input is a descendant of the `<label>`.
+
+<div className="example stacked">
+  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Send me product updates</span></label>
+  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">I agree to the terms of service<span className="nm-choice-field__required">*</span></span></label>
+  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Add a personal note<span className="nm-choice-field__optional">(optional)</span></span></label>
+</div>
+
+<p className="caption">Bare · required · optional</p>
+
+Use `.nm-choice-field__required` for a setting the user must actively confirm before continuing (rare for checkboxes — most are opt-in by nature). Use `.nm-choice-field__optional` to reassure the user that leaving it unchecked is fine.
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Checkbox tokens are remapped under `.dark`. Contrast and hover directionality are handled for you.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Unselected</span></label>
+      <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Selected</span></label>
+      <label className="nm-choice-field"><IndeterminateCheckbox /><span className="nm-choice-field__label">Mixed</span></label>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Unselected</span></label>
+      <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Selected</span></label>
+      <label className="nm-choice-field"><IndeterminateCheckbox /><span className="nm-choice-field__label">Mixed</span></label>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Notify me by email</span></label></div><div className="desc">Use a checkbox for one independent setting the user can flip on its own.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{flexDirection:'column',gap:'8px'}}><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Monthly billing</span></label><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Annual billing</span></label></div><div className="desc">Don't use checkboxes for mutually exclusive options — that's what radio groups are for.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><IndeterminateCheckbox /><span className="nm-choice-field__label">Select all (3 of 7)</span></label></div><div className="desc">Drive the mixed state from real partial selection, and clicking it should select everything.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Select all</span></label></div><div className="desc">Don't show a plain checked "select all" when only some items are actually selected — say so with mixed.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox is-readonly" defaultChecked readOnly tabIndex={-1} aria-readonly="true" /><span className="nm-choice-field__label">Two-factor auth (required by org policy)</span></label></div><div className="desc">Use read-only when a value can't change right now but the user still needs to see and submit it.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><input type="checkbox" className="nm-checkbox" defaultChecked disabled style={{opacity:0.4}} /></div><div className="desc">Don't reach for the native disabled look — it drops the value from the form and gives no reason why.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Always wrap the input in a `<label>` (or connect it via `for`/`id`) so the hit target includes the text.
+- Group related checkboxes under a `<fieldset>` with a `<legend>` when they belong to the same question.
+
+#### Mixed state
+
+- Set `element.indeterminate = true` in JavaScript — there is no HTML attribute for it.
+- Also set `aria-checked="mixed"` explicitly. Some screen readers don't reliably announce the native `indeterminate` property on its own.
+
+#### Read-only
+
+- Native `readonly` has no effect on checkboxes. Pair `.is-readonly` with `tabindex="-1"` and `aria-readonly="true"` — this removes it from the tab order (so Space can't reach it) while `pointer-events: none` blocks clicks, and the field's value still submits with the form.
+
+#### Keyboard
+
+- Tab moves focus between checkboxes; Space toggles the focused one.
+- Focus uses `:focus-visible`, so the ring appears on keyboard focus but not on mouse click.
+
+#### Labeling
+
+- Never rely on color alone to communicate checked vs. unchecked — the filled container plus the check glyph both change.
+- If a checkbox has no visible text label (rare), it must have an `aria-label`.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+<CheckboxSandbox />
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-checkbox-bg</td><td>Container fill, unchecked</td></tr>
+<tr><td className="tok">--nm-checkbox-border</td><td>Border, unchecked</td></tr>
+<tr><td className="tok">--nm-checkbox-checked-bg</td><td>Container fill, checked / mixed</td></tr>
+<tr><td className="tok">--nm-checkbox-checked-border</td><td>Border, checked / mixed</td></tr>
+<tr><td className="tok">--nm-checkbox-checked-icon</td><td>Check / dash glyph color</td></tr>
+<tr><td className="tok">--nm-checkbox-hover-bg</td><td>Fill on hover, unchecked</td></tr>
+<tr><td className="tok">--nm-checkbox-hover-border</td><td>Border on hover, unchecked</td></tr>
+<tr><td className="tok">--nm-checkbox-checked-hover-bg</td><td>Fill on hover, checked / mixed</td></tr>
+<tr><td className="tok">--nm-checkbox-checked-hover-icon</td><td>Glyph color on hover, checked / mixed</td></tr>
+<tr><td className="tok">--nm-checkbox-readonly-bg</td><td>Fill, read-only + unchecked</td></tr>
+<tr><td className="tok">--nm-checkbox-checked-readonly-bg</td><td>Fill, read-only + checked / mixed</td></tr>
+<tr><td className="tok">--nm-checkbox-checked-readonly-icon</td><td>Glyph color, read-only + checked / mixed</td></tr>
+<tr><td className="tok">--nm-choice-field-label-fg</td><td>Label text color</td></tr>
+<tr><td className="tok">--nm-choice-field-required</td><td>Required mark color</td></tr>
+<tr><td className="tok">--nm-choice-field-optional</td><td>Optional mark color</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+No JavaScript component is required for a plain checkbox — it's a native `<input>` styled by CSS classes. You only need JS to set `indeterminate`, or to enforce read-only.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<label class="nm-choice-field">
+  <input type="checkbox" class="nm-checkbox">
+  <span class="nm-choice-field__label">
+    I agree to the terms of service
+    <span class="nm-choice-field__required">*</span>
+  </span>
+</label>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-checkbox--sm` | 20px variant (omit for 24px default) | default |
+| `:checked` | Selection = on | — |
+| `:indeterminate` | Selection = mixed (set via JS, not an attribute) | — |
+| `[readonly]` / `.is-readonly` | Read-only — pair with `tabindex="-1"` | — |
+| `nm-choice-field__required` | Marks a field as required | — |
+| `nm-choice-field__optional` | Marks a field as optional | — |
+
+</section>
