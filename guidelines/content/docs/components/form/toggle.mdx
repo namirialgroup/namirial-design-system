@@ -4,37 +4,36 @@ description: A toggle switch applies a setting immediately — no form submissio
 ---
 
 import { ToggleSandbox } from '@/components/nm/toggle-sandbox';
+import { HeroSwitch } from '@/components/nm/hero-switch';
+import { IndeterminateSwitch } from '@/components/nm/indeterminate-switch';
 
 <p className="eyebrow">Components · Form</p>
 
 <p className="lede">A toggle (switch) flips a setting on or off <strong>immediately</strong> — there's no surrounding "Save" step. Namirial switches are built from <code>--nm-switch-track-\*</code> and <code>--nm-switch-thumb-\*</code> tokens defined in <code>namirial-theme.css</code>, ship at a single fixed size, and pair with the same <code>.nm-choice-field</code> label wrapper used by checkbox and radio. In the CSS the component is named <code>.nm-switch</code>; "toggle" is the name used in product copy and in this doc's navigation.</p>
 
 <div className="hero-stage">
-  <label className="nm-choice-field">
-    <span className="nm-switch"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span>
-    <span className="nm-choice-field__label">Off</span>
-  </label>
-  <label className="nm-choice-field">
-    <span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
-    <span className="nm-choice-field__label">On</span>
-  </label>
+  <HeroSwitch />
+  <HeroSwitch defaultChecked />
 </div>
 
 <section className="block" id="overview">
 
 ## Overview
 
-A switch and a checkbox both represent a binary on/off state, but they carry different promises to the user: flipping a switch takes effect the instant it's flipped, while a checkbox is understood to be staged until the surrounding form is submitted.
+A toggle switch represents a binary on/off, active/inactive, show/hide state. If the setting has more than two states, or requires the user to pick from a list of options, use a different control (radio buttons, select, segmented control). 
 
 ### When to use
 
-- A setting that applies instantly, with no "Save" button in sight (`Dark mode`, `Auto-renew subscription`, `Two-factor authentication`)
-- A single, standalone preference in a settings page, viewed on its own rather than inside a longer form
+**Instant effect:** <br />
+A toggle change should apply immediately — the user should never need to click Save or Submit to confirm it. Exceptions: 
+- Inside a desktop dialog: if flipping the switch reveals more complex settings, it's okay for the whole change to apply together with the dialog's own "Save" or "Submit" — instead of taking effect the instant it's flipped 
+- Big or hard-to-undo changes: if flipping it does something serious (like turning off two-factor authentication), still use a switch — just ask for confirmation first, rather than applying it silently 
 
-### When not to use
+**Dependent behavior:** <br />
+Show or hide a set of dependent settings tied to that state: Hide dependent settings when the toggle is off, and reveal them again when it's on — but preserve and save their values while hidden. Show/hide with the toggle explicitly if there isn't enough space to show all dependent settings at once, or when the UI overloads.
 
-- Inside a form with an explicit submit action — use a **checkbox** so the "staged, not yet applied" semantics are honest.
-- A choice among 3+ mutually exclusive named options — use **radio** or a **segmented control**.
+**Toggle vs Checkbox:** <br />
+A switch and a checkbox both represent a binary on/off state, but they carry different promises to the user: flipping a switch takes effect the instant it's flipped, while a checkbox is understood to be staged until the surrounding form is submitted. 
 
 </section>
 
@@ -45,20 +44,39 @@ A switch and a checkbox both represent a binary on/off state, but they carry dif
 A switch is a compound component: an outer track (`.nm-switch`), a visually-hidden native `<input type="checkbox">` (`.nm-switch__input`) that carries all real interaction and focus, and a visible thumb (`.nm-switch__thumb`) that slides between the two ends of the track. The thumb's own `::after` renders a small checkmark (or dash, when indeterminate) once it reaches the "on" position.
 
 <div className="anatomy" aria-hidden="true">
-  <label className="nm-choice-field giant" style={{pointerEvents:'none'}}>
-    <span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
-    <span className="nm-choice-field__label">Auto-renew</span>
-  </label>
-  <div className="labelpoint" style={{top:'30px',left:'40px'}}>1 · <b>Track</b></div>
-  <div className="dot" style={{top:'75px',left:'90px'}}></div>
-  <div className="labelpoint" style={{top:'30px',right:'180px'}}>2 · <b>Border</b></div>
-  <div className="dot" style={{top:'60px',right:'160px'}}></div>
-  <div className="labelpoint" style={{bottom:'60px',left:'70px'}}>3 · <b>Thumb</b></div>
-  <div className="dot" style={{bottom:'90px',left:'170px'}}></div>
-  <div className="labelpoint" style={{bottom:'90px',right:'160px'}}>4 · <b>Check glyph</b></div>
-  <div className="dot" style={{bottom:'95px',right:'170px'}}></div>
-  <div className="labelpoint" style={{bottom:'30px',right:'40px'}}>5 · <b>Label</b></div>
-  <div className="dot" style={{bottom:'55px',right:'110px'}}></div>
+  <div className="stage" style={{width:'720px',height:'226px'}}>
+    <label className="nm-choice-field giant" style={{pointerEvents:'none',position:'absolute',top:'81px',left:'377px'}}>
+      <span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
+      <span className="nm-choice-field__label">Auto-renew</span>
+    </label>
+    <svg style={{position:'absolute',top:0,left:0,width:'720px',height:'226px',pointerEvents:'none'}} viewBox="0 0 720 226">
+      <line x1="138" y1="43" x2="329" y2="93" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="560" y1="43" x2="394" y2="73" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="168" y1="153" x2="375" y2="93" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="545" y1="123" x2="375" y2="93" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="620" y1="183" x2="445" y2="93" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'31px',left:'60px'}}>
+      <div className="labelpoint" style={{position:'static'}}>1 · <b>Track</b></div>
+      <div className="dot" style={{top:'57px',left:'264px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'31px',left:'560px'}}>
+      <div className="labelpoint" style={{position:'static'}}>2 · <b>Border</b></div>
+      <div className="dot" style={{top:'37px',left:'-171px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'141px',left:'90px'}}>
+      <div className="labelpoint" style={{position:'static'}}>3 · <b>Thumb</b></div>
+      <div className="dot" style={{top:'-53px',left:'280px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'111px',left:'545px'}}>
+      <div className="labelpoint" style={{position:'static'}}>4 · <b>Check glyph</b></div>
+      <div className="dot" style={{top:'-23px',left:'-175px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'171px',left:'620px'}}>
+      <div className="labelpoint" style={{position:'static'}}>5 · <b>Label</b></div>
+      <div className="dot" style={{top:'-83px',left:'-180px'}}></div>
+    </div>
+  </div>
 </div>
 
 #### Tokens and values that drive each part
@@ -85,9 +103,9 @@ A switch is a compound component: an outer track (`.nm-switch`), a visually-hidd
 
 Like checkbox, a switch supports a **middle** (indeterminate) state for summarizing a group of settings that aren't all in the same position. Unlike checkbox, this is a class on the outer track (`.is-indeterminate`) rather than a native DOM property, since the visible thumb position (centered) isn't something the native `indeterminate` property drives on its own here.
 
-<div className="scale-row"><span className="sz">off</span><div><span className="nm-switch"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span></div><div className="metric">setting is off</div></div>
-<div className="scale-row"><span className="sz">on</span><div><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span></div><div className="metric">setting is on</div></div>
-<div className="scale-row"><span className="sz">middle</span><div><span className="nm-switch is-indeterminate"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span></div><div className="metric">mixed across a group</div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">off</span><div><span className="nm-switch"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span></div><div className="metric">setting is off</div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">on</span><div><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span></div><div className="metric">setting is on</div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">middle</span><div><span className="nm-switch is-indeterminate"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span></div><div className="metric">mixed across a group</div></div>
 
 <p className="caption">Switch is fixed at 48×24px (track) / 20×20px (thumb) — there are no size modifiers.</p>
 
@@ -99,14 +117,26 @@ Like checkbox, a switch supports a **middle** (indeterminate) state for summariz
 
 Hover targets the whole track, not just the thumb — this matches the larger click/tap target real switches have.
 
-<div className="example">
-  <span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
-  <span className="nm-switch" data-state="hover"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
-  <span className="nm-switch is-readonly"><input type="checkbox" className="nm-switch__input" defaultChecked tabIndex={-1} aria-readonly="true" /><span className="nm-switch__thumb"></span></span>
-  <span className="nm-switch" data-state="focus"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
+<div className="example" style={{pointerEvents:'none'}}>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
+    <span className="state-label">Default</span>
+  </div>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <span className="nm-switch" data-state="hover"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
+    <span className="state-label">Hover</span>
+  </div>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <span className="nm-switch is-readonly"><input type="checkbox" className="nm-switch__input" defaultChecked tabIndex={-1} aria-readonly="true" /><span className="nm-switch__thumb"></span></span>
+    <span className="state-label">Read-only</span>
+  </div>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <span className="nm-switch" data-state="focus"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
+    <span className="state-label">Focus</span>
+  </div>
 </div>
 
-<p className="caption">On · default → hover → read-only → focus</p>
+<p className="caption">All shown in the "on" position</p>
 
 #### No disabled state
 
@@ -127,7 +157,7 @@ Put `.is-readonly` on the outer `.nm-switch` track (that's what the CSS targets)
 
 <section className="block" id="field">
 
-## Switch field
+## Markup
 
 Pair with `.nm-choice-field` the same way as checkbox and radio. Write the label as the setting's name in its current framing, not as a question or an instruction to act.
 
@@ -138,7 +168,7 @@ Pair with `.nm-choice-field` the same way as checkbox and radio. Write the label
   </label>
   <label className="nm-choice-field">
     <span className="nm-switch"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span>
-    <span className="nm-choice-field__label">Auto-renew subscription <span className="nm-choice-field__optional">(optional)</span></span>
+    <span className="nm-choice-field__label">Auto-renew subscription</span>
   </label>
 </div>
 
@@ -154,7 +184,7 @@ Pair with `.nm-choice-field` the same way as checkbox and radio. Write the label
     <div className="theme-frame">
       <span className="nm-switch"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span>
       <span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
-      <span className="nm-switch is-indeterminate"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span>
+      <IndeterminateSwitch />
     </div>
   </div>
   <div className="theme-card" data-theme="dark">
@@ -162,7 +192,7 @@ Pair with `.nm-choice-field` the same way as checkbox and radio. Write the label
     <div className="theme-frame">
       <span className="nm-switch"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span>
       <span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span>
-      <span className="nm-switch is-indeterminate"><input type="checkbox" className="nm-switch__input" /><span className="nm-switch__thumb"></span></span>
+      <IndeterminateSwitch />
     </div>
   </div>
 </div>
@@ -176,13 +206,13 @@ Pair with `.nm-choice-field` the same way as checkbox and radio. Write the label
 ## Do & don't
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Dark mode</span></label></div><div className="desc">Use a switch for a setting that applies the instant it's flipped.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{flexDirection:'column',gap:'8px'}}><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Include shipping address</span></label><button className="nm-button nm-button--primary nm-button--sm" style={{pointerEvents:'none'}}>Save</button></div><div className="desc">Don't put a switch inside a form with a "Save" button — that promises instant effect while making the user wait for submission.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame" style={{pointerEvents:'none'}}><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Dark mode</span></label></div><div className="desc">Use a switch for a setting that applies the instant it's flipped.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{flexDirection:'column',gap:'8px',pointerEvents:'none'}}><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Include shipping address</span></label><button className="nm-button nm-button--primary nm-button--sm">Save</button></div><div className="desc">Don't put a switch inside a form with a "Save" button — that promises instant effect while making the user wait for submission.</div></div>
 </div>
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Auto-renew subscription</span></label></div><div className="desc">Label the switch with the setting's name, describing the state that's currently on.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Turn on auto-renew?</span></label></div><div className="desc">Don't phrase the label as a question — the switch itself already asks and answers that.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame" style={{pointerEvents:'none'}}><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Auto-renew subscription</span></label></div><div className="desc">Label the switch with the setting's name, describing the state that's currently on.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{pointerEvents:'none'}}><label className="nm-choice-field"><span className="nm-switch"><input type="checkbox" className="nm-switch__input" defaultChecked /><span className="nm-switch__thumb"></span></span><span className="nm-choice-field__label">Turn on auto-renew?</span></label></div><div className="desc">Don't phrase the label as a question — the switch itself already asks and answers that.</div></div>
 </div>
 
 </section>

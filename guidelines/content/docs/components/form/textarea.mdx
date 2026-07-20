@@ -1,8 +1,247 @@
 ---
 title: Textarea
-description: Coming soon.
+description: Textarea captures multiple lines of free-text content.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+<p className="eyebrow">Components · Form</p>
+
+<p className="lede">Textarea is input's multi-line sibling — the same label, container, and help-text parts, with a <code>&lt;textarea&gt;</code> in place of the field and a small <code>nm-input--textarea</code> modifier that top-aligns the content and allows vertical resizing.</p>
+
+<div className="hero-stage">
+  <div className="nm-input nm-input--textarea nm-input--md" style={{width:'340px'}}>
+    <label className="nm-input__label">Message</label>
+    <div className="nm-input__container">
+      <textarea className="nm-input__field" rows={4} placeholder="Add a note for the signer…"></textarea>
+    </div>
+    <span className="nm-input__help">Visible to everyone on this document.</span>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+Textarea is for content that needs room to breathe — a message, a description, a note — where a single line would force the user to scroll sideways through their own text. Everything about label, help text, and validation carries over unchanged from input.
+
+### When to use
+
+- A message, comment, or note of unpredictable length
+- A description field where a couple of sentences is the expected input
+- Free-form notes attached to a record (a signing instruction, an internal comment)
+
+### When not to use
+
+- A single value, however long — a name, an address line, an email — use **input**.
+- Content the user will format richly (headings, lists, bold) — that needs a rich-text editor, not a plain textarea.
+- A fixed-length code — use **code**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+Textarea reuses `.nm-input__label`, `.nm-input__container`, and `.nm-input__help` from input without modification. The only new pieces are the `nm-input--textarea` modifier on the wrapper and a `<textarea class="nm-input__field">` instead of `<input>`.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="nm-input nm-input--textarea nm-input--md giant" style={{width:'300px',pointerEvents:'none'}}>
+    <label className="nm-input__label">Signing instructions<span className="nm-input__optional">(optional)</span></label>
+    <div className="nm-input__container">
+      <textarea className="nm-input__field" rows={3} defaultValue={"Please sign on page 3,\nnext to the highlighted box."}></textarea>
+    </div>
+    <span className="nm-input__help">Shown to the signer before they open the document.</span>
+  </div>
+  <div className="labelpoint" style={{top:'10px',left:'0px'}}>1 · <b>Label</b></div>
+  <div className="dot" style={{top:'40px',left:'150px'}}></div>
+  <div className="labelpoint" style={{bottom:'90px',left:'0px'}}>2 · <b>Container</b></div>
+  <div className="dot" style={{bottom:'150px',left:'150px'}}></div>
+  <div className="labelpoint" style={{bottom:'90px',right:'0px'}}>3 · <b>Multi-line field</b></div>
+  <div className="dot" style={{bottom:'150px',right:'170px'}}></div>
+  <div className="labelpoint" style={{bottom:'50px',left:'0px'}}>4 · <b>Resize handle</b></div>
+  <div className="dot" style={{bottom:'82px',right:'40px'}}></div>
+  <div className="labelpoint" style={{bottom:'10px',right:'0px'}}>5 · <b>Help text</b></div>
+  <div className="dot" style={{bottom:'40px',right:'160px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Label / help / container fill / border | Same as input | `--nm-input-*` (see [Input](/docs/components/form/input)) |
+| Container alignment | Top-aligned instead of centered | `.nm-input--textarea .nm-input__container { align-items: flex-start }` |
+| Field line height | Roomier for multi-line reading | `.nm-input--textarea .nm-input__field { line-height: 1.5 }` |
+| Field resize | User-resizable height only | `.nm-input--textarea .nm-input__field { resize: vertical }` |
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+Textarea uses the same four input sizes for its label, border radius, and padding; height instead comes from the `rows` attribute on the `<textarea>` itself, not from the size modifier.
+
+<div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--textarea nm-input--xs" style={{width:'240px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={2} placeholder="Note"></textarea></div></div></div><div className="metric">inline comments</div></div>
+<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--textarea nm-input--md" style={{width:'240px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Message"></textarea></div></div></div><div className="metric">default for forms</div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--textarea nm-input--lg" style={{width:'240px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Description"></textarea></div></div></div><div className="metric">prominent single-field forms</div></div>
+<div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--textarea nm-input--xl" style={{width:'240px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Tell us more"></textarea></div></div></div><div className="metric">marketing, feedback forms</div></div>
+
+#### Choosing a row count
+
+Set `rows` to the number of lines you expect the average answer to take — 2–3 for a short note, 5–6 for an open-ended description. Let the user grow it further with the resize handle rather than guessing high and leaving empty space.
+
+</section>
+
+<section className="block" id="states">
+
+## Interaction & validation states
+
+Textarea shares every state with input: hover, focus, read-only, and the three validation intents.
+
+<div className="example">
+  <div className="nm-input nm-input--textarea nm-input--md" style={{width:'200px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Default" readOnly></textarea></div></div>
+  <div className="nm-input nm-input--textarea nm-input--md" style={{width:'200px'}}><div className="nm-input__container" data-state="hover"><textarea className="nm-input__field" rows={3} placeholder="Hover" readOnly></textarea></div></div>
+  <div className="nm-input nm-input--textarea nm-input--md" style={{width:'200px'}}><div className="nm-input__container" data-state="focus"><textarea className="nm-input__field" rows={3} placeholder="Focus" readOnly></textarea></div></div>
+  <div className="nm-input nm-input--textarea nm-input--md nm-input--readonly" style={{width:'200px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={3} defaultValue="Locked content" readOnly></textarea></div></div>
+</div>
+
+<p className="caption">Default → hover → focus → read-only</p>
+
+<div className="example">
+  <div className="nm-input nm-input--textarea nm-input--md nm-input--error" style={{width:'240px'}}>
+    <label className="nm-input__label">Reason for rejection<span className="nm-input__required">*</span></label>
+    <div className="nm-input__container"><textarea className="nm-input__field" rows={3}></textarea></div>
+    <span className="nm-input__help">Tell the signer why the document was rejected.</span>
+  </div>
+</div>
+
+<p className="caption">Error — same <code>nm-input--error</code> modifier as input</p>
+
+#### No disabled state
+
+As with every Namirial field, use `nm-input--readonly` instead of the native `disabled` attribute — the content stays legible and still submits with the form.
+
+</section>
+
+<section className="block" id="resize">
+
+## Resize behavior
+
+`resize: vertical` lets the user drag the bottom-right corner to grow the field, without letting it stretch wider than its container and break the surrounding layout. Never set `resize: none` unless the field's height is already generous enough for the longest realistic answer.
+
+<div className="example">
+  <div className="nm-input nm-input--textarea nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Comments</label>
+    <div className="nm-input__container"><textarea className="nm-input__field" rows={2} placeholder="Short by default — drag to expand"></textarea></div>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-input nm-input--textarea nm-input--md" style={{width:'240px'}}>
+        <label className="nm-input__label">Message</label>
+        <div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Add a note…"></textarea></div>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-input nm-input--textarea nm-input--md" style={{width:'240px'}}>
+        <label className="nm-input__label">Message</label>
+        <div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Add a note…"></textarea></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--textarea nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Description</label><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="What is this template for?"></textarea></div></div></div><div className="desc">Size <code>rows</code> to the expected answer length and let resize handle the rest.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Description</label><div className="nm-input__container"><input className="nm-input__field" placeholder="What is this template for?" /></div></div></div><div className="desc">Don't force multi-sentence content into a single-line input — the user loses sight of what they wrote.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--textarea nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={2} placeholder="Optional note"></textarea></div></div></div><div className="desc">Leave resize on so a user with a longer answer than you expected isn't stuck scrolling inside a tiny box.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><textarea className="nm-input__field" rows={2} style={{resize:'none'}} placeholder="Fixed height"></textarea></div></div></div><div className="desc">Don't disable resize on a field that might realistically overflow.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Associate the label the same way as input — `for`/`id` or nesting inside `.nm-input__label`.
+- If you enforce a character limit, expose the remaining count in a live region, not just visually.
+
+#### Keyboard
+
+- Tab moves focus in and out; the resize handle is native and keyboard-inaccessible by design — don't make resizing the only way to see full content, ensure `overflow: auto` handles scrolling too.
+- Enter inserts a newline (unlike input, where Enter often submits a form) — never intercept Enter to submit a form containing a textarea unless the user expects that.
+
+#### Labeling
+
+- Use `aria-describedby` to connect help text and any character-count indicator to the field.
+- On error, set `aria-invalid="true"` alongside the `nm-input--error` class.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+Textarea inherits every `--nm-input-*` token from [Input](/docs/components/form/input) — there is no separate token group. Only two rules extend the base system:
+
+<table className="tokens-table">
+<thead><tr><th>Rule</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">.nm-input--textarea .nm-input__container</td><td>Top-aligns content instead of centering it vertically</td></tr>
+<tr><td className="tok">.nm-input--textarea .nm-input__field</td><td>Sets <code>line-height: 1.5</code> and <code>resize: vertical</code></td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-input nm-input--textarea nm-input--md">
+  <label class="nm-input__label">Message</label>
+  <div class="nm-input__container">
+    <textarea class="nm-input__field" rows="4" placeholder="Add a note for the signer…"></textarea>
+  </div>
+  <span class="nm-input__help">Visible to everyone on this document.</span>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-input--textarea` | Switches container alignment and field line-height/resize for multi-line content | — |
+| `nm-input--{size}` | xs · md · lg · xl | `md` |
+| `nm-input--{intent}` | error · warning · success | — |
+| `nm-input--readonly` | Locks the container against edits | — |
+
+</section>

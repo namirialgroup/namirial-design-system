@@ -1029,6 +1029,14 @@
   --nm-input-label-required: var(--palette-positive-200);
 }
 
+.nm-input--textarea .nm-input__container {
+  align-items: flex-start;
+}
+.nm-input--textarea .nm-input__field {
+  line-height: 1.5;
+  resize: vertical;
+}
+
 :root {
   --nm-tag-bg: var(--palette-neutral-100);
   --nm-tag-fg: var(--palette-surface-950);
@@ -1465,16 +1473,16 @@
   width: 12px;
   height: 12px;
   background-color: var(--nm-switch-thumb-icon);
-  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>");
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M18 6 6 18'/><path d='M6 6l12 12'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M18 6 6 18'/><path d='M6 6l12 12'/></svg>");
   mask-size: contain;
   -webkit-mask-size: contain;
   mask-position: center;
   -webkit-mask-position: center;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
+  opacity: 1;
+  transition: opacity 0.2s ease-out, background-color 0.2s ease-out;
 }
 .nm-switch__input:checked + .nm-switch__thumb {
   transform: translateX(24px);
@@ -1483,6 +1491,8 @@
 .nm-switch__input:checked + .nm-switch__thumb::after {
   background-color: var(--nm-switch-thumb-checked-icon);
   opacity: 1;
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>");
 }
 .nm-switch:has(.nm-switch__input:checked) {
   background-color: var(--nm-switch-track-checked-bg);

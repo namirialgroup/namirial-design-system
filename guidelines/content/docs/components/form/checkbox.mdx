@@ -5,15 +5,17 @@ description: Checkboxes capture an independent on/off setting, or a partially-se
 
 import { CheckboxSandbox } from '@/components/nm/checkbox-sandbox';
 import { IndeterminateCheckbox } from '@/components/nm/indeterminate-checkbox';
+import { HeroCheckbox } from '@/components/nm/hero-checkbox';
+import { HeroIndeterminateCheckbox } from '@/components/nm/hero-indeterminate-checkbox';
 
 <p className="eyebrow">Components · Form</p>
 
 <p className="lede">A checkbox represents a single, independent binary setting — on or off — and can additionally represent a <strong>mixed</strong> state when it summarizes a partially-selected group. Namirial checkboxes are built from <code>--nm-checkbox-*</code> tokens defined in <code>namirial-theme.css</code>, ship in two sizes, and pair with the shared <code>.nm-choice-field</code> label wrapper used by radio and switch.</p>
 
 <div className="hero-stage">
-  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Unselected</span></label>
-  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Selected</span></label>
-  <label className="nm-choice-field"><IndeterminateCheckbox /><span className="nm-choice-field__label">Mixed</span></label>
+  <HeroCheckbox />
+  <HeroCheckbox defaultChecked />
+  <HeroIndeterminateCheckbox />
 </div>
 
 <section className="block" id="overview">
@@ -24,15 +26,21 @@ A checkbox lets a user opt in or out of one thing at a time. Each checkbox in a 
 
 ### When to use
 
-- A single, standalone yes/no setting (`Remember me`, `Send me product updates`)
-- A multi-select list where any number of items — including zero or all — can be checked
-- A "select all" control that reflects the state of a group beneath it (off / on / mixed)
+**Independent selection:** <br />
+A single, standalone yes/no setting (Remember me, Send me product updates), or a multi-select list where any number of items — including zero or all — can be checked. Not for mutually exclusive options; use a radio group for that instead.
 
-### When not to use
+**Select all / mixed state:** <br />
+A "select all" control that reflects the state of the group beneath it — off, on, or mixed when only some children are checked.
 
-- For a choice between mutually exclusive options — use a **radio** group instead.
-- For a setting that takes effect immediately with no surrounding form — use a **switch**. Checkboxes imply the change is queued until a form is submitted; switches imply it happens right away.
-- For a single always-visible on/off preference in a settings page — a **switch** reads more clearly at a glance.
+**Staged, not instant:** <br />
+Checkboxes imply the change is queued until the surrounding form is submitted, rather than applying right away. If the setting is always-visible in a settings page and should take effect the instant it's flipped, use a switch instead — it reads more clearly at a glance for that case.
+
+**Required state** <br />
+Show that a checkbox is required before validation, not only after — via a visible marker or short instruction text.
+
+- Required list (e.g. "select at least one"): show the validation message on the list as a whole, not per item.
+- Required single checkbox (e.g. "I agree to the terms"): show the validation message on that checkbox.
+- If no explicit confirming action is legally or functionally needed, consider a plain info text instead of a checkbox — it saves a click while still making sure the user has seen the requirement.
 
 </section>
 
@@ -43,20 +51,39 @@ A checkbox lets a user opt in or out of one thing at a time. Each checkbox in a 
 A checkbox is a single `<input type="checkbox">` styled with `appearance: none`. Everything — box, border, and check glyph — is one element; the glyph is an inline SVG rendered as a `mask-image` on its `::after` pseudo-element, not a separate icon component. When labeled, it's wrapped in a `.nm-choice-field` `<label>` alongside the text.
 
 <div className="anatomy" aria-hidden="true">
-  <label className="nm-choice-field giant" style={{pointerEvents:'none'}}>
-    <input type="checkbox" className="nm-checkbox" defaultChecked />
-    <span className="nm-choice-field__label">Sign as witness<span className="nm-choice-field__required">*</span></span>
-  </label>
-  <div className="labelpoint" style={{top:'30px',left:'40px'}}>1 · <b>Container</b></div>
-  <div className="dot" style={{top:'70px',left:'110px'}}></div>
-  <div className="labelpoint" style={{top:'30px',right:'160px'}}>2 · <b>Border</b></div>
-  <div className="dot" style={{top:'55px',right:'220px'}}></div>
-  <div className="labelpoint" style={{bottom:'70px',left:'70px'}}>3 · <b>Check glyph</b></div>
-  <div className="dot" style={{bottom:'95px',left:'110px'}}></div>
-  <div className="labelpoint" style={{bottom:'30px',left:'260px'}}>4 · <b>Label</b></div>
-  <div className="dot" style={{bottom:'55px',left:'260px'}}></div>
-  <div className="labelpoint" style={{bottom:'30px',right:'60px'}}>5 · <b>Required mark</b></div>
-  <div className="dot" style={{bottom:'55px',right:'90px'}}></div>
+  <div className="stage" style={{width:'740px',height:'226px'}}>
+    <label className="nm-choice-field giant" style={{pointerEvents:'none',position:'absolute',top:'81px',left:'371px'}}>
+      <input type="checkbox" className="nm-checkbox" defaultChecked />
+      <span className="nm-choice-field__label">Sign as witness<span className="nm-choice-field__required">(required)</span></span>
+    </label>
+    <svg style={{position:'absolute',top:0,left:0,width:'740px',height:'226px',pointerEvents:'none'}} viewBox="0 0 740 226">
+      <line x1="169" y1="43" x2="290" y2="93" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="560" y1="43" x2="310" y2="73" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="207" y1="143" x2="290" y2="93" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="339" y1="183" x2="353" y2="93" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="590" y1="183" x2="628" y2="96" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'31px',left:'65px'}}>
+      <div className="labelpoint" style={{position:'static'}}>1 · <b>Container</b></div>
+      <div className="dot" style={{top:'57px',left:'220px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'31px',left:'560px'}}>
+      <div className="labelpoint" style={{position:'static'}}>2 · <b>Border</b></div>
+      <div className="dot" style={{top:'37px',left:'-255px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'131px',left:'90px'}}>
+      <div className="labelpoint" style={{position:'static'}}>3 · <b>Check glyph</b></div>
+      <div className="dot" style={{top:'-43px',left:'195px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'171px',left:'261px'}}>
+      <div className="labelpoint" style={{position:'static'}}>4 · <b>Label</b></div>
+      <div className="dot" style={{top:'-83px',left:'87px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'171px',left:'590px'}}>
+      <div className="labelpoint" style={{position:'static'}}>5 · <b>Required mark</b></div>
+      <div className="dot" style={{top:'-80px',left:'33px'}}></div>
+    </div>
+  </div>
 </div>
 
 #### Tokens and values that drive each part
@@ -84,9 +111,9 @@ A checkbox is a single `<input type="checkbox">` styled with `appearance: none`.
 
 A checkbox has three possible selection states. Off and On are set by the user; Mixed can only be set programmatically — there's no way for a person to click a checkbox into "mixed" directly.
 
-<div className="scale-row"><span className="sz">off</span><div><input type="checkbox" className="nm-checkbox" /></div><div className="metric">unselected</div></div>
-<div className="scale-row"><span className="sz">on</span><div><input type="checkbox" className="nm-checkbox" defaultChecked /></div><div className="metric">fully selected</div></div>
-<div className="scale-row"><span className="sz">mixed</span><div><IndeterminateCheckbox /></div><div className="metric">some children selected</div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">off</span><div><input type="checkbox" className="nm-checkbox" /></div><div className="metric">unselected</div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">on</span><div><input type="checkbox" className="nm-checkbox" defaultChecked /></div><div className="metric">fully selected</div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">mixed</span><div><IndeterminateCheckbox /></div><div className="metric">some children selected</div></div>
 
 #### Wiring "select all"
 
@@ -110,8 +137,8 @@ Clicking a mixed checkbox should select **all** children, not toggle each one in
 
 Checkbox ships in two sizes — most surfaces should default to 24px and reserve 20px for dense tables and compact filter lists.
 
-<div className="scale-row"><span className="sz">default</span><div><input type="checkbox" className="nm-checkbox" defaultChecked /></div><div className="metric"><b>24×24px</b> · r <b>8</b></div></div>
-<div className="scale-row"><span className="sz">sm</span><div><input type="checkbox" className="nm-checkbox nm-checkbox--sm" defaultChecked /></div><div className="metric"><b>20×20px</b> · r <b>6</b></div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">default</span><div><input type="checkbox" className="nm-checkbox" defaultChecked /></div><div className="metric"><b>24×24px</b> · r <b>8</b></div></div>
+<div className="scale-row" style={{pointerEvents:'none'}}><span className="sz">sm</span><div><input type="checkbox" className="nm-checkbox nm-checkbox--sm" defaultChecked /></div><div className="metric"><b>20×20px</b> · r <b>6</b></div></div>
 
 </section>
 
@@ -121,14 +148,26 @@ Checkbox ships in two sizes — most surfaces should default to 24px and reserve
 
 Every checkbox responds to hover and can be placed in a read-only state that keeps its value visible but locks it against further changes.
 
-<div className="example">
-  <input type="checkbox" className="nm-checkbox" defaultChecked />
-  <input type="checkbox" className="nm-checkbox" defaultChecked data-state="hover" />
-  <input type="checkbox" className="nm-checkbox is-readonly" defaultChecked readOnly tabIndex={-1} aria-readonly="true" />
-  <input type="checkbox" className="nm-checkbox" defaultChecked data-state="focus" />
+<div className="example" style={{pointerEvents:'none'}}>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <input type="checkbox" className="nm-checkbox" defaultChecked />
+    <span className="state-label">Default</span>
+  </div>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <input type="checkbox" className="nm-checkbox" defaultChecked data-state="hover" />
+    <span className="state-label">Hover</span>
+  </div>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <input type="checkbox" className="nm-checkbox is-readonly" defaultChecked readOnly tabIndex={-1} aria-readonly="true" />
+    <span className="state-label">Read-only</span>
+  </div>
+  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'10px'}}>
+    <input type="checkbox" className="nm-checkbox" defaultChecked data-state="focus" />
+    <span className="state-label">Focus</span>
+  </div>
 </div>
 
-<p className="caption">Checked · default → hover → read-only → focus</p>
+<p className="caption">All shown checked</p>
 
 #### No disabled state
 
@@ -152,13 +191,13 @@ Focus is rendered by a 2px outline, 2px offset, using the same focus color as th
 
 <section className="block" id="field">
 
-## Checkbox field
+## Markup
 
 Pair a checkbox with a label using `.nm-choice-field`. The label is clickable and toggles the input — you don't need a separate `for`/`id` wire-up as long as the input is a descendant of the `<label>`.
 
 <div className="example stacked">
   <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Send me product updates</span></label>
-  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">I agree to the terms of service<span className="nm-choice-field__required">*</span></span></label>
+  <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">I agree to the terms of service<span className="nm-choice-field__required">(required)</span></span></label>
   <label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" /><span className="nm-choice-field__label">Add a personal note<span className="nm-choice-field__optional">(optional)</span></span></label>
 </div>
 
@@ -202,18 +241,18 @@ Checkbox tokens are remapped under `.dark`. Contrast and hover directionality ar
 ## Do & don't
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Notify me by email</span></label></div><div className="desc">Use a checkbox for one independent setting the user can flip on its own.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{flexDirection:'column',gap:'8px'}}><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Monthly billing</span></label><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Annual billing</span></label></div><div className="desc">Don't use checkboxes for mutually exclusive options — that's what radio groups are for.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame" style={{pointerEvents:'none'}}><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Notify me by email</span></label></div><div className="desc">Use a checkbox for one independent setting the user can flip on its own.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{pointerEvents:'none'}}><div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'8px'}}><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Monthly billing</span></label><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Annual billing</span></label></div></div><div className="desc">Don't use checkboxes for mutually exclusive options — that's what radio groups are for.</div></div>
 </div>
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><IndeterminateCheckbox /><span className="nm-choice-field__label">Select all (3 of 7)</span></label></div><div className="desc">Drive the mixed state from real partial selection, and clicking it should select everything.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Select all</span></label></div><div className="desc">Don't show a plain checked "select all" when only some items are actually selected — say so with mixed.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame" style={{pointerEvents:'none'}}><label className="nm-choice-field"><IndeterminateCheckbox /><span className="nm-choice-field__label">Select all (3 of 7)</span></label></div><div className="desc">Drive the mixed state from real partial selection, and clicking it should select everything.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{pointerEvents:'none'}}><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox" defaultChecked /><span className="nm-choice-field__label">Select all</span></label></div><div className="desc">Don't show a plain checked "select all" when only some items are actually selected — say so with mixed.</div></div>
 </div>
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox is-readonly" defaultChecked readOnly tabIndex={-1} aria-readonly="true" /><span className="nm-choice-field__label">Two-factor auth (required by org policy)</span></label></div><div className="desc">Use read-only when a value can't change right now but the user still needs to see and submit it.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><input type="checkbox" className="nm-checkbox" defaultChecked disabled style={{opacity:0.4}} /></div><div className="desc">Don't reach for the native disabled look — it drops the value from the form and gives no reason why.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame" style={{pointerEvents:'none'}}><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox is-readonly" defaultChecked readOnly tabIndex={-1} aria-readonly="true" /><span className="nm-choice-field__label">Two-factor auth (required by org policy)</span></label></div><div className="desc">Use read-only when a value can't change right now but the user still needs to see and submit it.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{pointerEvents:'none'}}><input type="checkbox" className="nm-checkbox" defaultChecked disabled style={{opacity:0.4}} /></div><div className="desc">Don't reach for the native disabled look — it drops the value from the form and gives no reason why.</div></div>
 </div>
 
 </section>
@@ -296,7 +335,7 @@ No JavaScript component is required for a plain checkbox — it's a native `<inp
   <input type="checkbox" class="nm-checkbox">
   <span class="nm-choice-field__label">
     I agree to the terms of service
-    <span class="nm-choice-field__required">*</span>
+    <span class="nm-choice-field__required">(required)</span>
   </span>
 </label>
 ```
