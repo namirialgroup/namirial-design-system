@@ -61,7 +61,7 @@ export function ToggleSandbox() {
               className="nm-switch__input"
               tabIndex={state === 'readonly' ? -1 : undefined}
               aria-readonly={state === 'readonly' ? true : undefined}
-              onChange={() => {}}
+              onChange={(e) => setSelection(e.target.checked ? 'on' : 'off')}
             />
             <span className="nm-switch__thumb"></span>
           </span>

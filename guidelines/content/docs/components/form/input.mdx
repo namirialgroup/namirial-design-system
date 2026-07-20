@@ -1,8 +1,431 @@
 ---
 title: Input
-description: Coming soon.
+description: Inputs capture a single line of free-text or numeric data.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Form</p>
+
+<p className="lede">An input captures a single value typed by the user — text, a number, a date, a currency amount, a color. Namirial inputs are built from <code>--nm-input-*</code> tokens defined in <code>namirial-theme.css</code>, ship in four sizes, and share the same <code>.nm-input__label</code> and <code>.nm-input__help</code> parts used by select and search.</p>
+
+<div className="hero-stage">
+  <div className="nm-input nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Email address<span className="nm-input__required">*</span></label>
+    <div className="nm-input__container">
+      <input className="nm-input__field" placeholder="you@company.com" />
+    </div>
+    <span className="nm-input__help">We'll never share your email.</span>
+  </div>
+  <div className="nm-input nm-input--md nm-input--success" style={{width:'280px'}}>
+    <label className="nm-input__label">Company name</label>
+    <div className="nm-input__container">
+      <input className="nm-input__field" defaultValue="Namirial S.p.A." />
+      <Ic n="check" />
+    </div>
+    <span className="nm-input__help">Looks good.</span>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+An input is the default control for a single line of free-form data — a name, an email, an amount, a date. Pair it with a clear label and, when the format matters, a help text that shows the expected shape before the user gets it wrong.
+
+### When to use
+
+- A single line of text, a number, a date, or a color value
+- Any field where the set of valid answers is too large to list (name, address, amount)
+- As the text half of a combo field — currency, percentage, or a searchable select
+
+### When not to use
+
+- For a choice from a short, known list — use **select** instead.
+- For multi-line content like a message or description — use **textarea**.
+- For filtering a list or catalog as the user types — use **search**.
+- For a fixed-length code like an OTP or PIN — use **code**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+An input is a label, a bordered container, and an optional help text — three independently-styled parts, each with its own token group. Icons and prefixes live inside the container, flanking the field.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="nm-input nm-input--md giant" style={{width:'280px',pointerEvents:'none'}}>
+    <label className="nm-input__label">Legal name<span className="nm-input__required">*</span></label>
+    <div className="nm-input__container">
+      <Ic n="user" />
+      <input className="nm-input__field" placeholder="Jane Doe" />
+    </div>
+    <span className="nm-input__help">As it appears on your ID.</span>
+  </div>
+  <div className="labelpoint" style={{top:'10px',left:'0px'}}>1 · <b>Label</b></div>
+  <div className="dot" style={{top:'40px',left:'120px'}}></div>
+  <div className="labelpoint" style={{top:'10px',right:'0px'}}>2 · <b>Required mark</b></div>
+  <div className="dot" style={{top:'40px',right:'190px'}}></div>
+  <div className="labelpoint" style={{bottom:'90px',left:'0px'}}>3 · <b>Container</b></div>
+  <div className="dot" style={{bottom:'130px',left:'150px'}}></div>
+  <div className="labelpoint" style={{bottom:'50px',left:'0px'}}>4 · <b>Leading icon</b></div>
+  <div className="dot" style={{bottom:'110px',left:'90px'}}></div>
+  <div className="labelpoint" style={{bottom:'10px',left:'50%',transform:'translateX(-50%)'}}>5 · <b>Field</b></div>
+  <div className="dot" style={{bottom:'110px',left:'50%',transform:'translateX(-50%)'}}></div>
+  <div className="labelpoint" style={{bottom:'50px',right:'0px'}}>6 · <b>Help text</b></div>
+  <div className="dot" style={{bottom:'75px',right:'110px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Label | Text color | `--nm-input-label-fg` |
+| Required mark | Color | `--nm-input-label-required` |
+| Optional mark | Color | `--nm-input-label-optional` |
+| Container | Fill | `--nm-input-bg` |
+| Container | Fill on hover | `--nm-input-bg-hover` |
+| Container | Fill, read-only | `--nm-input-bg-readonly` |
+| Container | Border | `--nm-input-border` |
+| Container | Radius | `border-radius` — 6 / 10 / 12 / 12 px (xs → xl) |
+| Field | Text color | `--nm-input-text` |
+| Field | Placeholder color | `--nm-input-placeholder` |
+| Icons | Color | `--nm-input-icon` |
+| Help text | Color | `--nm-input-help-fg` |
+| Focus ring | Color | `--nm-input-focus-ring`, `box-shadow` 2px, no offset |
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+Input ships in four sizes — there is no `sm` step, unlike button. Match the size to the density of the surrounding form.
+
+<div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--xs" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>12px</b> · h <b>24px</b> · r <b>6</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--md" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>16px</b> · h <b>40px</b> · r <b>10</b></div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--lg" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>20px</b> · h <b>48px</b> · r <b>12</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--xl" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>24px</b> · h <b>56px</b> · r <b>12</b></div></div>
+
+#### Choosing a size
+
+- `xs` — dense tables, inline editing, filter bars
+- `md` — default for forms and dialogs
+- `lg` — prominent single-field forms, onboarding
+- `xl` — signing surfaces, marketing lead-capture
+
+</section>
+
+<section className="block" id="content-types">
+
+## Content types
+
+The field between the label and the help text adapts to the kind of value it captures. All variants share the same `.nm-input__container`; only the contents change.
+
+### Default
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'260px'}}>
+    <label className="nm-input__label">Full name</label>
+    <div className="nm-input__container">
+      <input className="nm-input__field" placeholder="Jane Doe" />
+    </div>
+  </div>
+</div>
+
+### Icon left / Icon right
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'260px'}}>
+    <label className="nm-input__label">Email</label>
+    <div className="nm-input__container">
+      <Ic n="mail" />
+      <input className="nm-input__field" placeholder="you@company.com" />
+    </div>
+  </div>
+  <div className="nm-input nm-input--md" style={{width:'260px'}}>
+    <label className="nm-input__label">Website</label>
+    <div className="nm-input__container">
+      <input className="nm-input__field" placeholder="namirial.com" />
+      <Ic n="globe" />
+    </div>
+  </div>
+</div>
+
+Use `.nm-input__icon-leading` for an icon that identifies the field's format (an envelope for email). Use `.nm-input__icon-trailing` for one that reacts to state — a chevron for select, a checkmark for a validated field.
+
+### Currency / Percentage
+
+A combo field splits the container into two zones with `.nm-input__container--combo`: a fixed prefix or suffix (`.nm-input__combo-left` / `.nm-input__combo-right`) separated from the editable field by `.nm-input__combo-divider`.
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'220px'}}>
+    <label className="nm-input__label">Price</label>
+    <div className="nm-input__container nm-input__container--combo">
+      <span className="nm-input__combo-left">$</span>
+      <span className="nm-input__combo-divider"></span>
+      <input className="nm-input__field" style={{padding:'0 12px'}} placeholder="0.00" />
+    </div>
+  </div>
+  <div className="nm-input nm-input--md" style={{width:'220px'}}>
+    <label className="nm-input__label">Discount</label>
+    <div className="nm-input__container nm-input__container--combo">
+      <input className="nm-input__field" style={{padding:'0 12px'}} placeholder="0" />
+      <span className="nm-input__combo-divider"></span>
+      <span className="nm-input__combo-right">%</span>
+    </div>
+  </div>
+</div>
+
+### Clear
+
+A trailing icon becomes an actual clear action once the field has a value — render it as a `<button>`, not a decorative icon.
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'260px'}}>
+    <label className="nm-input__label">Tag</label>
+    <div className="nm-input__container">
+      <input className="nm-input__field" defaultValue="invoice-2026" />
+      <button type="button" className="nm-input__icon-trailing" aria-label="Clear" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Ic n="x" /></button>
+    </div>
+  </div>
+</div>
+
+### Color picker
+
+`.nm-input__color-swatch` renders the current value; pair it with a visually-hidden native `<input type="color">` (`.nm-input__color-native`) so the platform color picker still opens on click.
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'220px'}}>
+    <label className="nm-input__label">Accent color</label>
+    <div className="nm-input__container">
+      <span className="nm-input__color-swatch" style={{background:'#047c76'}}></span>
+      <input className="nm-input__field" defaultValue="#047C76" />
+    </div>
+  </div>
+</div>
+
+### Date
+
+Native `<input type="date">` is restyled to hide the default calendar icon so a leading `calendar` icon from the system's icon set can take its place.
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'220px'}}>
+    <label className="nm-input__label">Signing date</label>
+    <div className="nm-input__container">
+      <Ic n="calendar" />
+      <input type="date" className="nm-input__field" />
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="label">
+
+## Label
+
+`.nm-input__label` accepts an optional required or optional marker. Mark a field required only when the user must actively provide it — most fields don't need either marker.
+
+<div className="example stacked">
+  <div className="nm-input nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Full name</label>
+    <div className="nm-input__container"><input className="nm-input__field" placeholder="Jane Doe" /></div>
+  </div>
+  <div className="nm-input nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Tax ID<span className="nm-input__required">*</span></label>
+    <div className="nm-input__container"><input className="nm-input__field" placeholder="IT12345678901" /></div>
+  </div>
+  <div className="nm-input nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Middle name<span className="nm-input__optional">(optional)</span></label>
+    <div className="nm-input__container"><input className="nm-input__field" /></div>
+  </div>
+</div>
+
+<p className="caption">Bare · required · optional</p>
+
+</section>
+
+<section className="block" id="states">
+
+## Interaction & validation states
+
+Every input responds to hover and focus, can be locked read-only, and carries three validation intents that recolor the border, help text, and required mark together.
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'200px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Default" readOnly /></div></div>
+  <div className="nm-input nm-input--md" style={{width:'200px'}}><div className="nm-input__container" data-state="hover"><input className="nm-input__field" placeholder="Hover" readOnly /></div></div>
+  <div className="nm-input nm-input--md" style={{width:'200px'}}><div className="nm-input__container" data-state="focus"><input className="nm-input__field" placeholder="Focus" readOnly /></div></div>
+  <div className="nm-input nm-input--md nm-input--readonly" style={{width:'200px'}}><div className="nm-input__container"><input className="nm-input__field" defaultValue="Read-only" readOnly /></div></div>
+</div>
+
+<p className="caption">Default → hover → focus → read-only</p>
+
+<div className="example">
+  <div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}>
+    <label className="nm-input__label">Email<span className="nm-input__required">*</span></label>
+    <div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /></div>
+    <span className="nm-input__help">Enter a valid email address.</span>
+  </div>
+  <div className="nm-input nm-input--md nm-input--warning" style={{width:'220px'}}>
+    <label className="nm-input__label">Password</label>
+    <div className="nm-input__container"><input className="nm-input__field" type="password" defaultValue="weakpass" /></div>
+    <span className="nm-input__help">This password is weak.</span>
+  </div>
+  <div className="nm-input nm-input--md nm-input--success" style={{width:'220px'}}>
+    <label className="nm-input__label">Username</label>
+    <div className="nm-input__container"><input className="nm-input__field" defaultValue="jane.doe" /><Ic n="check" /></div>
+    <span className="nm-input__help">Username is available.</span>
+  </div>
+</div>
+
+<p className="caption">Error · warning · success — <code>nm-input--error</code>, <code>nm-input--warning</code>, <code>nm-input--success</code></p>
+
+#### No disabled state
+
+Like every Namirial control, inputs never ship a browser-default disabled look. Use **read-only** (`nm-input--readonly`) when a value can't change right now but should still be visible and still submit with the form.
+
+#### Focus
+
+Focus is rendered as a 2px `box-shadow` ring in `--nm-input-focus-ring`, not an outline — it sits flush against the container instead of floating outside it. It triggers on `:focus-within`, so clicking anywhere in the container (including a leading icon) focuses the field.
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Input tokens are remapped under `.dark`. Contrast and hover directionality are handled for you.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-input nm-input--md" style={{width:'220px'}}>
+        <label className="nm-input__label">Email<span className="nm-input__required">*</span></label>
+        <div className="nm-input__container"><Ic n="mail" /><input className="nm-input__field" placeholder="you@company.com" /></div>
+        <span className="nm-input__help">We'll never share your email.</span>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-input nm-input--md" style={{width:'220px'}}>
+        <label className="nm-input__label">Email<span className="nm-input__required">*</span></label>
+        <div className="nm-input__container"><Ic n="mail" /><input className="nm-input__field" placeholder="you@company.com" /></div>
+        <span className="nm-input__help">We'll never share your email.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Card number<span className="nm-input__optional">(optional)</span></label><div className="nm-input__container"><input className="nm-input__field" placeholder="4242 4242 4242 4242" /></div></div></div><div className="desc">Show the expected format as placeholder text, not as the label.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Enter 16 digits, no spaces, format XXXX-XXXX-XXXX-XXXX</label><div className="nm-input__container"><input className="nm-input__field" /></div></div></div><div className="desc">Don't cram formatting rules into the label — that's what help text and placeholder are for.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}><label className="nm-input__label">Email<span className="nm-input__required">*</span></label><div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /></div><span className="nm-input__help">Enter a valid email address.</span></div></div><div className="desc">Pair an error border with a help text that says exactly what to fix.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}><label className="nm-input__label">Email</label><div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /></div></div></div><div className="desc">Don't show a red border with no explanation — the user can see something's wrong but not what.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md nm-input--readonly" style={{width:'220px'}}><label className="nm-input__label">Organization</label><div className="nm-input__container"><input className="nm-input__field" defaultValue="Namirial S.p.A." readOnly /></div></div></div><div className="desc">Use read-only for a value the user can see and submit but can't edit here.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container" style={{opacity:0.4,pointerEvents:'none'}}><input className="nm-input__field" defaultValue="Namirial S.p.A." disabled /></div></div></div><div className="desc">Don't grey out a field with the native disabled state — its value drops out of the submitted form.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Always associate the label with the field — wrap both in `.nm-input` and use `for`/`id`, or nest the `<input>` inside the `<label>`.
+- Use the correct `type` (`email`, `tel`, `number`, `date`) so mobile keyboards and browser validation match the data.
+
+#### Help & error text
+
+- Connect help and error text to the field with `aria-describedby` so screen readers announce it alongside the label.
+- On error, add `aria-invalid="true"` to the `<input>` in addition to the `nm-input--error` class — the class is visual only.
+
+#### Keyboard
+
+- Tab moves focus into the field; all native text-editing shortcuts work unmodified.
+- Focus uses `:focus-within` on the container, so clicking a leading/trailing icon also focuses the field.
+
+#### Labeling
+
+- Icon-only trailing actions (like Clear) must be a real `<button>` with an `aria-label`, never a bare icon with a click handler.
+- Never rely on the border color alone to communicate validation state — pair it with visible help text.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-input-bg</td><td>Container fill, default</td></tr>
+<tr><td className="tok">--nm-input-bg-hover</td><td>Container fill, hover</td></tr>
+<tr><td className="tok">--nm-input-bg-readonly</td><td>Container fill, read-only</td></tr>
+<tr><td className="tok">--nm-input-border</td><td>Container border — recolored by <code>--error</code> / <code>--warning</code> / <code>--success</code></td></tr>
+<tr><td className="tok">--nm-input-focus-ring</td><td>Focus box-shadow color</td></tr>
+<tr><td className="tok">--nm-input-text</td><td>Field value color</td></tr>
+<tr><td className="tok">--nm-input-placeholder</td><td>Placeholder color</td></tr>
+<tr><td className="tok">--nm-input-icon</td><td>Leading / trailing icon color</td></tr>
+<tr><td className="tok">--nm-input-label-fg</td><td>Label text color</td></tr>
+<tr><td className="tok">--nm-input-label-required</td><td>Required mark color — recolored by validation intent</td></tr>
+<tr><td className="tok">--nm-input-label-optional</td><td>Optional mark color</td></tr>
+<tr><td className="tok">--nm-input-help-fg</td><td>Help text color — recolored by validation intent</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+No JavaScript is required for a plain input — it's native HTML styled by CSS classes.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-input nm-input--md">
+  <label class="nm-input__label">
+    Email address
+    <span class="nm-input__required">*</span>
+  </label>
+  <div class="nm-input__container">
+    <input class="nm-input__field" placeholder="you@company.com">
+  </div>
+  <span class="nm-input__help">We'll never share your email.</span>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-input--{size}` | xs · md · lg · xl | `md` |
+| `nm-input--{intent}` | error · warning · success | — |
+| `nm-input--readonly` | Locks the container against edits | — |
+| `nm-input__container--combo` | Splits the container into prefix/suffix + field, for currency/percentage | — |
+| `nm-input__icon-leading` / `nm-input__icon-trailing` | Positions an icon inside the container | — |
+| `nm-input__required` / `nm-input__optional` | Marks the label | — |
+
+</section>

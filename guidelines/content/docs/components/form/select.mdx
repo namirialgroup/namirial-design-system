@@ -1,8 +1,305 @@
 ---
 title: Select
-description: Coming soon.
+description: Select lets a user pick from a short, known list of options.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Form</p>
+
+<p className="lede">Select lets a user pick one or more values from a fixed list. Because no browser lets you restyle a native <code>&lt;select&gt;</code>, Namirial select is built as a custom combobox: an <code>.nm-input--select</code> trigger paired with an <code>.nm-dropdown</code> menu, sharing every label, help-text, size, and validation token with <a href="/docs/components/form/input">input</a>.</p>
+
+<div className="hero-stage">
+  <div className="nm-input nm-input--select nm-input--md" style={{width:'240px'}}>
+    <label className="nm-input__label">Country<span className="nm-input__required">*</span></label>
+    <div className="nm-input__container" role="combobox" aria-expanded="false">
+      <span className="nm-input__select-value">Italy</span>
+      <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+    </div>
+  </div>
+  <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'240px'}}>
+    <label className="nm-input__label">Document type</label>
+    <div className="nm-input__container" role="combobox" aria-expanded="true">
+      <span className="nm-input__select-value--placeholder">Select a type</span>
+      <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+    </div>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+Select trades the openness of an input for the safety of a fixed list — the user can only submit a value you've already validated. Reach for it whenever the answer space is small enough to enumerate and stable enough not to need free text.
+
+### When to use
+
+- A closed set of mutually-exclusive options — country, document type, currency
+- A list too long for radio buttons but too structured for free text (roughly 5–50 items)
+- Multi-select from a known set of tags, roles, or categories
+
+### When not to use
+
+- Two to four always-visible options — a **radio group** or **segmented control** reads faster with no extra click.
+- A value the user needs to type or that isn't in any fixed list — use **input**.
+- A large, unstructured, or searchable catalog (documents, contacts, products) — use **search**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+Select reuses the input's label, container, and help text unchanged. What's different is the container's content — a `.nm-input__select-value` instead of a text field — and a `.nm-dropdown` menu that opens beneath it.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="nm-input nm-input--select is-open nm-input--md giant" style={{width:'220px',pointerEvents:'none'}}>
+    <label className="nm-input__label">Role</label>
+    <div className="nm-input__container" role="combobox" aria-expanded="true">
+      <span className="nm-input__select-value">Administrator</span>
+      <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+    </div>
+  </div>
+  <div className="labelpoint" style={{top:'10px',left:'0px'}}>1 · <b>Label</b></div>
+  <div className="dot" style={{top:'40px',left:'80px'}}></div>
+  <div className="labelpoint" style={{bottom:'80px',left:'0px'}}>2 · <b>Trigger</b></div>
+  <div className="dot" style={{bottom:'110px',left:'90px'}}></div>
+  <div className="labelpoint" style={{bottom:'80px',right:'0px'}}>3 · <b>Selected value</b></div>
+  <div className="dot" style={{bottom:'110px',right:'190px'}}></div>
+  <div className="labelpoint" style={{bottom:'40px',left:'0px'}}>4 · <b>Chevron</b></div>
+  <div className="dot" style={{bottom:'110px',left:'190px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Trigger | Same as input container | `--nm-input-*` (see [Input](/docs/components/form/input)) |
+| Selected value | Text color | `--nm-input-text` |
+| Placeholder | Text color | `--nm-input-placeholder` |
+| Chevron | Rotation on open | `.is-open .nm-input__icon-trailing { transform: rotate(180deg) }` |
+| Menu | Fill | `--nm-dropdown-bg` |
+| Menu | Border / shadow | `--nm-dropdown-border` / `--nm-dropdown-shadow` |
+| Option | Text color | `--nm-dropdown-item-text` |
+| Option | Hover fill | `--nm-dropdown-item-hover-bg` |
+| Option | Selected fill / marker | `--nm-dropdown-item-active-bg` / `--nm-dropdown-item-active-fg` |
+
+</section>
+
+<section className="block" id="menu">
+
+## Trigger & menu
+
+The trigger is a `.nm-input--select` container; the menu is a separate `.nm-dropdown` positioned below it. They're shown side by side here — in product, the menu is absolutely positioned and only one is visible at a time.
+
+<div className="example">
+  <div className="nm-input nm-input--select nm-input--md" style={{width:'200px'}}>
+    <label className="nm-input__label">Status</label>
+    <div className="nm-input__container" role="combobox" aria-expanded="false">
+      <span className="nm-input__select-value">In review</span>
+      <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+    </div>
+  </div>
+  <div className="nm-dropdown" role="listbox" style={{width:'200px'}}>
+    <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Draft</span></div>
+    <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">In review</span></div>
+    <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Approved</span></div>
+    <div className="nm-dropdown__separator"></div>
+    <div className="nm-dropdown__item nm-dropdown__item--disabled" role="option" aria-disabled="true"><span className="nm-dropdown__item-label">Archived</span></div>
+  </div>
+</div>
+
+<p className="caption">Closed trigger · open menu with a selected item, a separator, and a disabled item</p>
+
+Selected options get a filled background, bold weight, and a 2px marker via `.nm-dropdown__item[aria-selected="true"]`. Hover shows the same marker at low weight so users can preview where they'll land before clicking.
+
+</section>
+
+<section className="block" id="multi">
+
+## Multi-select
+
+When more than one value can be chosen, render each selection as an `.nm-tag` inside the trigger instead of plain text, and mark matching menu items with `.nm-dropdown__item--multi` (a checkbox-style marker instead of the single-select dot).
+
+<div className="example">
+  <div className="nm-input nm-input--select nm-input--md" style={{width:'320px'}}>
+    <label className="nm-input__label">Roles</label>
+    <div className="nm-input__container nm-input__container--flush-start" role="combobox" aria-expanded="false" style={{flexWrap:'wrap',minHeight:'40px'}}>
+      <span className="nm-tag">Signer<button type="button" className="nm-tag__remove" aria-label="Remove Signer"><Ic n="x" /></button></span>
+      <span className="nm-tag">Approver<button type="button" className="nm-tag__remove" aria-label="Remove Approver"><Ic n="x" /></button></span>
+      <span className="nm-input__icon-trailing" style={{marginLeft:'auto'}}><Ic n="chevron-down" /></span>
+    </div>
+  </div>
+  <div className="nm-dropdown" role="listbox" aria-multiselectable="true" style={{width:'200px'}}>
+    <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="true"><Ic n="check-square" /><span className="nm-dropdown__item-label">Signer</span></div>
+    <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="true"><Ic n="check-square" /><span className="nm-dropdown__item-label">Approver</span></div>
+    <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="false"><Ic n="square" /><span className="nm-dropdown__item-label">Viewer</span></div>
+  </div>
+</div>
+
+Use `.nm-input__container--flush-start` so the first tag sits flush with the container's edge, matching the padding rhythm of a plain text value.
+
+</section>
+
+<section className="block" id="states">
+
+## States
+
+Select shares every interaction and validation state with input — hover, focus, read-only, error, warning, success — plus an open/closed state of its own.
+
+<div className="example">
+  <div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" aria-expanded="false"><span className="nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
+  <div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" data-state="hover"><span className="nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
+  <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" aria-expanded="true" data-state="focus"><span className="nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
+  <div className="nm-input nm-input--select nm-input--readonly nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value">Italy</span></div></div>
+</div>
+
+<p className="caption">Closed → hover → open (focused) → read-only</p>
+
+<div className="example">
+  <div className="nm-input nm-input--select nm-input--error nm-input--md" style={{width:'220px'}}>
+    <label className="nm-input__label">Country<span className="nm-input__required">*</span></label>
+    <div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Select a country</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
+    <span className="nm-input__help">Select a country to continue.</span>
+  </div>
+</div>
+
+<p className="caption">Error — same <code>nm-input--error</code> modifier as input</p>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'200px'}}>
+        <div className="nm-input__container" role="combobox" aria-expanded="true"><span className="nm-input__select-value">Italy</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
+      </div>
+      <div className="nm-dropdown" role="listbox" style={{width:'180px'}}>
+        <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">Italy</span></div>
+        <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Germany</span></div>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'200px'}}>
+        <div className="nm-input__container" role="combobox" aria-expanded="true"><span className="nm-input__select-value">Italy</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
+      </div>
+      <div className="nm-dropdown" role="listbox" style={{width:'180px'}}>
+        <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">Italy</span></div>
+        <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Germany</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Select currency</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Use a placeholder that names what's being chosen, not a generic "Select".</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value">USD</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Don't pre-select a value the user hasn't actually chosen — an empty placeholder is more honest than a silent default.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div style={{display:'flex',gap:'8px'}}><label className="nm-choice-field"><input type="radio" className="nm-radio" defaultChecked /><span className="nm-choice-field__label">Sign</span></label><label className="nm-choice-field"><input type="radio" className="nm-radio" /><span className="nm-choice-field__label">Approve</span></label></div></div><div className="desc">For 2–4 always-visible options, use radio — it's faster than opening a menu.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'150px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value">Sign</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Don't hide two or three options behind a click when they could all be visible at once.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+Namirial select follows the ARIA combobox pattern — it is not a native `<select>`, so all keyboard and screen-reader behavior must be wired explicitly.
+
+#### Semantics
+
+- Trigger: `role="combobox"`, `aria-expanded`, `aria-controls` pointing at the menu's `id`, `aria-haspopup="listbox"`.
+- Menu: `role="listbox"` (or `role="listbox" aria-multiselectable="true"` for multi-select), each option `role="option"` with `aria-selected`.
+- Keep a hidden native `<select>` or a hidden `<input>` in sync with the chosen value so the field still submits inside a plain HTML `<form>`.
+
+#### Keyboard
+
+- Enter or Space on the trigger opens the menu; Escape closes it and returns focus to the trigger.
+- Arrow Up / Down moves through options without closing the menu; Enter commits the highlighted option.
+- Type-ahead: typing a letter jumps to the next option starting with it.
+
+#### Labeling
+
+- The trigger needs the same label association as input — `for`/`id` or nesting.
+- Disabled options use `aria-disabled="true"` and `nm-dropdown__item--disabled`; they stay in the DOM and are announced, just not selectable.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+Select inherits every `--nm-input-*` token from [Input](/docs/components/form/input) for its trigger. The menu has its own group:
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-dropdown-bg</td><td>Menu fill</td></tr>
+<tr><td className="tok">--nm-dropdown-border</td><td>Menu border</td></tr>
+<tr><td className="tok">--nm-dropdown-shadow</td><td>Menu drop shadow</td></tr>
+<tr><td className="tok">--nm-dropdown-item-text</td><td>Option text color</td></tr>
+<tr><td className="tok">--nm-dropdown-item-hover-bg</td><td>Option fill on hover</td></tr>
+<tr><td className="tok">--nm-dropdown-item-active-bg</td><td>Selected option fill</td></tr>
+<tr><td className="tok">--nm-dropdown-item-active-fg</td><td>Selected option text / marker color</td></tr>
+<tr><td className="tok">--nm-dropdown-separator</td><td>Divider line color</td></tr>
+<tr><td className="tok">--nm-tag-bg / --nm-tag-fg / --nm-tag-border</td><td>Multi-select chip appearance</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+Select needs a small amount of JavaScript to toggle the menu and sync the chosen value — there is no native element to lean on.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-input nm-input--select nm-input--md">
+  <label class="nm-input__label" id="country-label">Country</label>
+  <div class="nm-input__container" role="combobox"
+       aria-haspopup="listbox" aria-expanded="false"
+       aria-controls="country-listbox" aria-labelledby="country-label" tabindex="0">
+    <span class="nm-input__select-value--placeholder">Select a country</span>
+    <span class="nm-input__icon-trailing"><!-- chevron icon --></span>
+  </div>
+  <ul class="nm-dropdown" role="listbox" id="country-listbox" hidden>
+    <li class="nm-dropdown__item" role="option">Italy</li>
+    <li class="nm-dropdown__item" role="option">Germany</li>
+  </ul>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-input--select` | Enables select cursor + chevron rotation | — |
+| `is-open` | Rotates the trailing chevron 180° | — |
+| `nm-input__select-value` / `nm-input__select-value--placeholder` | Selected text vs. empty state | — |
+| `nm-dropdown__item--multi` | Checkbox-style marker for multi-select | — |
+| `nm-dropdown__item--disabled` | Non-selectable option | — |
+| `nm-dropdown__separator` | Divider between groups of options | — |
+
+</section>

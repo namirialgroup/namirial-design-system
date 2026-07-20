@@ -1,8 +1,252 @@
 ---
 title: Code
-description: Coming soon.
+description: Code captures a short, fixed-length verification code.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Form</p>
+
+<p className="lede">A code field captures a short, fixed-length value — a one-time password, a PIN, a signing confirmation code. Namirial doesn't give it dedicated tokens; it's a composition of single-character <a href="/docs/components/form/input">input</a> cells laid out in a row, so it inherits sizes, focus, and validation for free.</p>
+
+<div className="hero-stage">
+  <div className="code-field">
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A code field exists for exactly one job: verifying that the user has access to something out-of-band — an SMS, an authenticator app, an email. Every cell holds exactly one character, so correctness is visible before the code is even submitted.
+
+### When to use
+
+- One-time passwords (OTP) sent by SMS, email, or an authenticator app
+- A short numeric PIN a user sets and re-enters
+- A signing confirmation code embedded in a document workflow
+
+### When not to use
+
+- Any value longer than ~8 characters — a single **input** with `letter-spacing` and a monospace font reads better than a wall of cells.
+- Free-form text of any kind — use **input**.
+- A value the user selects rather than types — use **select**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+Each cell is a full `.nm-input` instance — container and field — with `maxlength="1"` and centered text, laid out with a simple flex row. There is no `.nm-code` class in the theme; the row is just `display: flex` with a gap.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="code-field giant" style={{pointerEvents:'none'}}>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
+  </div>
+  <div className="labelpoint" style={{bottom:'40px',left:'0px'}}>1 · <b>Cell</b></div>
+  <div className="dot" style={{bottom:'85px',left:'110px'}}></div>
+  <div className="labelpoint" style={{bottom:'40px',right:'0px'}}>2 · <b>Row gap: 8px</b></div>
+  <div className="dot" style={{bottom:'85px',right:'160px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Cell | Every visual property | `--nm-input-*` — identical to a size-matched input (see [Input](/docs/components/form/input)) |
+| Cell width | Fixed so digits don't reflow | `48px` default, `56px` at `lg`/`xl` |
+| Row | Gap between cells | `8px` |
+| Text | Centered in the cell | `text-align: center` on `.nm-input__field` |
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+Code cells use the same size scale as input — pick `lg` or `xl` for signing flows where legibility at a glance matters most.
+
+<div className="scale-row"><span className="sz">md</span><div><div className="code-field"><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div></div></div><div className="metric">in-page confirmations</div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="code-field lg"><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div></div></div><div className="metric">default for OTP</div></div>
+<div className="scale-row"><span className="sz">xl</span><div><div className="code-field lg"><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div></div></div><div className="metric">signing surfaces, kiosks</div></div>
+
+</section>
+
+<section className="block" id="states">
+
+## States
+
+Each cell carries its own focus ring, so the currently-active cell is unambiguous. Validation is applied to the whole row at once, not per cell.
+
+<div className="example">
+  <div className="code-field">
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container" data-state="focus"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+  </div>
+</div>
+
+<p className="caption">First digit entered, second cell focused and awaiting input</p>
+
+<div className="example">
+  <div className="code-field">
+    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
+    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div>
+    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div>
+  </div>
+  <div className="nm-input__help" style={{color:'var(--palette-negative-700)'}}>That code has expired. Request a new one.</div>
+</div>
+
+<p className="caption">Error — all four cells recolor together with <code>nm-input--error</code></p>
+
+<div className="example">
+  <div className="code-field">
+    <div className="nm-input nm-input--lg nm-input--success"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /><Ic n="check" /></div></div>
+  </div>
+</div>
+
+<p className="caption">Success shown once the whole code validates — apply it to the last cell only, not every cell</p>
+
+</section>
+
+<section className="block" id="behavior">
+
+## Behavior
+
+A code field needs a small amount of JavaScript beyond CSS: typing a digit should auto-advance focus to the next cell, Backspace on an empty cell should move focus back, and pasting a full code should split it across every cell.
+
+```js
+const cells = Array.from(row.querySelectorAll('.nm-input__field'));
+
+cells.forEach((cell, i) => {
+  cell.addEventListener('input', () => {
+    cell.value = cell.value.replace(/\D/g, '').slice(0, 1);
+    if (cell.value && cells[i + 1]) cells[i + 1].focus();
+  });
+  cell.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !cell.value && cells[i - 1]) cells[i - 1].focus();
+  });
+  cell.addEventListener('paste', (e) => {
+    const digits = e.clipboardData.getData('text').replace(/\D/g, '').split('');
+    if (digits.length < 2) return;
+    e.preventDefault();
+    digits.slice(0, cells.length).forEach((d, j) => { cells[j].value = d; });
+    cells[Math.min(digits.length, cells.length) - 1].focus();
+  });
+});
+```
+
+Validate and submit only once every cell is filled — don't ask the user to press a separate "Verify" button for a 4–6 digit code if you can submit automatically on completion.
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="code-field">
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="code-field">
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div></div></div><div className="desc">Auto-advance focus as each digit is typed — the user should never have to click the next cell.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'160px'}}><div className="nm-input__container"><input className="nm-input__field" maxLength={4} placeholder="0000" readOnly /></div></div></div><div className="desc">Don't fake a code field with a single masked input — cells make progress and correctness visible.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div></div></div><div className="desc">Support pasting a full code from a clipboard or SMS-autofill suggestion into any cell.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div style={{fontSize:'13px'}}>10+ character cells</div></div><div className="desc">Don't use a code field for anything longer than a short OTP — a plain input scales better past ~8 characters.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Use `<input inputmode="numeric" pattern="[0-9]*" maxlength="1">` per cell so mobile keyboards default to a numeric pad.
+- Wrap the row in a `<fieldset>` with a `<legend>` describing what the code is for ("Verification code sent to your phone").
+
+#### Keyboard
+
+- Auto-advance and auto-retreat (described in [Behavior](#behavior)) must not trap focus — Tab and Shift+Tab should still move a keyboard user through cells normally if they choose not to type sequentially.
+- Paste-splitting must not break the browser's native paste handling for users who paste one cell at a time.
+
+#### Labeling
+
+- Announce validation results in an `aria-live="polite"` region near the field — don't rely on color or shake animation alone.
+- Give the fieldset an `aria-describedby` pointing at any help or countdown text ("Code expires in 4:59").
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<fieldset>
+  <legend>Verification code</legend>
+  <div class="code-field">
+    <div class="nm-input nm-input--lg">
+      <div class="nm-input__container">
+        <input class="nm-input__field" inputmode="numeric" pattern="[0-9]*" maxlength="1">
+      </div>
+    </div>
+    <!-- repeat per digit -->
+  </div>
+</fieldset>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-input--{size}` | md · lg · xl per cell | `lg` |
+| `nm-input--{intent}` | error · success, applied to every cell (or the last, for success) | — |
+| `code-field` | Flex row with an 8px gap and fixed cell width | — |
+
+</section>
