@@ -4,6 +4,7 @@ description: Search filters a list or catalog as the user types.
 ---
 
 import { Ic } from '@/components/nm/icon';
+import { SearchSandbox } from '@/components/nm/search-sandbox';
 
 <p className="eyebrow">Components · Form</p>
 
@@ -12,13 +13,13 @@ import { Ic } from '@/components/nm/icon';
 <div className="hero-stage">
   <div className="nm-input nm-input--md" style={{width:'280px'}}>
     <div className="nm-input__container">
-      <Ic n="search" />
+      <span className="nm-input__icon-leading"><Ic n="search" /></span>
       <input type="search" className="nm-input__field" placeholder="Search documents" />
     </div>
   </div>
   <div className="nm-input nm-input--md" style={{width:'280px'}}>
     <div className="nm-input__container">
-      <Ic n="search" />
+      <span className="nm-input__icon-leading"><Ic n="search" /></span>
       <input type="search" className="nm-input__field" defaultValue="signature workflow" />
       <button type="button" className="nm-input__icon-trailing" aria-label="Clear search" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Ic n="x" /></button>
     </div>
@@ -29,19 +30,13 @@ import { Ic } from '@/components/nm/icon';
 
 ## Overview
 
-Search narrows a large, often unstructured collection down to what matters right now. Unlike select, it doesn't require the user to already know the exact value — they type a fragment and the system finds matches.
+The Search component helps users quickly find items within a large or unstructured collection. Instead of choosing from a predefined list, users enter a search term to filter or locate relevant results.
 
 ### When to use
-
-- Filtering a table, document list, or catalog as the user types
-- A global command palette or content search
-- Finding one item in a set too large to browse (contacts, templates, past documents)
-
-### When not to use
-
-- Choosing from a short, fixed list — use **select**.
-- Capturing a specific known value like an email or ID — use **input**.
-- The list is already short enough to scan without filtering — skip the search field entirely.
+Use the Search component when:
+- Users need to filter tables, lists, or catalogs based on their input.
+- Users need to search across content, commands, or resources, such as in a global search or command palette.
+- The collection is too large to browse efficiently, for example when finding contacts, templates, documents, or products.
 
 </section>
 
@@ -52,19 +47,32 @@ Search narrows a large, often unstructured collection down to what matters right
 Search is `.nm-input__container` with a leading search icon and a conditional trailing clear button — no dedicated CSS of its own beyond what input already defines.
 
 <div className="anatomy" aria-hidden="true">
-  <div className="nm-input nm-input--md giant" style={{width:'260px',pointerEvents:'none'}}>
-    <div className="nm-input__container">
-      <Ic n="search" />
-      <input type="search" className="nm-input__field" defaultValue="invoice-2026" />
-      <span className="nm-input__icon-trailing"><Ic n="x" /></span>
+  <div className="stage" style={{width:'640px',height:'220px'}}>
+    <div className="nm-input nm-input--md giant" style={{width:'260px',pointerEvents:'none',position:'absolute',top:'90px',left:'190px'}}>
+      <div className="nm-input__container">
+        <span className="nm-input__icon-leading"><Ic n="search" /></span>
+        <input type="search" className="nm-input__field" defaultValue="invoice-2026" />
+        <span className="nm-input__icon-trailing"><Ic n="x" /></span>
+      </div>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'640px',height:'220px',pointerEvents:'none'}} viewBox="0 0 640 220">
+      <line x1="90" y1="44" x2="110" y2="110" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="300" y1="190" x2="320" y2="125" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="44" x2="530" y2="110" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'20px',left:'40px'}}>
+      <div className="labelpoint" style={{position:'static'}}>1 · <b>Search icon</b></div>
+      <div className="dot" style={{top:'90px',left:'70px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'190px',left:'270px'}}>
+      <div className="labelpoint" style={{position:'static'}}>2 · <b>Field</b></div>
+      <div className="dot" style={{top:'-65px',left:'50px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'20px',left:'480px'}}>
+      <div className="labelpoint" style={{position:'static'}}>3 · <b>Clear button</b></div>
+      <div className="dot" style={{top:'90px',left:'50px'}}></div>
     </div>
   </div>
-  <div className="labelpoint" style={{bottom:'60px',left:'0px'}}>1 · <b>Search icon</b></div>
-  <div className="dot" style={{bottom:'110px',left:'80px'}}></div>
-  <div className="labelpoint" style={{bottom:'20px',left:'50%',transform:'translateX(-50%)'}}>2 · <b>Field</b></div>
-  <div className="dot" style={{bottom:'110px',left:'50%',transform:'translateX(-50%)'}}></div>
-  <div className="labelpoint" style={{bottom:'60px',right:'0px'}}>3 · <b>Clear button</b></div>
-  <div className="dot" style={{bottom:'110px',right:'80px'}}></div>
 </div>
 
 Reuse `.nm-input__icon-leading` for the search glyph and `.nm-input__icon-trailing` for clear — the same slots used by input's icon variants — so search never needs its own token group.
@@ -75,12 +83,13 @@ Reuse `.nm-input__icon-leading` for the search glyph and `.nm-input__icon-traili
 
 ## Sizes
 
-Same four sizes as input — pick the one that matches the surface search lives in.
+Same five sizes as input — pick the one that matches the surface search lives in.
 
-<div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--xs" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" placeholder="Filter" /></div></div></div><div className="metric"><b>filter bars</b></div></div>
-<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>toolbars, panels</b></div></div>
-<div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--lg" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>page headers</b></div></div>
-<div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--xl" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" placeholder="Search everything" /></div></div></div><div className="metric"><b>command palette</b></div></div>
+<div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--xs" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Filter" /></div></div></div><div className="metric"><b>filter bars</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input nm-input--sm" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>default for forms and dialogs</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>toolbars, panels</b></div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--lg" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>page headers</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--xl" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search everything" /></div></div></div><div className="metric"><b>command palette</b></div></div>
 
 </section>
 
@@ -90,19 +99,21 @@ Same four sizes as input — pick the one that matches the surface search lives 
 
 Pair search with a `.nm-dropdown` to show live matches beneath the field — the same menu component used by select, so results inherit its hover, selection, and separator styling for free.
 
-<div className="example stacked">
-  <div className="nm-input nm-input--md" style={{width:'320px'}}>
-    <div className="nm-input__container">
-      <Ic n="search" />
-      <input type="search" className="nm-input__field" defaultValue="invoice" />
-      <button type="button" className="nm-input__icon-trailing" aria-label="Clear search" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Ic n="x" /></button>
+<div className="example" style={{paddingBottom:'160px'}}>
+  <div style={{position:'relative', width:'240px'}}>
+    <div className="nm-input nm-input--md">
+      <div className="nm-input__container">
+        <span className="nm-input__icon-leading"><Ic n="search" /></span>
+        <input type="search" className="nm-input__field" defaultValue="invoice" />
+        <button type="button" className="nm-input__icon-trailing" aria-label="Clear search" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Ic n="x" /></button>
+      </div>
     </div>
-  </div>
-  <div className="nm-dropdown" role="listbox" style={{width:'320px'}}>
-    <div className="nm-dropdown__item" role="option"><Ic n="file-text" /><span className="nm-dropdown__item-label">invoice-2026-001.pdf</span></div>
-    <div className="nm-dropdown__item" role="option"><Ic n="file-text" /><span className="nm-dropdown__item-label">invoice-2026-002.pdf</span></div>
-    <div className="nm-dropdown__separator"></div>
-    <div className="nm-dropdown__item" role="option"><Ic n="search" /><span className="nm-dropdown__item-label">Search all documents for "invoice"</span></div>
+    <div className="nm-dropdown" role="listbox" style={{position:'absolute', top:'100%', left:0, right:0, marginTop:'4px'}}>
+      <div className="nm-dropdown__item" role="option"><Ic n="file-text" /><span className="nm-dropdown__item-label">invoice-2026-001.pdf</span></div>
+      <div className="nm-dropdown__item" role="option"><Ic n="file-text" /><span className="nm-dropdown__item-label">invoice-2026-002.pdf</span></div>
+      <div className="nm-dropdown__separator"></div>
+      <div className="nm-dropdown__item" role="option"><Ic n="search" /><span className="nm-dropdown__item-label">Search all documents for "invoice"</span></div>
+    </div>
   </div>
 </div>
 
@@ -110,16 +121,18 @@ Pair search with a `.nm-dropdown` to show live matches beneath the field — the
 
 ### No results
 
-<div className="example stacked">
-  <div className="nm-input nm-input--md" style={{width:'320px'}}>
-    <div className="nm-input__container">
-      <Ic n="search" />
-      <input type="search" className="nm-input__field" defaultValue="xyzzy" />
-      <button type="button" className="nm-input__icon-trailing" aria-label="Clear search" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Ic n="x" /></button>
+<div className="example" style={{paddingBottom:'80px'}}>
+  <div style={{position:'relative', width:'240px'}}>
+    <div className="nm-input nm-input--md">
+      <div className="nm-input__container">
+        <span className="nm-input__icon-leading"><Ic n="search" /></span>
+        <input type="search" className="nm-input__field" defaultValue="xyzzy" />
+        <button type="button" className="nm-input__icon-trailing" aria-label="Clear search" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Ic n="x" /></button>
+      </div>
     </div>
-  </div>
-  <div className="nm-dropdown" role="listbox" style={{width:'320px'}}>
-    <div className="nm-dropdown__item nm-dropdown__item--disabled" role="option">No results for "xyzzy"</div>
+    <div className="nm-dropdown" role="listbox" style={{position:'absolute', top:'100%', left:0, right:0, marginTop:'4px'}}>
+      <div className="nm-dropdown__item" role="option">No results for "xyzzy"</div>
+    </div>
   </div>
 </div>
 
@@ -130,9 +143,9 @@ Pair search with a `.nm-dropdown` to show live matches beneath the field — the
 ## States
 
 <div className="example">
-  <div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" placeholder="Search" readOnly /></div></div>
-  <div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container" data-state="hover"><Ic n="search" /><input type="search" className="nm-input__field" placeholder="Search" readOnly /></div></div>
-  <div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container" data-state="focus"><Ic n="search" /><input type="search" className="nm-input__field" defaultValue="inv" readOnly /></div></div>
+  <div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" readOnly /></div></div>
+  <div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container" data-state="hover"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" readOnly /></div></div>
+  <div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container" data-state="focus"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" defaultValue="inv" readOnly /></div></div>
 </div>
 
 <p className="caption">Empty → hover → focused with a query typed</p>
@@ -152,7 +165,7 @@ The trailing clear button should mount only once the field has a value — an em
     <div className="theme-label">Light <span>data-theme="light"</span></div>
     <div className="theme-frame">
       <div className="nm-input nm-input--md" style={{width:'240px'}}>
-        <div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" defaultValue="invoice" readOnly /><span className="nm-input__icon-trailing"><Ic n="x" /></span></div>
+        <div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" defaultValue="invoice" readOnly /><span className="nm-input__icon-trailing"><Ic n="x" /></span></div>
       </div>
     </div>
   </div>
@@ -160,7 +173,7 @@ The trailing clear button should mount only once the field has a value — an em
     <div className="theme-label">Dark <span>data-theme="dark"</span></div>
     <div className="theme-frame">
       <div className="nm-input nm-input--md" style={{width:'240px'}}>
-        <div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" defaultValue="invoice" readOnly /><span className="nm-input__icon-trailing"><Ic n="x" /></span></div>
+        <div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" defaultValue="invoice" readOnly /><span className="nm-input__icon-trailing"><Ic n="x" /></span></div>
       </div>
     </div>
   </div>
@@ -175,13 +188,13 @@ The trailing clear button should mount only once the field has a value — an em
 ## Do & don't
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" placeholder="Search documents" readOnly /></div></div></div><div className="desc">Name what's being searched in the placeholder — "documents", not just "Search".</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search documents" readOnly /></div></div></div><div className="desc">Name what's being searched in the placeholder — "documents", not just "Search".</div></div>
   <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'220px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Choose a document</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Don't use select for a catalog too large to enumerate in a menu — give the user search instead.</div></div>
 </div>
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" defaultValue="inv" readOnly /><span className="nm-input__icon-trailing"><Ic n="x" /></span></div></div></div><div className="desc">Show the clear button once there's a query — it's the fastest way to reset the filter.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><Ic n="search" /><input type="search" className="nm-input__field" defaultValue="inv" readOnly /></div></div></div><div className="desc">Don't make the user select-all-and-delete to clear a search field.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" defaultValue="inv" readOnly /><span className="nm-input__icon-trailing"><Ic n="x" /></span></div></div></div><div className="desc">Show the clear button once there's a query — it's the fastest way to reset the filter.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" defaultValue="inv" readOnly /></div></div></div><div className="desc">Don't make the user select-all-and-delete to clear a search field.</div></div>
 </div>
 
 </section>
@@ -207,6 +220,14 @@ The trailing clear button should mount only once the field has a value — an em
 
 </section>
 
+<section className="block" id="sandbox">
+
+## Playground
+
+<SearchSandbox />
+
+</section>
+
 <section className="block" id="code-usage">
 
 ## Implementation
@@ -228,7 +249,7 @@ Search is markup-only for the base field. Live filtering and the results dropdow
 
 | Class | Values | Default |
 |-------|--------|---------|
-| `nm-input--{size}` | xs · md · lg · xl | `md` |
+| `nm-input--{size}` | xs · sm · md · lg · xl | `sm` |
 | `nm-input__icon-leading` | Houses the search glyph | — |
 | `nm-input__icon-trailing` | Houses the clear button — mount conditionally | — |
 

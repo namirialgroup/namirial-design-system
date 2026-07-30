@@ -4,14 +4,15 @@ description: Inputs capture a single line of free-text or numeric data.
 ---
 
 import { Ic } from '@/components/nm/icon';
+import { InputSandbox } from '@/components/nm/input-sandbox';
 
 <p className="eyebrow">Components · Form</p>
 
-<p className="lede">An input captures a single value typed by the user — text, a number, a date, a currency amount, a color. Namirial inputs are built from <code>--nm-input-*</code> tokens defined in <code>namirial-theme.css</code>, ship in four sizes, and share the same <code>.nm-input__label</code> and <code>.nm-input__help</code> parts used by select and search.</p>
+<p className="lede">An input captures a single value typed by the user — text, a number, a date, a currency amount, a color. Namirial inputs are built from <code>--nm-input-*</code> tokens defined in <code>namirial-theme.css</code>, ship in five sizes, and share the same <code>.nm-input__label</code> and <code>.nm-input__help</code> parts used by select and search.</p>
 
 <div className="hero-stage">
   <div className="nm-input nm-input--md" style={{width:'280px'}}>
-    <label className="nm-input__label">Email address<span className="nm-input__required">*</span></label>
+    <label className="nm-input__label">Email address<span className="nm-input__required">(required)</span></label>
     <div className="nm-input__container">
       <input className="nm-input__field" placeholder="you@company.com" />
     </div>
@@ -21,7 +22,7 @@ import { Ic } from '@/components/nm/icon';
     <label className="nm-input__label">Company name</label>
     <div className="nm-input__container">
       <input className="nm-input__field" defaultValue="Namirial S.p.A." />
-      <Ic n="check" />
+      <span className="nm-input__icon-status"><Ic n="circle-check" /></span>
     </div>
     <span className="nm-input__help">Looks good.</span>
   </div>
@@ -31,20 +32,30 @@ import { Ic } from '@/components/nm/icon';
 
 ## Overview
 
-An input is the default control for a single line of free-form data — a name, an email, an amount, a date. Pair it with a clear label and, when the format matters, a help text that shows the expected shape before the user gets it wrong.
+An input is the default control for collecting a single line of free-form text or data, such as a name, email address, amount, or date. Always pair it with a clear label. When a specific format is expected, provide helpful guidance before users enter their information.
 
 ### When to use
 
-- A single line of text, a number, a date, or a color value
-- Any field where the set of valid answers is too large to list (name, address, amount)
-- As the text half of a combo field — currency, percentage, or a searchable select
+Use an input when:
 
-### When not to use
+- You need to collect a single line of free-form data and the range of valid responses is too broad to present as a predefined list.
+- The input is part of a composite field, paired with a unit, symbol, or another control (for example, a currency selector or measurement unit).
 
-- For a choice from a short, known list — use **select** instead.
-- For multi-line content like a message or description — use **textarea**.
-- For filtering a list or catalog as the user types — use **search**.
-- For a fixed-length code like an OTP or PIN — use **code**.
+Consider another component when:
+
+- Users need to choose from a fixed set of options (use Select, Radio buttons, or Checkboxes).
+- Users need to enter longer or multi-line content (use Textarea).
+- The value requires a specialised input pattern or interaction (e.g. Code, Search).
+
+**Required fields** <br/>
+Do not indicate required fields with an asterisk (*). Use the label “(required)” instead.
+
+If all or most fields in a form are mandatory, indicate this at the beginning of the form by using one of the following statements:
+
+- “All fields are required.”
+- “All fields are required unless otherwise indicated.”
+
+In forms where only some fields are optional, mark those fields with “(optional)”.
 
 </section>
 
@@ -55,26 +66,48 @@ An input is the default control for a single line of free-form data — a name, 
 An input is a label, a bordered container, and an optional help text — three independently-styled parts, each with its own token group. Icons and prefixes live inside the container, flanking the field.
 
 <div className="anatomy" aria-hidden="true">
-  <div className="nm-input nm-input--md giant" style={{width:'280px',pointerEvents:'none'}}>
-    <label className="nm-input__label">Legal name<span className="nm-input__required">*</span></label>
-    <div className="nm-input__container">
-      <Ic n="user" />
-      <input className="nm-input__field" placeholder="Jane Doe" />
+  <div className="stage" style={{width:'880px',height:'320px'}}>
+    <div className="nm-input nm-input--md giant" style={{width:'260px',pointerEvents:'none',position:'absolute',top:'96px',left:'310px'}}>
+      <label className="nm-input__label">Legal name<span className="nm-input__required">(required)</span></label>
+      <div className="nm-input__container">
+        <span className="nm-input__icon-leading"><Ic n="user" /></span>
+        <input className="nm-input__field" defaultValue="Jane Doe" />
+      </div>
+      <span className="nm-input__help">As it appears on your ID.</span>
     </div>
-    <span className="nm-input__help">As it appears on your ID.</span>
+    <svg style={{position:'absolute',top:0,left:0,width:'880px',height:'320px',pointerEvents:'none'}} viewBox="0 0 880 320">
+      <line x1="90" y1="40" x2="250" y2="60" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="790" y1="40" x2="416" y2="77" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="90" y1="165" x2="230" y2="157" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="790" y1="165" x2="500" y2="157" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="90" y1="285" x2="260" y2="230" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="790" y1="285" x2="660" y2="190" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'16px',left:'30px'}}>
+      <div className="labelpoint" style={{position:'static'}}>1 · <b>Label</b></div>
+      <div className="dot" style={{top:'44px',left:'220px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'16px',left:'710px'}}>
+      <div className="labelpoint" style={{position:'static'}}>2 · <b>Required mark</b></div>
+      <div className="dot" style={{top:'61px',left:'-294px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'140px',left:'30px'}}>
+      <div className="labelpoint" style={{position:'static'}}>3 · <b>Leading icon</b></div>
+      <div className="dot" style={{top:'17px',left:'200px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'140px',left:'710px'}}>
+      <div className="labelpoint" style={{position:'static'}}>4 · <b>Field</b></div>
+      <div className="dot" style={{top:'17px',left:'-210px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'260px',left:'30px'}}>
+      <div className="labelpoint" style={{position:'static'}}>5 · <b>Help text</b></div>
+      <div className="dot" style={{top:'-30px',left:'230px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'260px',left:'710px'}}>
+      <div className="labelpoint" style={{position:'static'}}>6 · <b>Container</b></div>
+      <div className="dot" style={{top:'-70px',left:'-50px'}}></div>
+    </div>
   </div>
-  <div className="labelpoint" style={{top:'10px',left:'0px'}}>1 · <b>Label</b></div>
-  <div className="dot" style={{top:'40px',left:'120px'}}></div>
-  <div className="labelpoint" style={{top:'10px',right:'0px'}}>2 · <b>Required mark</b></div>
-  <div className="dot" style={{top:'40px',right:'190px'}}></div>
-  <div className="labelpoint" style={{bottom:'90px',left:'0px'}}>3 · <b>Container</b></div>
-  <div className="dot" style={{bottom:'130px',left:'150px'}}></div>
-  <div className="labelpoint" style={{bottom:'50px',left:'0px'}}>4 · <b>Leading icon</b></div>
-  <div className="dot" style={{bottom:'110px',left:'90px'}}></div>
-  <div className="labelpoint" style={{bottom:'10px',left:'50%',transform:'translateX(-50%)'}}>5 · <b>Field</b></div>
-  <div className="dot" style={{bottom:'110px',left:'50%',transform:'translateX(-50%)'}}></div>
-  <div className="labelpoint" style={{bottom:'50px',right:'0px'}}>6 · <b>Help text</b></div>
-  <div className="dot" style={{bottom:'75px',right:'110px'}}></div>
 </div>
 
 #### Tokens and values that drive each part
@@ -91,7 +124,8 @@ An input is a label, a bordered container, and an optional help text — three i
 | Container | Radius | `border-radius` — 6 / 10 / 12 / 12 px (xs → xl) |
 | Field | Text color | `--nm-input-text` |
 | Field | Placeholder color | `--nm-input-placeholder` |
-| Icons | Color | `--nm-input-icon` |
+| Leading / trailing icon | Color | `--nm-input-text` — neutral, unaffected by validation intent |
+| Status icon | Color | `--nm-input-icon` — recolored by validation intent |
 | Help text | Color | `--nm-input-help-fg` |
 | Focus ring | Color | `--nm-input-focus-ring`, `box-shadow` 2px, no offset |
 
@@ -101,9 +135,10 @@ An input is a label, a bordered container, and an optional help text — three i
 
 ## Sizes
 
-Input ships in four sizes — there is no `sm` step, unlike button. Match the size to the density of the surrounding form.
+Input ships in five sizes, matching button's `xs`–`xl` scale. Match the size to the density of the surrounding form.
 
 <div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--xs" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>12px</b> · h <b>24px</b> · r <b>6</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input nm-input--sm" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>14px</b> · h <b>32px</b> · r <b>8</b></div></div>
 <div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--md" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>16px</b> · h <b>40px</b> · r <b>10</b></div></div>
 <div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--lg" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>20px</b> · h <b>48px</b> · r <b>12</b></div></div>
 <div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--xl" style={{width:'240px'}}><div className="nm-input__container"><input className="nm-input__field" placeholder="Placeholder" /></div></div></div><div className="metric"><b>24px</b> · h <b>56px</b> · r <b>12</b></div></div>
@@ -111,7 +146,8 @@ Input ships in four sizes — there is no `sm` step, unlike button. Match the si
 #### Choosing a size
 
 - `xs` — dense tables, inline editing, filter bars
-- `md` — default for forms and dialogs
+- `sm` — default for forms and dialogs
+- `md` — standard content forms, cards
 - `lg` — prominent single-field forms, onboarding
 - `xl` — signing surfaces, marketing lead-capture
 
@@ -129,7 +165,7 @@ The field between the label and the help text adapts to the kind of value it cap
   <div className="nm-input nm-input--md" style={{width:'260px'}}>
     <label className="nm-input__label">Full name</label>
     <div className="nm-input__container">
-      <input className="nm-input__field" placeholder="Jane Doe" />
+      <input className="nm-input__field" defaultValue="Jane Doe" />
     </div>
   </div>
 </div>
@@ -140,43 +176,20 @@ The field between the label and the help text adapts to the kind of value it cap
   <div className="nm-input nm-input--md" style={{width:'260px'}}>
     <label className="nm-input__label">Email</label>
     <div className="nm-input__container">
-      <Ic n="mail" />
-      <input className="nm-input__field" placeholder="you@company.com" />
+      <span className="nm-input__icon-leading"><Ic n="mail" /></span>
+      <input className="nm-input__field" defaultValue="you@company.com" />
     </div>
   </div>
   <div className="nm-input nm-input--md" style={{width:'260px'}}>
     <label className="nm-input__label">Website</label>
     <div className="nm-input__container">
-      <input className="nm-input__field" placeholder="namirial.com" />
-      <Ic n="globe" />
+      <input className="nm-input__field" defaultValue="namirial.com" />
+      <span className="nm-input__icon-trailing"><Ic n="globe" /></span>
     </div>
   </div>
 </div>
 
-Use `.nm-input__icon-leading` for an icon that identifies the field's format (an envelope for email). Use `.nm-input__icon-trailing` for one that reacts to state — a chevron for select, a checkmark for a validated field.
-
-### Currency / Percentage
-
-A combo field splits the container into two zones with `.nm-input__container--combo`: a fixed prefix or suffix (`.nm-input__combo-left` / `.nm-input__combo-right`) separated from the editable field by `.nm-input__combo-divider`.
-
-<div className="example">
-  <div className="nm-input nm-input--md" style={{width:'220px'}}>
-    <label className="nm-input__label">Price</label>
-    <div className="nm-input__container nm-input__container--combo">
-      <span className="nm-input__combo-left">$</span>
-      <span className="nm-input__combo-divider"></span>
-      <input className="nm-input__field" style={{padding:'0 12px'}} placeholder="0.00" />
-    </div>
-  </div>
-  <div className="nm-input nm-input--md" style={{width:'220px'}}>
-    <label className="nm-input__label">Discount</label>
-    <div className="nm-input__container nm-input__container--combo">
-      <input className="nm-input__field" style={{padding:'0 12px'}} placeholder="0" />
-      <span className="nm-input__combo-divider"></span>
-      <span className="nm-input__combo-right">%</span>
-    </div>
-  </div>
-</div>
+Use `.nm-input__icon-leading` for an icon that identifies the field's format (an envelope for email). Use `.nm-input__icon-trailing` for a secondary content icon, like a chevron for select. Both always render in the same neutral color as the field's own text — they identify or decorate, they don't report validity. For that, use the dedicated `.nm-input__icon-status` (see [Interaction & validation states](#states)) — it's the only icon element that changes color with `nm-input--error` / `nm-input--warning` / `nm-input--success`, and it can appear alongside a leading or trailing content icon rather than replacing it.
 
 ### Clear
 
@@ -188,6 +201,56 @@ A trailing icon becomes an actual clear action once the field has a value — re
     <div className="nm-input__container">
       <input className="nm-input__field" defaultValue="invoice-2026" />
       <button type="button" className="nm-input__icon-trailing" aria-label="Clear" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}><Ic n="x" /></button>
+    </div>
+  </div>
+</div>
+
+### Label
+
+`.nm-input__label` accepts an optional required or optional marker. Mark a field required only when the user must actively provide it — most fields don't need either marker.
+
+<div className="example stacked">
+  <div className="nm-input nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Full name</label>
+    <div className="nm-input__container"><input className="nm-input__field" defaultValue="Jane Doe" /></div>
+  </div>
+  <div className="nm-input nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Tax ID<span className="nm-input__required">(required)</span></label>
+    <div className="nm-input__container"><input className="nm-input__field" defaultValue="IT12345678901" /></div>
+  </div>
+  <div className="nm-input nm-input--md" style={{width:'280px'}}>
+    <label className="nm-input__label">Middle name<span className="nm-input__optional">(optional)</span></label>
+    <div className="nm-input__container"><input className="nm-input__field" /></div>
+  </div>
+</div>
+
+<p className="caption">Bare · required · optional</p>
+
+</section>
+
+<section className="block" id="pattern-examples">
+
+## Pattern examples
+
+Common recipes built by composing the same `.nm-input` parts differently — nothing here is a new component.
+
+### Currency / Percentage
+
+Currency and percentage both render their affix as an icon rather than literal text — `.nm-input__icon-leading` for the prefix, `.nm-input__icon-trailing` for the suffix — so they pick up the same per-size icon dimensions as every other icon in the system, with no divider or boxed compartment involved.
+
+<div className="example">
+  <div className="nm-input nm-input--md" style={{width:'220px'}}>
+    <label className="nm-input__label">Price</label>
+    <div className="nm-input__container">
+      <span className="nm-input__icon-leading"><Ic n="dollar-sign" /></span>
+      <input className="nm-input__field" placeholder="0.00" />
+    </div>
+  </div>
+  <div className="nm-input nm-input--md" style={{width:'220px'}}>
+    <label className="nm-input__label">Discount</label>
+    <div className="nm-input__container">
+      <input className="nm-input__field" placeholder="0" />
+      <span className="nm-input__icon-trailing"><Ic n="percent" /></span>
     </div>
   </div>
 </div>
@@ -214,36 +277,22 @@ Native `<input type="date">` is restyled to hide the default calendar icon so a 
   <div className="nm-input nm-input--md" style={{width:'220px'}}>
     <label className="nm-input__label">Signing date</label>
     <div className="nm-input__container">
-      <Ic n="calendar" />
+      <span className="nm-input__icon-trailing"><Ic n="calendar" /></span>
       <input type="date" className="nm-input__field" />
     </div>
   </div>
-</div>
-
-</section>
-
-<section className="block" id="label">
-
-## Label
-
-`.nm-input__label` accepts an optional required or optional marker. Mark a field required only when the user must actively provide it — most fields don't need either marker.
-
-<div className="example stacked">
-  <div className="nm-input nm-input--md" style={{width:'280px'}}>
-    <label className="nm-input__label">Full name</label>
-    <div className="nm-input__container"><input className="nm-input__field" placeholder="Jane Doe" /></div>
-  </div>
-  <div className="nm-input nm-input--md" style={{width:'280px'}}>
-    <label className="nm-input__label">Tax ID<span className="nm-input__required">*</span></label>
-    <div className="nm-input__container"><input className="nm-input__field" placeholder="IT12345678901" /></div>
-  </div>
-  <div className="nm-input nm-input--md" style={{width:'280px'}}>
-    <label className="nm-input__label">Middle name<span className="nm-input__optional">(optional)</span></label>
-    <div className="nm-input__container"><input className="nm-input__field" /></div>
+  <div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}>
+    <label className="nm-input__label">Signing date<span className="nm-input__required">(required)</span></label>
+    <div className="nm-input__container">
+      <input className="nm-input__field" placeholder="dd/mm/yyyy" />
+      <span className="nm-input__icon-status"><Ic n="alert-circle" /></span>
+      <span className="nm-input__icon-trailing"><Ic n="calendar" /></span>
+    </div>
+    <span className="nm-input__help">Enter a valid date.</span>
   </div>
 </div>
 
-<p className="caption">Bare · required · optional</p>
+A content icon (like `calendar`) always stays neutral — it identifies the field's format, not its validity. A validation icon uses the separate `.nm-input__icon-status` slot, which is the only icon element recolored by `nm-input--error` / `nm-input--warning` / `nm-input--success`. Both slots can be present in the same container at once.
 
 </section>
 
@@ -264,18 +313,18 @@ Every input responds to hover and focus, can be locked read-only, and carries th
 
 <div className="example">
   <div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}>
-    <label className="nm-input__label">Email<span className="nm-input__required">*</span></label>
-    <div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /></div>
+    <label className="nm-input__label">Email<span className="nm-input__required">(required)</span></label>
+    <div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /><span className="nm-input__icon-status"><Ic n="alert-circle" /></span></div>
     <span className="nm-input__help">Enter a valid email address.</span>
   </div>
   <div className="nm-input nm-input--md nm-input--warning" style={{width:'220px'}}>
     <label className="nm-input__label">Password</label>
-    <div className="nm-input__container"><input className="nm-input__field" type="password" defaultValue="weakpass" /></div>
+    <div className="nm-input__container"><input className="nm-input__field" type="password" defaultValue="weakpass" /><span className="nm-input__icon-status"><Ic n="alert-triangle" /></span></div>
     <span className="nm-input__help">This password is weak.</span>
   </div>
   <div className="nm-input nm-input--md nm-input--success" style={{width:'220px'}}>
     <label className="nm-input__label">Username</label>
-    <div className="nm-input__container"><input className="nm-input__field" defaultValue="jane.doe" /><Ic n="check" /></div>
+    <div className="nm-input__container"><input className="nm-input__field" defaultValue="jane.doe" /><span className="nm-input__icon-status"><Ic n="circle-check" /></span></div>
     <span className="nm-input__help">Username is available.</span>
   </div>
 </div>
@@ -303,8 +352,8 @@ Input tokens are remapped under `.dark`. Contrast and hover directionality are h
     <div className="theme-label">Light <span>data-theme="light"</span></div>
     <div className="theme-frame">
       <div className="nm-input nm-input--md" style={{width:'220px'}}>
-        <label className="nm-input__label">Email<span className="nm-input__required">*</span></label>
-        <div className="nm-input__container"><Ic n="mail" /><input className="nm-input__field" placeholder="you@company.com" /></div>
+        <label className="nm-input__label">Email<span className="nm-input__required">(required)</span></label>
+        <div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="mail" /></span><input className="nm-input__field" placeholder="you@company.com" /></div>
         <span className="nm-input__help">We'll never share your email.</span>
       </div>
     </div>
@@ -313,8 +362,8 @@ Input tokens are remapped under `.dark`. Contrast and hover directionality are h
     <div className="theme-label">Dark <span>data-theme="dark"</span></div>
     <div className="theme-frame">
       <div className="nm-input nm-input--md" style={{width:'220px'}}>
-        <label className="nm-input__label">Email<span className="nm-input__required">*</span></label>
-        <div className="nm-input__container"><Ic n="mail" /><input className="nm-input__field" placeholder="you@company.com" /></div>
+        <label className="nm-input__label">Email<span className="nm-input__required">(required)</span></label>
+        <div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="mail" /></span><input className="nm-input__field" placeholder="you@company.com" /></div>
         <span className="nm-input__help">We'll never share your email.</span>
       </div>
     </div>
@@ -330,18 +379,23 @@ Input tokens are remapped under `.dark`. Contrast and hover directionality are h
 ## Do & don't
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Card number<span className="nm-input__optional">(optional)</span></label><div className="nm-input__container"><input className="nm-input__field" placeholder="4242 4242 4242 4242" /></div></div></div><div className="desc">Show the expected format as placeholder text, not as the label.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Enter 16 digits, no spaces, format XXXX-XXXX-XXXX-XXXX</label><div className="nm-input__container"><input className="nm-input__field" /></div></div></div><div className="desc">Don't cram formatting rules into the label — that's what help text and placeholder are for.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Reference number</label><div className="nm-input__container"><input className="nm-input__field" placeholder="ORD-000000" /></div><span className="nm-input__help">Format: ORD-000000</span></div></div><div className="desc">Show the expected format as help text, not as a placeholder that disappears once typing starts.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><label className="nm-input__label">Reference number</label><div className="nm-input__container"><input className="nm-input__field" placeholder="ORD-000000" /></div></div></div><div className="desc">Don't rely on placeholder text alone to convey the required format.</div></div>
 </div>
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}><label className="nm-input__label">Email<span className="nm-input__required">*</span></label><div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /></div><span className="nm-input__help">Enter a valid email address.</span></div></div><div className="desc">Pair an error border with a help text that says exactly what to fix.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}><label className="nm-input__label">Email</label><div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /></div></div></div><div className="desc">Don't show a red border with no explanation — the user can see something's wrong but not what.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}><label className="nm-input__label">Email<span className="nm-input__required">(required)</span></label><div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /><span className="nm-input__icon-status"><Ic n="alert-circle" /></span></div><span className="nm-input__help">Enter a valid email address.</span></div></div><div className="desc">Pair an error border with a help text that says exactly what to fix.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md nm-input--error" style={{width:'220px'}}><label className="nm-input__label">Email</label><div className="nm-input__container"><input className="nm-input__field" defaultValue="jane@" /></div></div></div><div className="desc">Don't show a red border with no explanation and icon — this is not accessibile at all and it can not be recognized what is wrong.</div></div>
 </div>
 
 <div className="dodont">
   <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md nm-input--readonly" style={{width:'220px'}}><label className="nm-input__label">Organization</label><div className="nm-input__container"><input className="nm-input__field" defaultValue="Namirial S.p.A." readOnly /></div></div></div><div className="desc">Use read-only for a value the user can see and submit but can't edit here.</div></div>
   <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container" style={{opacity:0.4,pointerEvents:'none'}}><input className="nm-input__field" defaultValue="Namirial S.p.A." disabled /></div></div></div><div className="desc">Don't grey out a field with the native disabled state — its value drops out of the submitted form.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'120px'}}><label className="nm-input__label">ZIP code</label><div className="nm-input__container"><input className="nm-input__field" defaultValue="00100" /></div></div></div><div className="desc">Size the field to roughly match the expected content length.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame" style={{width:'100%'}}><div className="nm-input nm-input--md" style={{width:'100%'}}><label className="nm-input__label">ZIP code</label><div className="nm-input__container"><input className="nm-input__field" defaultValue="00100" /></div></div></div><div className="desc">Don't make every field full width regardless of what it holds — it removes a useful visual cue.</div></div>
 </div>
 
 </section>
@@ -372,6 +426,14 @@ Input tokens are remapped under `.dark`. Contrast and hover directionality are h
 
 </section>
 
+<section className="block" id="sandbox">
+
+## Playground
+
+<InputSandbox />
+
+</section>
+
 <section className="block" id="tokens">
 
 ## Token reference
@@ -386,7 +448,7 @@ Input tokens are remapped under `.dark`. Contrast and hover directionality are h
 <tr><td className="tok">--nm-input-focus-ring</td><td>Focus box-shadow color</td></tr>
 <tr><td className="tok">--nm-input-text</td><td>Field value color</td></tr>
 <tr><td className="tok">--nm-input-placeholder</td><td>Placeholder color</td></tr>
-<tr><td className="tok">--nm-input-icon</td><td>Leading / trailing icon color</td></tr>
+<tr><td className="tok">--nm-input-icon</td><td>Status icon color — recolored by validation intent</td></tr>
 <tr><td className="tok">--nm-input-label-fg</td><td>Label text color</td></tr>
 <tr><td className="tok">--nm-input-label-required</td><td>Required mark color — recolored by validation intent</td></tr>
 <tr><td className="tok">--nm-input-label-optional</td><td>Optional mark color</td></tr>
@@ -408,7 +470,7 @@ No JavaScript is required for a plain input — it's native HTML styled by CSS c
 <div class="nm-input nm-input--md">
   <label class="nm-input__label">
     Email address
-    <span class="nm-input__required">*</span>
+    <span class="nm-input__required">(required)</span>
   </label>
   <div class="nm-input__container">
     <input class="nm-input__field" placeholder="you@company.com">
@@ -421,11 +483,12 @@ No JavaScript is required for a plain input — it's native HTML styled by CSS c
 
 | Class | Values | Default |
 |-------|--------|---------|
-| `nm-input--{size}` | xs · md · lg · xl | `md` |
+| `nm-input--{size}` | xs · sm · md · lg · xl | `sm` |
 | `nm-input--{intent}` | error · warning · success | — |
 | `nm-input--readonly` | Locks the container against edits | — |
-| `nm-input__container--combo` | Splits the container into prefix/suffix + field, for currency/percentage | — |
-| `nm-input__icon-leading` / `nm-input__icon-trailing` | Positions an icon inside the container | — |
+| `nm-input__container--combo` | Splits the container into a fixed compartment and the field, separated by `nm-input__combo-divider` | — |
+| `nm-input__icon-leading` / `nm-input__icon-trailing` | Positions a neutral content icon inside the container | — |
+| `nm-input__icon-status` | Positions the validation icon — the only one recolored by `nm-input--error` / `nm-input--warning` / `nm-input--success`; can coexist with a leading/trailing icon | — |
 | `nm-input__required` / `nm-input__optional` | Marks the label | — |
 
 </section>

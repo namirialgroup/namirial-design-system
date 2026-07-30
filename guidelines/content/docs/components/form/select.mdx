@@ -4,24 +4,32 @@ description: Select lets a user pick from a short, known list of options.
 ---
 
 import { Ic } from '@/components/nm/icon';
+import { SelectSandbox } from '@/components/nm/select-sandbox';
 
 <p className="eyebrow">Components · Form</p>
 
 <p className="lede">Select lets a user pick one or more values from a fixed list. Because no browser lets you restyle a native <code>&lt;select&gt;</code>, Namirial select is built as a custom combobox: an <code>.nm-input--select</code> trigger paired with an <code>.nm-dropdown</code> menu, sharing every label, help-text, size, and validation token with <a href="/docs/components/form/input">input</a>.</p>
 
-<div className="hero-stage">
+<div className="hero-stage" style={{overflow:'visible', paddingBottom:'160px'}}>
   <div className="nm-input nm-input--select nm-input--md" style={{width:'240px'}}>
-    <label className="nm-input__label">Country<span className="nm-input__required">*</span></label>
+    <label className="nm-input__label">Country<span className="nm-input__required">(required)</span></label>
     <div className="nm-input__container" role="combobox" aria-expanded="false">
       <span className="nm-input__select-value">Italy</span>
       <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
     </div>
   </div>
-  <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'240px'}}>
-    <label className="nm-input__label">Document type</label>
-    <div className="nm-input__container" role="combobox" aria-expanded="true">
-      <span className="nm-input__select-value--placeholder">Select a type</span>
-      <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+  <div style={{position:'relative', width:'240px'}}>
+    <div className="nm-input nm-input--select is-open nm-input--md">
+      <label className="nm-input__label">Document type</label>
+      <div className="nm-input__container" role="combobox" aria-expanded="true">
+        <span className="nm-input__select-value--placeholder">Select a type</span>
+        <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+      </div>
+    </div>
+    <div className="nm-dropdown" role="listbox" style={{position:'absolute', top:'100%', left:0, right:0, marginTop:'4px'}}>
+      <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Passport</span></div>
+      <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">National ID</span></div>
+      <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Driver's licence</span></div>
     </div>
   </div>
 </div>
@@ -30,19 +38,15 @@ import { Ic } from '@/components/nm/icon';
 
 ## Overview
 
-Select trades the openness of an input for the safety of a fixed list — the user can only submit a value you've already validated. Reach for it whenever the answer space is small enough to enumerate and stable enough not to need free text.
+The Select component lets users choose one or more values from a predefined list of options. It provides a controlled way to capture structured input by limiting selections to values that have already been defined.
 
 ### When to use
 
-- A closed set of mutually-exclusive options — country, document type, currency
-- A list too long for radio buttons but too structured for free text (roughly 5–50 items)
-- Multi-select from a known set of tags, roles, or categories
+Use the Select component when:
 
-### When not to use
-
-- Two to four always-visible options — a **radio group** or **segmented control** reads faster with no extra click.
-- A value the user needs to type or that isn't in any fixed list — use **input**.
-- A large, unstructured, or searchable catalog (documents, contacts, products) — use **search**.
+- Users need to choose from a fixed set of mutually exclusive options, such as a country, language, document type, or currency.
+- The number of options is too large for radio buttons but still manageable as a list (typically around 5–50 options).
+- Users need to select multiple items from a predefined set, such as tags, roles, or categories (using a multi-select variant).
 
 </section>
 
@@ -53,21 +57,37 @@ Select trades the openness of an input for the safety of a fixed list — the us
 Select reuses the input's label, container, and help text unchanged. What's different is the container's content — a `.nm-input__select-value` instead of a text field — and a `.nm-dropdown` menu that opens beneath it.
 
 <div className="anatomy" aria-hidden="true">
-  <div className="nm-input nm-input--select is-open nm-input--md giant" style={{width:'220px',pointerEvents:'none'}}>
-    <label className="nm-input__label">Role</label>
-    <div className="nm-input__container" role="combobox" aria-expanded="true">
-      <span className="nm-input__select-value">Administrator</span>
-      <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+  <div className="stage" style={{width:'640px',height:'260px'}}>
+    <div className="nm-input nm-input--select is-open nm-input--md giant" style={{width:'220px',pointerEvents:'none',position:'absolute',top:'70px',left:'210px'}}>
+      <label className="nm-input__label">Role</label>
+      <div className="nm-input__container" role="combobox" aria-expanded="true">
+        <span className="nm-input__select-value">Administrator</span>
+        <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+      </div>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'640px',height:'260px',pointerEvents:'none'}} viewBox="0 0 640 260">
+      <line x1="100" y1="40" x2="140" y2="50" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="480" y1="40" x2="500" y2="101" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="100" y1="195" x2="170" y2="141" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="480" y1="195" x2="490" y2="141" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'16px',left:'40px'}}>
+      <div className="labelpoint" style={{position:'static'}}>1 · <b>Label</b></div>
+      <div className="dot" style={{top:'34px',left:'100px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'16px',left:'440px'}}>
+      <div className="labelpoint" style={{position:'static'}}>2 · <b>Trigger</b></div>
+      <div className="dot" style={{top:'85px',left:'60px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'190px',left:'40px'}}>
+      <div className="labelpoint" style={{position:'static'}}>3 · <b>Selected value</b></div>
+      <div className="dot" style={{top:'-49px',left:'130px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'190px',left:'440px'}}>
+      <div className="labelpoint" style={{position:'static'}}>4 · <b>Chevron</b></div>
+      <div className="dot" style={{top:'-49px',left:'50px'}}></div>
     </div>
   </div>
-  <div className="labelpoint" style={{top:'10px',left:'0px'}}>1 · <b>Label</b></div>
-  <div className="dot" style={{top:'40px',left:'80px'}}></div>
-  <div className="labelpoint" style={{bottom:'80px',left:'0px'}}>2 · <b>Trigger</b></div>
-  <div className="dot" style={{bottom:'110px',left:'90px'}}></div>
-  <div className="labelpoint" style={{bottom:'80px',right:'0px'}}>3 · <b>Selected value</b></div>
-  <div className="dot" style={{bottom:'110px',right:'190px'}}></div>
-  <div className="labelpoint" style={{bottom:'40px',left:'0px'}}>4 · <b>Chevron</b></div>
-  <div className="dot" style={{bottom:'110px',left:'190px'}}></div>
 </div>
 
 #### Tokens and values that drive each part
@@ -86,26 +106,42 @@ Select reuses the input's label, container, and help text unchanged. What's diff
 
 </section>
 
+<section className="block" id="sizes">
+
+## Sizes
+
+Select shares input's five-size scale — `xs`–`xl` — since the trigger is a `.nm-input--select` container underneath.
+
+<div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--select nm-input--xs" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>12px</b> · h <b>24px</b> · r <b>6</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input nm-input--select nm-input--sm" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>14px</b> · h <b>32px</b> · r <b>8</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--select nm-input--md" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>16px</b> · h <b>40px</b> · r <b>10</b></div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--select nm-input--lg" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>20px</b> · h <b>48px</b> · r <b>12</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--select nm-input--xl" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>24px</b> · h <b>56px</b> · r <b>12</b></div></div>
+
+</section>
+
 <section className="block" id="menu">
 
 ## Trigger & menu
 
-The trigger is a `.nm-input--select` container; the menu is a separate `.nm-dropdown` positioned below it. They're shown side by side here — in product, the menu is absolutely positioned and only one is visible at a time.
+The trigger is a `.nm-input--select` container; the menu is a separate `.nm-dropdown`, absolutely positioned directly beneath it.
 
-<div className="example">
-  <div className="nm-input nm-input--select nm-input--md" style={{width:'200px'}}>
-    <label className="nm-input__label">Status</label>
-    <div className="nm-input__container" role="combobox" aria-expanded="false">
-      <span className="nm-input__select-value">In review</span>
-      <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+<div className="example" style={{paddingBottom:'180px'}}>
+  <div style={{position:'relative', width:'200px'}}>
+    <div className="nm-input nm-input--select is-open nm-input--md">
+      <label className="nm-input__label">Status</label>
+      <div className="nm-input__container" role="combobox" aria-expanded="true">
+        <span className="nm-input__select-value">In review</span>
+        <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+      </div>
     </div>
-  </div>
-  <div className="nm-dropdown" role="listbox" style={{width:'200px'}}>
-    <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Draft</span></div>
-    <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">In review</span></div>
-    <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Approved</span></div>
-    <div className="nm-dropdown__separator"></div>
-    <div className="nm-dropdown__item nm-dropdown__item--disabled" role="option" aria-disabled="true"><span className="nm-dropdown__item-label">Archived</span></div>
+    <div className="nm-dropdown" role="listbox" style={{position:'absolute', top:'100%', left:0, right:0, marginTop:'4px'}}>
+      <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Draft</span></div>
+      <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">In review</span></div>
+      <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Approved</span></div>
+      <div className="nm-dropdown__separator"></div>
+      <div className="nm-dropdown__item nm-dropdown__item--disabled" role="option" aria-disabled="true"><span className="nm-dropdown__item-label">Archived</span></div>
+    </div>
   </div>
 </div>
 
@@ -121,19 +157,21 @@ Selected options get a filled background, bold weight, and a 2px marker via `.nm
 
 When more than one value can be chosen, render each selection as an `.nm-tag` inside the trigger instead of plain text, and mark matching menu items with `.nm-dropdown__item--multi` (a checkbox-style marker instead of the single-select dot).
 
-<div className="example">
-  <div className="nm-input nm-input--select nm-input--md" style={{width:'320px'}}>
-    <label className="nm-input__label">Roles</label>
-    <div className="nm-input__container nm-input__container--flush-start" role="combobox" aria-expanded="false" style={{flexWrap:'wrap',minHeight:'40px'}}>
-      <span className="nm-tag">Signer<button type="button" className="nm-tag__remove" aria-label="Remove Signer"><Ic n="x" /></button></span>
-      <span className="nm-tag">Approver<button type="button" className="nm-tag__remove" aria-label="Remove Approver"><Ic n="x" /></button></span>
-      <span className="nm-input__icon-trailing" style={{marginLeft:'auto'}}><Ic n="chevron-down" /></span>
+<div className="example" style={{paddingBottom:'180px'}}>
+  <div style={{position:'relative', width:'320px'}}>
+    <div className="nm-input nm-input--select is-open nm-input--md">
+      <label className="nm-input__label">Roles</label>
+      <div className="nm-input__container nm-input__container--flush-start" role="combobox" aria-expanded="true" style={{flexWrap:'wrap',minHeight:'40px'}}>
+        <span className="nm-tag">Signer<button type="button" className="nm-tag__remove" aria-label="Remove Signer"><Ic n="x" /></button></span>
+        <span className="nm-tag">Approver<button type="button" className="nm-tag__remove" aria-label="Remove Approver"><Ic n="x" /></button></span>
+        <span className="nm-input__icon-trailing" style={{marginLeft:'auto'}}><Ic n="chevron-down" /></span>
+      </div>
     </div>
-  </div>
-  <div className="nm-dropdown" role="listbox" aria-multiselectable="true" style={{width:'200px'}}>
-    <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="true"><Ic n="check-square" /><span className="nm-dropdown__item-label">Signer</span></div>
-    <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="true"><Ic n="check-square" /><span className="nm-dropdown__item-label">Approver</span></div>
-    <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="false"><Ic n="square" /><span className="nm-dropdown__item-label">Viewer</span></div>
+    <div className="nm-dropdown" role="listbox" aria-multiselectable="true" style={{position:'absolute', top:'100%', left:0, right:0, marginTop:'4px'}}>
+      <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="true"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox nm-checkbox--sm" defaultChecked /><span className="nm-choice-field__label">Signer</span></label></div>
+      <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="true"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox nm-checkbox--sm" defaultChecked /><span className="nm-choice-field__label">Approver</span></label></div>
+      <div className="nm-dropdown__item nm-dropdown__item--multi" role="option" aria-selected="false"><label className="nm-choice-field"><input type="checkbox" className="nm-checkbox nm-checkbox--sm" /><span className="nm-choice-field__label">Viewer</span></label></div>
+    </div>
   </div>
 </div>
 
@@ -158,8 +196,8 @@ Select shares every interaction and validation state with input — hover, focus
 
 <div className="example">
   <div className="nm-input nm-input--select nm-input--error nm-input--md" style={{width:'220px'}}>
-    <label className="nm-input__label">Country<span className="nm-input__required">*</span></label>
-    <div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Select a country</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
+    <label className="nm-input__label">Country<span className="nm-input__required">(required)</span></label>
+    <div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Select a country</span><span className="nm-input__icon-status"><Ic n="alert-circle" /></span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
     <span className="nm-input__help">Select a country to continue.</span>
   </div>
 </div>
@@ -173,27 +211,31 @@ Select shares every interaction and validation state with input — hover, focus
 ## Light & dark theme
 
 <div className="theme-pair">
-  <div className="theme-card" data-theme="light">
+  <div className="theme-card" data-theme="light" style={{overflow:'visible'}}>
     <div className="theme-label">Light <span>data-theme="light"</span></div>
-    <div className="theme-frame">
-      <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'200px'}}>
-        <div className="nm-input__container" role="combobox" aria-expanded="true"><span className="nm-input__select-value">Italy</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
-      </div>
-      <div className="nm-dropdown" role="listbox" style={{width:'180px'}}>
-        <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">Italy</span></div>
-        <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Germany</span></div>
+    <div className="theme-frame" style={{overflow:'visible', paddingBottom:'100px'}}>
+      <div style={{position:'relative', width:'200px'}}>
+        <div className="nm-input nm-input--select is-open nm-input--md">
+          <div className="nm-input__container" role="combobox" aria-expanded="true"><span className="nm-input__select-value">Italy</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
+        </div>
+        <div className="nm-dropdown" role="listbox" style={{position:'absolute', top:'100%', left:0, right:0, marginTop:'4px'}}>
+          <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">Italy</span></div>
+          <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Germany</span></div>
+        </div>
       </div>
     </div>
   </div>
-  <div className="theme-card" data-theme="dark">
+  <div className="theme-card" data-theme="dark" style={{overflow:'visible'}}>
     <div className="theme-label">Dark <span>data-theme="dark"</span></div>
-    <div className="theme-frame">
-      <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'200px'}}>
-        <div className="nm-input__container" role="combobox" aria-expanded="true"><span className="nm-input__select-value">Italy</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
-      </div>
-      <div className="nm-dropdown" role="listbox" style={{width:'180px'}}>
-        <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">Italy</span></div>
-        <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Germany</span></div>
+    <div className="theme-frame" style={{overflow:'visible', paddingBottom:'100px'}}>
+      <div style={{position:'relative', width:'200px'}}>
+        <div className="nm-input nm-input--select is-open nm-input--md">
+          <div className="nm-input__container" role="combobox" aria-expanded="true"><span className="nm-input__select-value">Italy</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
+        </div>
+        <div className="nm-dropdown" role="listbox" style={{position:'absolute', top:'100%', left:0, right:0, marginTop:'4px'}}>
+          <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">Italy</span></div>
+          <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Germany</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -241,6 +283,14 @@ Namirial select follows the ARIA combobox pattern — it is not a native `<selec
 
 - The trigger needs the same label association as input — `for`/`id` or nesting.
 - Disabled options use `aria-disabled="true"` and `nm-dropdown__item--disabled`; they stay in the DOM and are announced, just not selectable.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+<SelectSandbox />
 
 </section>
 

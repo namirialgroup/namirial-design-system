@@ -160,6 +160,7 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .nm-input__container[data-state="hover"] { background-color:var(--nm-input-bg-hover); }
 .nm-input__container[data-state="focus"] { outline:none; box-shadow:0 0 0 2px var(--nm-input-focus-ring); }
 .code-field { display:flex; gap:8px; }
-.code-field .nm-input { width:48px; }
+.code-field .nm-input { width:32px; }
 .code-field .nm-input__field { text-align:center; }
-.code-field.lg .nm-input { width:56px; }
+.code-field .nm-input__container { border-radius:8px; padding-left:4px; padding-right:4px; }
+.code-field .nm-input__field:focus::placeholder { color:transparent; }

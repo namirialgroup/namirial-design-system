@@ -4,6 +4,7 @@ description: Code captures a short, fixed-length verification code.
 ---
 
 import { Ic } from '@/components/nm/icon';
+import { CodeSandbox } from '@/components/nm/code-sandbox';
 
 <p className="eyebrow">Components · Form</p>
 
@@ -14,9 +15,9 @@ import { Ic } from '@/components/nm/icon';
     <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div>
     <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div>
     <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" /></div></div>
   </div>
 </div>
 
@@ -24,19 +25,13 @@ import { Ic } from '@/components/nm/icon';
 
 ## Overview
 
-A code field exists for exactly one job: verifying that the user has access to something out-of-band — an SMS, an authenticator app, an email. Every cell holds exactly one character, so correctness is visible before the code is even submitted.
+The Code Field component is designed for entering short verification codes, where each character is entered into its own input cell. This layout improves readability, makes input errors easier to spot, and supports common authentication and verification flows.
 
 ### When to use
-
-- One-time passwords (OTP) sent by SMS, email, or an authenticator app
-- A short numeric PIN a user sets and re-enters
-- A signing confirmation code embedded in a document workflow
-
-### When not to use
-
-- Any value longer than ~8 characters — a single **input** with `letter-spacing` and a monospace font reads better than a wall of cells.
-- Free-form text of any kind — use **input**.
-- A value the user selects rather than types — use **select**.
+Use the Code Field component when:
+- Users need to enter a one-time password (OTP) received via SMS, email, or an authenticator app.
+- Users need to enter or confirm a short PIN or verification code.
+- A workflow requires a short confirmation or signing code as part of a secure process.
 
 </section>
 
@@ -47,15 +42,25 @@ A code field exists for exactly one job: verifying that the user has access to s
 Each cell is a full `.nm-input` instance — container and field — with `maxlength="1"` and centered text, laid out with a simple flex row. There is no `.nm-code` class in the theme; the row is just `display: flex` with a gap.
 
 <div className="anatomy" aria-hidden="true">
-  <div className="code-field giant" style={{pointerEvents:'none'}}>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div>
+  <div className="stage" style={{width:'640px',height:'220px'}}>
+    <div className="code-field giant" style={{pointerEvents:'none',position:'absolute',top:'60px',left:'220px'}}>
+      <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div>
+      <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div>
+      <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" /></div></div>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'640px',height:'220px',pointerEvents:'none'}} viewBox="0 0 640 220">
+      <line x1="100" y1="40" x2="240" y2="45" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="480" y1="175" x2="244" y2="84" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'20px',left:'60px'}}>
+      <div className="labelpoint" style={{position:'static'}}>1 · <b>Cell</b></div>
+      <div className="dot" style={{top:'25px',left:'180px'}}></div>
+    </div>
+    <div style={{position:'absolute',top:'170px',left:'420px'}}>
+      <div className="labelpoint" style={{position:'static'}}>2 · <b>Row gap: 8px</b></div>
+      <div className="dot" style={{top:'-86px',left:'-176px'}}></div>
+    </div>
   </div>
-  <div className="labelpoint" style={{bottom:'40px',left:'0px'}}>1 · <b>Cell</b></div>
-  <div className="dot" style={{bottom:'85px',left:'110px'}}></div>
-  <div className="labelpoint" style={{bottom:'40px',right:'0px'}}>2 · <b>Row gap: 8px</b></div>
-  <div className="dot" style={{bottom:'85px',right:'160px'}}></div>
 </div>
 
 #### Tokens and values that drive each part
@@ -63,7 +68,8 @@ Each cell is a full `.nm-input` instance — container and field — with `maxle
 | Part | Role | Source |
 |------|------|--------|
 | Cell | Every visual property | `--nm-input-*` — identical to a size-matched input (see [Input](/docs/components/form/input)) |
-| Cell width | Fixed so digits don't reflow | `48px` default, `56px` at `lg`/`xl` |
+| Cell width | Fixed so digits don't reflow | `32px`, same at every size |
+| Cell | Border radius, both sizes | `8px` |
 | Row | Gap between cells | `8px` |
 | Text | Centered in the cell | `text-align: center` on `.nm-input__field` |
 
@@ -73,11 +79,10 @@ Each cell is a full `.nm-input` instance — container and field — with `maxle
 
 ## Sizes
 
-Code cells use the same size scale as input — pick `lg` or `xl` for signing flows where legibility at a glance matters most.
+Code only supports two sizes — `sm` and `lg` — pick `lg` for signing flows where legibility at a glance matters most.
 
-<div className="scale-row"><span className="sz">md</span><div><div className="code-field"><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div></div></div><div className="metric">in-page confirmations</div></div>
-<div className="scale-row"><span className="sz">lg</span><div><div className="code-field lg"><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div></div></div><div className="metric">default for OTP</div></div>
-<div className="scale-row"><span className="sz">xl</span><div><div className="code-field lg"><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--xl"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} /></div></div></div></div><div className="metric">signing surfaces, kiosks</div></div>
+<div className="scale-row"><span className="sz">sm</span><div><div className="code-field"><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" /></div></div></div></div><div className="metric">in-page confirmations</div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="code-field"><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" /></div></div><div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" /></div></div></div></div><div className="metric">default for OTP, signing surfaces</div></div>
 
 </section>
 
@@ -87,36 +92,67 @@ Code cells use the same size scale as input — pick `lg` or `xl` for signing fl
 
 Each cell carries its own focus ring, so the currently-active cell is unambiguous. Validation is applied to the whole row at once, not per cell.
 
-<div className="example">
-  <div className="code-field">
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container" data-state="focus"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
-    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
-  </div>
-</div>
-
+#### Focus state
 <p className="caption">First digit entered, second cell focused and awaiting input</p>
 
 <div className="example">
   <div className="code-field">
-    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
-    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
-    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div>
-    <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container" data-state="focus"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div>
+    <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div>
   </div>
-  <div className="nm-input__help" style={{color:'var(--palette-negative-700)'}}>That code has expired. Request a new one.</div>
 </div>
 
-<p className="caption">Error — all four cells recolor together with <code>nm-input--error</code></p>
+<p className="caption">Error — all four cells recolor together with <code>nm-input--error</code>, with a status icon alongside the row</p>
+
+#### Error states
+
+All code cells recolor together with <code>nm-input--error</code>. 
 
 <div className="example">
-  <div className="code-field">
-    <div className="nm-input nm-input--lg nm-input--success"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /><Ic n="check" /></div></div>
+  <div className="nm-input--error" style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'8px'}}>
+    <div className="code-field">
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div>
+    </div>
+    <div className="nm-input__help" style={{color:'var(--nm-input-help-fg)', display:'flex', alignItems:'center', gap:'4px'}}><Ic n="alert-circle" /> Incorrect code. Please try again.</div>
   </div>
 </div>
 
-<p className="caption">Success shown once the whole code validates — apply it to the last cell only, not every cell</p>
+<p className="caption">Error message - placed directly beneath the row, exactly like a standard input fields.</p>
+
+<div className="example">
+  <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'8px'}}>
+    <div className="code-field">
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div>
+    </div>
+    <div className="nm-input__help">Code expires in <b>4:55</b></div>
+    <div className="nm-input__help nm-input--error" style={{color:'var(--nm-input-help-fg)', display:'flex', alignItems:'center', gap:'4px'}}><Ic n="alert-circle" /> Incorrect code. Please try again.</div>
+  </div>
+</div>
+
+<p className="caption">Help text + error — If persistent help text (e.g. a countdown) is shown, keep it in its neutral color and display the error on a second line below it. This keeps the countdown visible during validation.</p>
+
+#### Success state
+<p className="caption">Success — shown once the whole code validates.</p>
+
+<div className="example">
+  <div className="nm-input--success" style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'8px'}}>
+    <div className="code-field">
+      <div className="nm-input nm-input--lg nm-input--success"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--success"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--success"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div>
+      <div className="nm-input nm-input--lg nm-input--success"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div>
+    </div>
+    <div className="nm-input__help" style={{color:'var(--nm-input-help-fg)', display:'flex', alignItems:'center', gap:'4px'}}><Ic n="circle-check" /> Code verified.</div>
+  </div>
+</div>
 
 </section>
 
@@ -162,8 +198,8 @@ Validate and submit only once every cell is filled — don't ask the user to pre
       <div className="code-field">
         <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
         <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
-        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
-        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div>
       </div>
     </div>
   </div>
@@ -173,14 +209,12 @@ Validate and submit only once every cell is filled — don't ask the user to pre
       <div className="code-field">
         <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div>
         <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div>
-        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
-        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div>
+        <div className="nm-input nm-input--lg"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div>
       </div>
     </div>
   </div>
 </div>
-
-<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
 
 </section>
 
@@ -189,13 +223,23 @@ Validate and submit only once every cell is filled — don't ask the user to pre
 ## Do & don't
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div></div></div><div className="desc">Auto-advance focus as each digit is typed — the user should never have to click the next cell.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'160px'}}><div className="nm-input__container"><input className="nm-input__field" maxLength={4} placeholder="0000" readOnly /></div></div></div><div className="desc">Don't fake a code field with a single masked input — cells make progress and correctness visible.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div></div></div><div className="desc">Support pasting the entire code into any cell — split it automatically across the row.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly disabled /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly disabled /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly disabled /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly disabled /></div></div></div></div><div className="desc">Don't block paste or autofill — users copy codes from SMS, email, and password managers.</div></div>
 </div>
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div><div className="nm-input nm-input--md"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} readOnly /></div></div></div></div><div className="desc">Support pasting a full code from a clipboard or SMS-autofill suggestion into any cell.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div style={{fontSize:'13px'}}>10+ character cells</div></div><div className="desc">Don't use a code field for anything longer than a short OTP — a plain input scales better past ~8 characters.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container" data-state="focus"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div></div></div><div className="desc">Auto-advance focus to the next cell after each valid character is typed.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container" data-state="focus"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div></div></div><div className="desc">Don't move focus unpredictably or trap keyboard users — Tab and Shift+Tab must still work.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div><div className="nm-input nm-input--sm"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div></div></div><div className="desc">Show errors only once the code is complete, or on submit.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="code-field"><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container" data-state="focus"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} placeholder="-" readOnly /></div></div></div></div><div className="desc">Don't validate while the user is still typing partial input.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'8px'}}><div className="code-field"><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div></div><div className="nm-input__help">Code expires in <b>4:55</b></div><div className="nm-input__help nm-input--error" style={{color:'var(--nm-input-help-fg)', display:'flex', alignItems:'center', gap:'4px'}}><Ic n="alert-circle" /> Incorrect code.</div></div></div><div className="desc">Keep help text — like a resend countdown — visible, and show the error beneath it.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'8px'}}><div className="code-field"><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="4" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="2" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="9" readOnly /></div></div><div className="nm-input nm-input--sm nm-input--error"><div className="nm-input__container"><input className="nm-input__field" maxLength={1} defaultValue="1" readOnly /></div></div></div><div className="nm-input__help nm-input--error" style={{color:'var(--nm-input-help-fg)', display:'flex', alignItems:'center', gap:'4px'}}><Ic n="alert-circle" /> Incorrect code.</div></div></div><div className="desc">Don't replace helpful information — like the countdown — with the error message.</div></div>
 </div>
 
 </section>
@@ -221,6 +265,14 @@ Validate and submit only once every cell is filled — don't ask the user to pre
 
 </section>
 
+<section className="block" id="sandbox">
+
+## Playground
+
+<CodeSandbox />
+
+</section>
+
 <section className="block" id="code-usage">
 
 ## Implementation
@@ -233,7 +285,7 @@ Validate and submit only once every cell is filled — don't ask the user to pre
   <div class="code-field">
     <div class="nm-input nm-input--lg">
       <div class="nm-input__container">
-        <input class="nm-input__field" inputmode="numeric" pattern="[0-9]*" maxlength="1">
+        <input class="nm-input__field" inputmode="numeric" pattern="[0-9]*" maxlength="1" placeholder="-">
       </div>
     </div>
     <!-- repeat per digit -->
@@ -245,7 +297,7 @@ Validate and submit only once every cell is filled — don't ask the user to pre
 
 | Class | Values | Default |
 |-------|--------|---------|
-| `nm-input--{size}` | md · lg · xl per cell | `lg` |
+| `nm-input--{size}` | sm · lg per cell — the only two sizes code supports | `lg` |
 | `nm-input--{intent}` | error · success, applied to every cell (or the last, for success) | — |
 | `code-field` | Flex row with an 8px gap and fixed cell width | — |
 
