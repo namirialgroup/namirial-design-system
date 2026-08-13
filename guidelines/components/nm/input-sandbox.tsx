@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Ic } from './icon';
 
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type Size = 'xs' | 'md' | 'lg' | 'xl';
 type Intent = 'default' | 'error' | 'warning' | 'success';
 type State = 'default' | 'hover' | 'focus' | 'readonly';
 type LeadingIcon = 'none' | 'leading';
@@ -48,9 +48,10 @@ export function InputSandbox() {
           color: 'var(--palette-surface-950)',
         };
 
-  // The status icon is its own slot — independent of leading/trailing content
-  // icons, so both can be present at once. It's the only icon recolored by intent.
-  const showStatusIcon = intent !== 'default';
+  // `.nm-input--{intent}` recolors --nm-input-icon for the whole field, so a leading/trailing
+  // icon inherits it too unless pinned back to the neutral field-text color — that keeps only
+  // the feedback icon itself tinted, and lets a real trailing icon (clear, globe) sit alongside it.
+  const neutralIconStyle = intent !== 'default' ? { color: 'var(--nm-input-text)' } : undefined;
   const codeDataState = state === 'hover' || state === 'focus' ? ` data-state="${state}"` : '';
 
   return (
@@ -67,7 +68,7 @@ export function InputSandbox() {
             data-state={state === 'hover' || state === 'focus' ? state : undefined}
           >
             {leading === 'leading' && (
-              <span className="nm-input__icon-leading">
+              <span className="nm-input__icon-leading" style={neutralIconStyle}>
                 <Ic n="mail" />
               </span>
             )}
@@ -76,13 +77,13 @@ export function InputSandbox() {
               defaultValue="you@company.com"
               readOnly={state === 'readonly'}
             />
-            {showStatusIcon && (
-              <span className="nm-input__icon-status">
+            {intent !== 'default' && (
+              <span className="nm-input__icon-trailing">
                 <Ic n={INTENT_ICON[intent as Exclude<Intent, 'default'>]} />
               </span>
             )}
             {trailing === 'icon' && (
-              <span className="nm-input__icon-trailing">
+              <span className="nm-input__icon-trailing" style={neutralIconStyle}>
                 <Ic n="globe" />
               </span>
             )}
@@ -91,7 +92,7 @@ export function InputSandbox() {
                 type="button"
                 className="nm-input__icon-trailing"
                 aria-label="Clear"
-                style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', ...neutralIconStyle }}
               >
                 <Ic n="x" />
               </button>
@@ -105,7 +106,6 @@ export function InputSandbox() {
           <label>Size</label>
           <select value={size} onChange={(e) => setSize(e.target.value as Size)}>
             <option value="xs">xs</option>
-            <option value="sm">sm</option>
             <option value="md">md</option>
             <option value="lg">lg</option>
             <option value="xl">xl</option>
@@ -205,12 +205,14 @@ export function InputSandbox() {
         <span className="tok-str">&quot;nm-input__field&quot;</span>
         {state === 'readonly' ? ' readonly' : ''}
         <span className="tok-tag">&gt;</span>
-        {showStatusIcon && (
+        {intent !== 'default' && (
           <>
             {'\n    '}
             <span className="tok-tag">&lt;span</span> <span className="tok-attr">class</span>=
-            <span className="tok-str">&quot;nm-input__icon-status&quot;</span>
-            <span className="tok-tag">&gt;&lt;/span&gt;</span>
+            <span className="tok-str">&quot;nm-input__icon-trailing&quot;</span>
+            <span className="tok-tag">&gt;</span>
+            (feedback)
+            <span className="tok-tag">&lt;/span&gt;</span>
           </>
         )}
         {trailing !== 'none' && (

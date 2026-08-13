@@ -47,30 +47,30 @@ Use the Search component when:
 Search is `.nm-input__container` with a leading search icon and a conditional trailing clear button — no dedicated CSS of its own beyond what input already defines.
 
 <div className="anatomy" aria-hidden="true">
-  <div className="stage" style={{width:'640px',height:'220px'}}>
-    <div className="nm-input nm-input--md giant" style={{width:'260px',pointerEvents:'none',position:'absolute',top:'90px',left:'190px'}}>
+  <div className="stage" style={{width:'620px',height:'226px'}}>
+    <div className="nm-input nm-input--md giant" style={{width:'260px',pointerEvents:'none',position:'absolute',top:'90px',left:'190px',transform:'scale(1)',transformOrigin:'center'}}>
       <div className="nm-input__container">
         <span className="nm-input__icon-leading"><Ic n="search" /></span>
         <input type="search" className="nm-input__field" defaultValue="invoice-2026" />
         <span className="nm-input__icon-trailing"><Ic n="x" /></span>
       </div>
     </div>
-    <svg style={{position:'absolute',top:0,left:0,width:'640px',height:'220px',pointerEvents:'none'}} viewBox="0 0 640 220">
-      <line x1="90" y1="44" x2="110" y2="110" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="300" y1="190" x2="320" y2="125" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="510" y1="44" x2="530" y2="110" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    <svg style={{position:'absolute',top:0,left:0,width:'620px',height:'226px',pointerEvents:'none'}} viewBox="0 0 620 226">
+      <line x1="90" y1="44" x2="215" y2="110" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="300" y1="190" x2="320" y2="118" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="44" x2="425" y2="110" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
     </svg>
     <div style={{position:'absolute',top:'20px',left:'40px'}}>
       <div className="labelpoint" style={{position:'static'}}>1 · <b>Search icon</b></div>
-      <div className="dot" style={{top:'90px',left:'70px'}}></div>
+      <div className="dot" style={{top:'90px',left:'175px'}}></div>
     </div>
     <div style={{position:'absolute',top:'190px',left:'270px'}}>
       <div className="labelpoint" style={{position:'static'}}>2 · <b>Field</b></div>
-      <div className="dot" style={{top:'-65px',left:'50px'}}></div>
+      <div className="dot" style={{top:'-72px',left:'50px'}}></div>
     </div>
     <div style={{position:'absolute',top:'20px',left:'480px'}}>
       <div className="labelpoint" style={{position:'static'}}>3 · <b>Clear button</b></div>
-      <div className="dot" style={{top:'90px',left:'50px'}}></div>
+      <div className="dot" style={{top:'90px',left:'-55px'}}></div>
     </div>
   </div>
 </div>
@@ -83,10 +83,10 @@ Reuse `.nm-input__icon-leading` for the search glyph and `.nm-input__icon-traili
 
 ## Sizes
 
-Same five sizes as input — pick the one that matches the surface search lives in.
+Same five sizes as input — `xs`, `sm`, `md`, `lg`, `xl` — with `sm` as the default. Pick the one that matches the surface search lives in. `sm` isn't a modifier class; it's what `.nm-input` renders with no size class at all.
 
 <div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--xs" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Filter" /></div></div></div><div className="metric"><b>filter bars</b></div></div>
-<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input nm-input--sm" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>default for forms and dialogs</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>default for forms and dialogs</b></div></div>
 <div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>toolbars, panels</b></div></div>
 <div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--lg" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search" /></div></div></div><div className="metric"><b>page headers</b></div></div>
 <div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--xl" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search everything" /></div></div></div><div className="metric"><b>command palette</b></div></div>
@@ -189,7 +189,7 @@ The trailing clear button should mount only once the field has a value — an em
 
 <div className="dodont">
   <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--md" style={{width:'220px'}}><div className="nm-input__container"><span className="nm-input__icon-leading"><Ic n="search" /></span><input type="search" className="nm-input__field" placeholder="Search documents" readOnly /></div></div></div><div className="desc">Name what's being searched in the placeholder — "documents", not just "Search".</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'220px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Choose a document</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Don't use select for a catalog too large to enumerate in a menu — give the user search instead.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'220px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Choose a document</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Don't use select for a catalog too large to enumerate in a menu — give the user search instead.</div></div>
 </div>
 
 <div className="dodont">
@@ -249,7 +249,7 @@ Search is markup-only for the base field. Live filtering and the results dropdow
 
 | Class | Values | Default |
 |-------|--------|---------|
-| `nm-input--{size}` | xs · sm · md · lg · xl | `sm` |
+| `nm-input--{size}` | xs · md · lg · xl — omit for the `sm` default | — (`sm`) |
 | `nm-input__icon-leading` | Houses the search glyph | — |
 | `nm-input__icon-trailing` | Houses the clear button — mount conditionally | — |
 

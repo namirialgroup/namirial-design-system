@@ -22,7 +22,7 @@ import { SelectSandbox } from '@/components/nm/select-sandbox';
     <div className="nm-input nm-input--select is-open nm-input--md">
       <label className="nm-input__label">Document type</label>
       <div className="nm-input__container" role="combobox" aria-expanded="true">
-        <span className="nm-input__select-value--placeholder">Select a type</span>
+        <span className="nm-input__select-value nm-input__select-value--placeholder">Select a type</span>
         <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
       </div>
     </div>
@@ -57,35 +57,35 @@ Use the Select component when:
 Select reuses the input's label, container, and help text unchanged. What's different is the container's content — a `.nm-input__select-value` instead of a text field — and a `.nm-dropdown` menu that opens beneath it.
 
 <div className="anatomy" aria-hidden="true">
-  <div className="stage" style={{width:'640px',height:'260px'}}>
-    <div className="nm-input nm-input--select is-open nm-input--md giant" style={{width:'220px',pointerEvents:'none',position:'absolute',top:'70px',left:'210px'}}>
+  <div className="stage" style={{width:'560px',height:'236px'}}>
+    <div className="nm-input nm-input--select is-open nm-input--md giant" style={{width:'220px',pointerEvents:'none',position:'absolute',top:'70px',left:'210px',transform:'scale(1)',transformOrigin:'center'}}>
       <label className="nm-input__label">Role</label>
       <div className="nm-input__container" role="combobox" aria-expanded="true">
         <span className="nm-input__select-value">Administrator</span>
         <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
       </div>
     </div>
-    <svg style={{position:'absolute',top:0,left:0,width:'640px',height:'260px',pointerEvents:'none'}} viewBox="0 0 640 260">
-      <line x1="100" y1="40" x2="140" y2="50" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="480" y1="40" x2="500" y2="101" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="100" y1="195" x2="170" y2="141" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="480" y1="195" x2="490" y2="141" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    <svg style={{position:'absolute',top:0,left:0,width:'560px',height:'236px',pointerEvents:'none'}} viewBox="0 0 560 236">
+      <line x1="100" y1="40" x2="230" y2="79" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="480" y1="40" x2="410" y2="104" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="100" y1="195" x2="245" y2="124" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="480" y1="195" x2="405" y2="124" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
     </svg>
     <div style={{position:'absolute',top:'16px',left:'40px'}}>
       <div className="labelpoint" style={{position:'static'}}>1 · <b>Label</b></div>
-      <div className="dot" style={{top:'34px',left:'100px'}}></div>
+      <div className="dot" style={{top:'63px',left:'190px'}}></div>
     </div>
     <div style={{position:'absolute',top:'16px',left:'440px'}}>
       <div className="labelpoint" style={{position:'static'}}>2 · <b>Trigger</b></div>
-      <div className="dot" style={{top:'85px',left:'60px'}}></div>
+      <div className="dot" style={{top:'88px',left:'-30px'}}></div>
     </div>
     <div style={{position:'absolute',top:'190px',left:'40px'}}>
       <div className="labelpoint" style={{position:'static'}}>3 · <b>Selected value</b></div>
-      <div className="dot" style={{top:'-49px',left:'130px'}}></div>
+      <div className="dot" style={{top:'-66px',left:'205px'}}></div>
     </div>
     <div style={{position:'absolute',top:'190px',left:'440px'}}>
       <div className="labelpoint" style={{position:'static'}}>4 · <b>Chevron</b></div>
-      <div className="dot" style={{top:'-49px',left:'50px'}}></div>
+      <div className="dot" style={{top:'-66px',left:'-35px'}}></div>
     </div>
   </div>
 </div>
@@ -110,13 +110,13 @@ Select reuses the input's label, container, and help text unchanged. What's diff
 
 ## Sizes
 
-Select shares input's five-size scale — `xs`–`xl` — since the trigger is a `.nm-input--select` container underneath.
+Select shares input's five-size scale — `xs`, `sm`, `md`, `lg`, `xl` — with `sm` as the default, since the trigger is a `.nm-input--select` container underneath. `sm` isn't a modifier class; it's what `.nm-input--select` renders with no size class at all.
 
-<div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--select nm-input--xs" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>12px</b> · h <b>24px</b> · r <b>6</b></div></div>
-<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input nm-input--select nm-input--sm" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>14px</b> · h <b>32px</b> · r <b>8</b></div></div>
-<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--select nm-input--md" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>16px</b> · h <b>40px</b> · r <b>10</b></div></div>
-<div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--select nm-input--lg" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>20px</b> · h <b>48px</b> · r <b>12</b></div></div>
-<div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--select nm-input--xl" style={{width:'240px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>24px</b> · h <b>56px</b> · r <b>12</b></div></div>
+<div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--select nm-input--xs" style={{width:'240px'}}><label className="nm-input__label">Label</label><div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>12px</b> · h <b>24px</b> · r <b>6</b></div></div>
+<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input nm-input--select" style={{width:'240px'}}><label className="nm-input__label">Label</label><div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>14px</b> · h <b>32px</b> · r <b>8</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--select nm-input--md" style={{width:'240px'}}><label className="nm-input__label">Label</label><div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>16px</b> · h <b>40px</b> · r <b>10</b></div></div>
+<div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--select nm-input--lg" style={{width:'240px'}}><label className="nm-input__label">Label</label><div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>20px</b> · h <b>48px</b> · r <b>12</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--select nm-input--xl" style={{width:'240px'}}><label className="nm-input__label">Label</label><div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Placeholder</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="metric"><b>24px</b> · h <b>56px</b> · r <b>12</b></div></div>
 
 </section>
 
@@ -139,13 +139,11 @@ The trigger is a `.nm-input--select` container; the menu is a separate `.nm-drop
       <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Draft</span></div>
       <div className="nm-dropdown__item" role="option" aria-selected="true"><span className="nm-dropdown__item-label">In review</span></div>
       <div className="nm-dropdown__item" role="option"><span className="nm-dropdown__item-label">Approved</span></div>
-      <div className="nm-dropdown__separator"></div>
-      <div className="nm-dropdown__item nm-dropdown__item--disabled" role="option" aria-disabled="true"><span className="nm-dropdown__item-label">Archived</span></div>
     </div>
   </div>
 </div>
 
-<p className="caption">Closed trigger · open menu with a selected item, a separator, and a disabled item</p>
+<p className="caption">Closed trigger · open menu with a selected item</p>
 
 Selected options get a filled background, bold weight, and a 2px marker via `.nm-dropdown__item[aria-selected="true"]`. Hover shows the same marker at low weight so users can preview where they'll land before clicking.
 
@@ -162,8 +160,8 @@ When more than one value can be chosen, render each selection as an `.nm-tag` in
     <div className="nm-input nm-input--select is-open nm-input--md">
       <label className="nm-input__label">Roles</label>
       <div className="nm-input__container nm-input__container--flush-start" role="combobox" aria-expanded="true" style={{flexWrap:'wrap',minHeight:'40px'}}>
-        <span className="nm-tag">Signer<button type="button" className="nm-tag__remove" aria-label="Remove Signer"><Ic n="x" /></button></span>
-        <span className="nm-tag">Approver<button type="button" className="nm-tag__remove" aria-label="Remove Approver"><Ic n="x" /></button></span>
+        <span className="nm-tag nm-tag--secondary">Signer<button type="button" className="nm-tag__remove" aria-label="Remove Signer"><Ic n="x" /></button></span>
+        <span className="nm-tag nm-tag--secondary">Approver<button type="button" className="nm-tag__remove" aria-label="Remove Approver"><Ic n="x" /></button></span>
         <span className="nm-input__icon-trailing" style={{marginLeft:'auto'}}><Ic n="chevron-down" /></span>
       </div>
     </div>
@@ -186,9 +184,9 @@ Use `.nm-input__container--flush-start` so the first tag sits flush with the con
 Select shares every interaction and validation state with input — hover, focus, read-only, error, warning, success — plus an open/closed state of its own.
 
 <div className="example">
-  <div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" aria-expanded="false"><span className="nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
-  <div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" data-state="hover"><span className="nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
-  <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" aria-expanded="true" data-state="focus"><span className="nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
+  <div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" aria-expanded="false"><span className="nm-input__select-value nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
+  <div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" data-state="hover"><span className="nm-input__select-value nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
+  <div className="nm-input nm-input--select is-open nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox" aria-expanded="true" data-state="focus"><span className="nm-input__select-value nm-input__select-value--placeholder">Select</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div>
   <div className="nm-input nm-input--select nm-input--readonly nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value">Italy</span></div></div>
 </div>
 
@@ -197,7 +195,7 @@ Select shares every interaction and validation state with input — hover, focus
 <div className="example">
   <div className="nm-input nm-input--select nm-input--error nm-input--md" style={{width:'220px'}}>
     <label className="nm-input__label">Country<span className="nm-input__required">(required)</span></label>
-    <div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Select a country</span><span className="nm-input__icon-status"><Ic n="alert-circle" /></span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
+    <div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Select a country</span><span className="nm-input__icon-trailing"><Ic n="alert-circle" /></span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div>
     <span className="nm-input__help">Select a country to continue.</span>
   </div>
 </div>
@@ -250,7 +248,7 @@ Select shares every interaction and validation state with input — hover, focus
 ## Do & don't
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value--placeholder">Select currency</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Use a placeholder that names what's being chosen, not a generic "Select".</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value nm-input__select-value--placeholder">Select currency</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Use a placeholder that names what's being chosen, not a generic "Select".</div></div>
   <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-input nm-input--select nm-input--md" style={{width:'180px'}}><div className="nm-input__container" role="combobox"><span className="nm-input__select-value">USD</span><span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span></div></div></div><div className="desc">Don't pre-select a value the user hasn't actually chosen — an empty placeholder is more honest than a silent default.</div></div>
 </div>
 

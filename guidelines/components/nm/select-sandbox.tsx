@@ -135,7 +135,7 @@ export function SelectSandbox() {
               }}
             >
               {intent !== 'default' && (
-                <span className="nm-input__icon-status">
+                <span className="nm-input__icon-trailing">
                   <Ic n={INTENT_ICON[intent as Exclude<Intent, 'default'>]} />
                 </span>
               )}

@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import { Ic } from './icon';
 
-type Size = 'sm' | 'lg';
+type Size = 'md' | 'lg';
 type Intent = 'default' | 'error' | 'success';
 type Length = 4 | 6 | 8;
 type Bg = 'light' | 'dark';
@@ -122,7 +122,7 @@ export function CodeSandbox() {
         <div className="ctrl">
           <label>Size</label>
           <select value={size} onChange={(e) => setSize(e.target.value as Size)}>
-            <option value="sm">sm</option>
+            <option value="md">md</option>
             <option value="lg">lg</option>
           </select>
         </div>

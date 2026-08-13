@@ -43,40 +43,40 @@ Use the Textarea component when:
 Textarea reuses `.nm-input__label`, `.nm-input__container`, and `.nm-input__help` from input without modification. The only new pieces are the `nm-input--textarea` modifier on the wrapper and a `<textarea class="nm-input__field">` instead of `<input>`.
 
 <div className="anatomy" aria-hidden="true">
-  <div className="stage" style={{width:'700px',height:'320px'}}>
-    <div className="nm-input nm-input--textarea nm-input--md giant" style={{width:'208px',pointerEvents:'none',position:'absolute',top:'96px',left:'248px'}}>
+  <div className="stage" style={{width:'620px',height:'300px'}}>
+    <div className="nm-input nm-input--textarea nm-input--md giant" style={{width:'260px',pointerEvents:'none',position:'absolute',top:'86px',left:'194px',transform:'scale(1)',transformOrigin:'center'}}>
       <label className="nm-input__label">Signing instructions<span className="nm-input__optional">(optional)</span></label>
       <div className="nm-input__container">
         <textarea className="nm-input__field" rows={3} defaultValue={"Please sign on page 3,\nnext to the highlighted box."}></textarea>
       </div>
-      <span className="nm-input__help">Shown to the signer before they open the document.</span>
+      <span className="nm-input__help">Shown to the signer beforehand.</span>
     </div>
-    <svg style={{position:'absolute',top:0,left:0,width:'700px',height:'320px',pointerEvents:'none'}} viewBox="0 0 700 320">
-      <line x1="72" y1="32" x2="208" y2="44" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="608" y1="32" x2="528" y2="92" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="72" y1="148" x2="216" y2="144" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="608" y1="148" x2="532" y2="204" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="72" y1="276" x2="208" y2="240" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    <svg style={{position:'absolute',top:0,left:0,width:'620px',height:'300px',pointerEvents:'none'}} viewBox="0 0 620 300">
+      <line x1="72" y1="32" x2="234" y2="102" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="32" x2="434" y2="126" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="72" y1="148" x2="239" y2="152" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="148" x2="437" y2="182" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="72" y1="266" x2="234" y2="220" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
     </svg>
     <div style={{position:'absolute',top:'13px',left:'24px'}}>
       <div className="labelpoint" style={{position:'static'}}>1 · <b>Label</b></div>
-      <div className="dot" style={{top:'31px',left:'184px'}}></div>
+      <div className="dot" style={{top:'89px',left:'210px'}}></div>
     </div>
-    <div style={{position:'absolute',top:'13px',left:'568px'}}>
+    <div style={{position:'absolute',top:'13px',left:'470px'}}>
       <div className="labelpoint" style={{position:'static'}}>2 · <b>Container</b></div>
-      <div className="dot" style={{top:'79px',left:'-40px'}}></div>
+      <div className="dot" style={{top:'113px',left:'-36px'}}></div>
     </div>
     <div style={{position:'absolute',top:'144px',left:'24px'}}>
       <div className="labelpoint" style={{position:'static'}}>3 · <b>Multi-line field</b></div>
-      <div className="dot" style={{top:'0px',left:'192px'}}></div>
+      <div className="dot" style={{top:'8px',left:'215px'}}></div>
     </div>
-    <div style={{position:'absolute',top:'144px',left:'568px'}}>
+    <div style={{position:'absolute',top:'144px',left:'470px'}}>
       <div className="labelpoint" style={{position:'static'}}>4 · <b>Resize handle</b></div>
-      <div className="dot" style={{top:'60px',left:'-36px'}}></div>
+      <div className="dot" style={{top:'38px',left:'-33px'}}></div>
     </div>
-    <div style={{position:'absolute',top:'272px',left:'24px'}}>
+    <div style={{position:'absolute',top:'262px',left:'24px'}}>
       <div className="labelpoint" style={{position:'static'}}>5 · <b>Help text</b></div>
-      <div className="dot" style={{top:'-32px',left:'184px'}}></div>
+      <div className="dot" style={{top:'-42px',left:'210px'}}></div>
     </div>
   </div>
 </div>
@@ -96,11 +96,10 @@ Textarea reuses `.nm-input__label`, `.nm-input__container`, and `.nm-input__help
 
 ## Sizes
 
-Textarea uses the same five input sizes for its label, border radius, and padding; height instead comes from the `rows` attribute on the `<textarea>` itself, not from the size modifier.
+Textarea uses the same four input sizes — `xs`, `md`, `lg`, `xl` — with `md` as the default, for its label, border radius, and padding; height instead comes from the `rows` attribute on the `<textarea>` itself, not from the size modifier. There is no `sm` step.
 
 <div className="scale-row"><span className="sz">xs</span><div><div className="nm-input nm-input--textarea nm-input--xs" style={{width:'240px'}}><label className="nm-input__label">Note</label><div className="nm-input__container"><textarea className="nm-input__field" rows={2} placeholder="Note"></textarea></div></div></div><div className="metric">inline comments</div></div>
-<div className="scale-row"><span className="sz">sm</span><div><div className="nm-input nm-input--textarea nm-input--sm" style={{width:'240px'}}><label className="nm-input__label">Message</label><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Message"></textarea></div></div></div><div className="metric">default for forms</div></div>
-<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--textarea nm-input--md" style={{width:'240px'}}><label className="nm-input__label">Message</label><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Message"></textarea></div></div></div><div className="metric">standard content forms</div></div>
+<div className="scale-row"><span className="sz">md</span><div><div className="nm-input nm-input--textarea nm-input--md" style={{width:'240px'}}><label className="nm-input__label">Message</label><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Message"></textarea></div></div></div><div className="metric">default for forms, standard content</div></div>
 <div className="scale-row"><span className="sz">lg</span><div><div className="nm-input nm-input--textarea nm-input--lg" style={{width:'240px'}}><label className="nm-input__label">Description</label><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Description"></textarea></div></div></div><div className="metric">prominent single-field forms</div></div>
 <div className="scale-row"><span className="sz">xl</span><div><div className="nm-input nm-input--textarea nm-input--xl" style={{width:'240px'}}><label className="nm-input__label">Tell us more</label><div className="nm-input__container"><textarea className="nm-input__field" rows={3} placeholder="Tell us more"></textarea></div></div></div><div className="metric">marketing, feedback forms</div></div>
 
@@ -132,17 +131,17 @@ No disabled state. As with every Namirial field, use `nm-input--readonly` instea
 <div className="example">
   <div className="nm-input nm-input--textarea nm-input--md nm-input--error" style={{width:'220px'}}>
     <label className="nm-input__label">Reason for rejection<span className="nm-input__required">(required)</span></label>
-    <div className="nm-input__container"><textarea className="nm-input__field" rows={3}></textarea><span className="nm-input__icon-status"><Ic n="alert-circle" /></span></div>
+    <div className="nm-input__container"><textarea className="nm-input__field" rows={3}></textarea><span className="nm-input__icon-trailing"><Ic n="alert-circle" /></span></div>
     <span className="nm-input__help">Tell the signer why the document was rejected.</span>
   </div>
   <div className="nm-input nm-input--textarea nm-input--md nm-input--warning" style={{width:'220px'}}>
     <label className="nm-input__label">Internal note</label>
-    <div className="nm-input__container"><textarea className="nm-input__field" rows={3} defaultValue="Visible to the whole team, not just approvers."></textarea><span className="nm-input__icon-status"><Ic n="alert-triangle" /></span></div>
+    <div className="nm-input__container"><textarea className="nm-input__field" rows={3} defaultValue="Visible to the whole team, not just approvers."></textarea><span className="nm-input__icon-trailing"><Ic n="alert-triangle" /></span></div>
     <span className="nm-input__help">This note will be visible to everyone with access.</span>
   </div>
   <div className="nm-input nm-input--textarea nm-input--md nm-input--success" style={{width:'220px'}}>
     <label className="nm-input__label">Summary</label>
-    <div className="nm-input__container"><textarea className="nm-input__field" rows={3} defaultValue="Signed and archived on July 12."></textarea><span className="nm-input__icon-status"><Ic n="circle-check" /></span></div>
+    <div className="nm-input__container"><textarea className="nm-input__field" rows={3} defaultValue="Signed and archived on July 12."></textarea><span className="nm-input__icon-trailing"><Ic n="circle-check" /></span></div>
     <span className="nm-input__help">Looks good — nothing left to change.</span>
   </div>
 </div>
@@ -335,7 +334,7 @@ With the optional toolbar:
 | Class | Values | Default |
 |-------|--------|---------|
 | `nm-input--textarea` | Switches container alignment and field line-height/resize for multi-line content | — |
-| `nm-input--{size}` | xs · sm · md · lg · xl | `sm` |
+| `nm-input--{size}` | xs · md · lg · xl | `md` |
 | `nm-input--{intent}` | error · warning · success | — |
 | `nm-input--readonly` | Locks the container against edits | — |
 | `nm-input__container--toolbar` | Add to `.nm-input__container` to stack an optional formatting toolbar above the field | — |

@@ -13,6 +13,43 @@
  * purpose — those previews must stay fixed regardless of the site theme.
  */
 
+/* namirial-theme.css keys the dropdown's dark-mode background off `--palette-neutral-950`
+   (#1A2424), while every other dark-mode surface (input, dialog, stage background) uses
+   `--palette-surface-950` (#0A1111). That mismatch makes dropdowns render as a visibly lighter,
+   off-theme panel floating over the page instead of matching the rest of dark mode. Align it
+   with the same background token used everywhere else. Covers both the site-wide `.dark` theme
+   and the sandbox's own `data-theme` toggle on `.stage`, since dropdowns appear under both. */
+[data-theme='dark'] .nm-dropdown, .dark .nm-dropdown {
+  --nm-dropdown-bg: var(--palette-surface-950);
+}
+
+/* Search recipe uses a custom .nm-input__icon-trailing clear button; hide the browser's
+   native type="search" cancel affordance so that custom icon is the only way to clear. */
+.nm-input__field[type='search']::-webkit-search-cancel-button,
+.nm-input__field[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Select's error/warning/success examples pair a validation icon with the chevron, both as
+   `.nm-input__icon-trailing` — namirial-theme.css recolors that class as a whole via
+   `--nm-input-icon`, so the chevron was going red/amber/green along with the validation icon.
+   The chevron is a structural affordance (open/closed), not feedback, so pin it back to the
+   neutral icon color; the validation icon (first of the pair) keeps the intent color.
+   Scoped to the sandbox's own `data-theme` on `.stage` (its light/dark control), not the
+   site-wide `.dark` class — the two are independent, so a light-mode stage on a dark-themed
+   site must still get the dark chevron, not the white one. */
+.nm-input--select.nm-input--error .nm-input__icon-trailing:last-of-type,
+.nm-input--select.nm-input--warning .nm-input__icon-trailing:last-of-type,
+.nm-input--select.nm-input--success .nm-input__icon-trailing:last-of-type {
+  color: var(--palette-surface-950);
+}
+.stage[data-theme='dark'] .nm-input--select.nm-input--error .nm-input__icon-trailing:last-of-type,
+.stage[data-theme='dark'] .nm-input--select.nm-input--warning .nm-input__icon-trailing:last-of-type,
+.stage[data-theme='dark'] .nm-input--select.nm-input--success .nm-input__icon-trailing:last-of-type {
+  color: var(--palette-surface-50);
+}
+
 .eyebrow { font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--palette-accent-700); margin:0 0 12px; }
 .dark .eyebrow { color:var(--palette-accent-200); }
 h1.display { font-size:56px; line-height:1.05; font-weight:700; letter-spacing:-0.02em; margin:0 0 20px; max-width:14ch; }
@@ -78,12 +115,81 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .anatomy .dot { position:absolute; width:10px; height:10px; border-radius:999px; background:var(--palette-accent-500); box-shadow:0 0 0 4px var(--palette-accent-50); }
 .dark .anatomy .dot { box-shadow:0 0 0 4px var(--palette-accent-900); }
 .anatomy .labelpoint { position:absolute; font:600 11px/1.3 ui-monospace,Menlo,monospace; color:var(--palette-surface-950); background:var(--palette-surface-50); padding:4px 8px; border-radius:4px; border:1px solid var(--palette-neutral-100); white-space:nowrap; }
+/* .labelpoint's chip background stays --palette-surface-50 (light) in both themes on
+   purpose — it's a fixed annotation card, not a themed surface — so its accent text must
+   stay the dark accent-700 in both themes too; accent-200 here was unreadably pale on white. */
 .anatomy .labelpoint b { color:var(--palette-accent-700); }
-.dark .anatomy .labelpoint b { color:var(--palette-accent-200); }
 .theme-pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0 8px; }
 @media (max-width:760px) { .theme-pair { grid-template-columns:1fr; } }
 .theme-card { border-radius:12px; overflow:hidden; border:1px solid var(--palette-neutral-100); background:var(--palette-surface-50); color:var(--palette-surface-950); }
 .theme-card[data-theme='dark'] { background:var(--palette-surface-950); color:var(--palette-surface-50); border-color:var(--palette-neutral-800); }
+[data-theme='light'] {
+  --nm-input-bg: var(--palette-surface-50);
+  --nm-input-bg-hover: var(--palette-neutral-50);
+  --nm-input-bg-readonly: var(--palette-surface-100);
+  --nm-input-border: var(--palette-neutral-600);
+  --nm-input-focus-ring: var(--palette-active-600);
+  --nm-input-text: var(--palette-surface-950);
+  --nm-input-placeholder: var(--palette-neutral-600);
+  --nm-input-icon: var(--palette-surface-950);
+  --nm-input-label-fg: var(--palette-surface-950);
+  --nm-input-label-required: var(--palette-surface-900);
+  --nm-input-label-optional: var(--palette-neutral-700);
+  --nm-input-help-fg: var(--palette-surface-900);
+  --nm-tag-bg: var(--palette-tag-badge-primary-soft);
+  --nm-tag-border: var(--palette-tag-badge-primary-medium-tag);
+  --nm-tag-fg: var(--palette-surface-950);
+  --nm-tag-remove-fg: var(--palette-neutral-600);
+  --nm-tag-remove-hover-fg: var(--palette-surface-950);
+  --nm-dropdown-bg: var(--palette-surface-50);
+  --nm-dropdown-border: var(--palette-neutral-100);
+  --nm-dropdown-shadow: var(--palette-surface-900-1);
+  --nm-dropdown-item-text: var(--palette-surface-950);
+  --nm-dropdown-item-hover-bg: var(--palette-neutral-100);
+  --nm-dropdown-item-active-bg: var(--palette-neutral-50);
+  --nm-dropdown-item-active-fg: var(--palette-accent-900);
+  --nm-dropdown-separator: var(--palette-neutral-100);
+  /* namirial-theme.css only flips these back via `[data-theme=dark], .dark` — with no matching
+     `[data-theme=light]` rule, a light-mode preview (e.g. the textarea toolbar's ghost icon
+     buttons) nested under a dark-themed site keeps inheriting the dark-mode fg color from the
+     site's `.dark` class, rendering near-white icons on the preview's white background. */
+  --nm-button-ghost-secondary-fg: var(--palette-surface-950);
+  --nm-button-secondary-fg: var(--palette-surface-950);
+  --nm-button-secondary-hover-bg: var(--palette-neutral-50);
+  --nm-button-secondary-hover-border: var(--palette-neutral-800);
+  --nm-button-secondary-active-bg: var(--palette-neutral-100);
+  --nm-button-secondary-active-border: var(--palette-neutral-800);
+}
+/* Checked state in a multi-select list is already conveyed by the checkbox itself, so the
+   docs example skips the single-select active background namirial-theme.css applies to
+   `[aria-selected=true]` — kept scoped to `.nm-dropdown__item--multi` only. */
+.nm-dropdown__item--multi[aria-selected='true'] {
+  background-color: transparent;
+}
+.nm-dropdown__item--multi[aria-selected='true']:hover {
+  background-color: var(--nm-dropdown-item-hover-bg);
+}
+/* namirial-theme.css darkens intent colors via `.dark .nm-input--error` etc (descendant
+   combinator, matches through ancestors) — same specificity, so these have to be re-declared
+   here too or a locked light preview still gets the dark-mode intent colors on a dark site. */
+[data-theme='light'] .nm-input--error {
+  --nm-input-border: var(--palette-negative-700);
+  --nm-input-help-fg: var(--palette-negative-700);
+  --nm-input-label-required: var(--palette-negative-700);
+  --nm-input-icon: var(--palette-negative-700);
+}
+[data-theme='light'] .nm-input--warning {
+  --nm-input-border: var(--palette-warning-700);
+  --nm-input-help-fg: var(--palette-warning-700);
+  --nm-input-label-required: var(--palette-warning-700);
+  --nm-input-icon: var(--palette-warning-700);
+}
+[data-theme='light'] .nm-input--success {
+  --nm-input-border: var(--palette-positive-700);
+  --nm-input-help-fg: var(--palette-positive-700);
+  --nm-input-label-required: var(--palette-positive-700);
+  --nm-input-icon: var(--palette-positive-700);
+}
 .theme-card .theme-label { padding:10px 16px; font:700 11px/1 "Open Sans",sans-serif; letter-spacing:0.08em; text-transform:uppercase; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent); }
 .theme-card .theme-label span { font:500 11px/1 ui-monospace,Menlo,monospace; opacity:0.6; text-transform:none; letter-spacing:0; }
 .theme-card .theme-frame { padding:28px 24px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px; min-height:120px; }
@@ -105,6 +211,13 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .dark .sandbox .code .tok-tag { color:var(--palette-accent-200); }
 .dark .sandbox .code .tok-attr { color:var(--palette-info-200); }
 .dark .sandbox .code .tok-str { color:var(--palette-positive-200); }
+.pattern-tabs { display:flex; gap:4px; padding:4px; border:1px solid var(--palette-neutral-100); border-radius:10px; background:var(--palette-neutral-50); width:fit-content; margin:24px 0 0; }
+.dark .pattern-tabs { background:var(--palette-surface-950); border-color:var(--palette-neutral-300); }
+.pattern-tabs button { font:600 13px/1 "Open Sans",sans-serif; padding:8px 14px; border:none; border-radius:7px; background:transparent; color:var(--palette-neutral-700); cursor:pointer; }
+.dark .pattern-tabs button { color:var(--palette-neutral-200); }
+.pattern-tabs button[aria-selected='true'] { background:var(--palette-surface-50); color:var(--palette-surface-950); box-shadow:0 1px 3px var(--palette-surface-900-1); }
+.dark .pattern-tabs button[aria-selected='true'] { background:var(--palette-surface-900); color:var(--palette-surface-50); }
+.pattern-tabs + .sandbox { margin-top:12px; }
 .tokens-table { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; margin-top:12px; }
 .tokens-table th, .tokens-table td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--palette-neutral-100); }
 .tokens-table th { font:700 11px/1 "Open Sans",sans-serif; text-transform:uppercase; letter-spacing:0.06em; color:var(--palette-neutral-700); background:var(--palette-neutral-50); }
@@ -113,6 +226,161 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .dark .tokens-table td.tok { color:var(--palette-surface-100); }
 .tokens-table td .swatch-inline { display:inline-block; width:14px; height:14px; border-radius:3px; border:1px solid var(--palette-neutral-100); vertical-align:middle; margin-right:8px; }
 .nm-button[data-state="hover"] { pointer-events:none; }
+/* Textarea: the container's own padding insets the field's border-box, so the native resize
+   handle (drawn at the field's own bottom-right corner) sits short of the container's true
+   corner. Pull the field's right edge partway out through that padding (leaving a 6px breathing
+   gap so the handle doesn't sit glued to the rounded corner) and rebuild most of that padding
+   on the field itself so the text position barely shifts. The bottom edge is left at the
+   container's own padding untouched. Values are duplicated per size to match
+   namirial-theme.css's own `.nm-input--{size} .nm-input__container` padding
+   (xs: 2/8, sm & md: 4/12 default, lg & xl: 4/16). */
+.nm-input--textarea .nm-input__container { align-items: stretch; }
+/* The browser draws its own resize grip using a system color that's barely visible against a
+   dark theme (it isn't tied to any CSS color, so it can't follow the field's own tokens).
+   Replace it with a themed glyph baked as a background-image (mask-image on ::-webkit-resizer
+   rendered as a solid block instead of clipping to the line shape, so bake the color directly
+   into two SVGs instead — one per theme — matching `--nm-input-border`'s light/dark values). */
+.nm-input--textarea .nm-input__field::-webkit-resizer {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cg stroke='rgb(99,111,111)' stroke-width='1.5' stroke-linecap='round'%3E%3Cline x1='13' y1='4' x2='4' y2='13'/%3E%3Cline x1='13' y1='8' x2='8' y2='13'/%3E%3Cline x1='13' y1='12' x2='12' y2='13'/%3E%3C/g%3E%3C/svg%3E");
+}
+[data-theme='dark'] .nm-input--textarea .nm-input__field::-webkit-resizer,
+.dark .nm-input--textarea .nm-input__field::-webkit-resizer {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cg stroke='rgb(183,196,196)' stroke-width='1.5' stroke-linecap='round'%3E%3Cline x1='13' y1='4' x2='4' y2='13'/%3E%3Cline x1='13' y1='8' x2='8' y2='13'/%3E%3Cline x1='13' y1='12' x2='12' y2='13'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* :not(.nm-input__container--toolbar) — the toolbar variant's container padding is already 0
+   (see below), so pulling the field out by the same amount here would push it past the
+   container's real edge and get clipped by the toolbar container's overflow:hidden. Toolbar
+   fields get their own plain padding-right instead, with nothing to pull through. */
+.nm-input--textarea .nm-input__container:not(:has(.nm-input__icon-trailing, .nm-input__icon-leading)):not(.nm-input__container--toolbar) .nm-input__field { margin-right: -6px; padding-right: 6px; }
+.nm-input--textarea.nm-input--xs .nm-input__container:not(:has(.nm-input__icon-trailing, .nm-input__icon-leading)):not(.nm-input__container--toolbar) .nm-input__field { margin-right: -2px; padding-right: 2px; }
+.nm-input--textarea.nm-input--lg .nm-input__container:not(:has(.nm-input__icon-trailing, .nm-input__icon-leading)):not(.nm-input__container--toolbar) .nm-input__field,
+.nm-input--textarea.nm-input--xl .nm-input__container:not(:has(.nm-input__icon-trailing, .nm-input__icon-leading)):not(.nm-input__container--toolbar) .nm-input__field { margin-right: -10px; padding-right: 10px; }
+/* When a validation icon is present it's a flex sibling in the same right-hand column as the
+   resize handle, so leaving it in flow would either overlap the field (if pulled flush) or
+   strand the handle far from the true corner (if not, since the field stops before the icon
+   column). Take the icon out of flow instead: absolutely position it over the field's own
+   top-right padding, let the field reclaim the full container width (and reach the true
+   corner via the same pull as the no-icon case above), and pad the field's text away from
+   the icon so typed content can't run underneath it. */
+.nm-input--textarea .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) {
+  position: relative;
+}
+.nm-input--textarea .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-trailing,
+.nm-input--textarea .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-leading {
+  position: absolute;
+  margin: 0;
+}
+.nm-input--textarea .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__field {
+  width: 100%;
+  margin-right: -6px;
+  padding-right: 38px;
+}
+.nm-input--textarea .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-trailing,
+.nm-input--textarea .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-leading {
+  top: 8px;
+  right: 12px;
+}
+.nm-input--textarea.nm-input--xs .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__field {
+  margin-right: -2px;
+  padding-right: 24px;
+}
+.nm-input--textarea.nm-input--xs .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-trailing,
+.nm-input--textarea.nm-input--xs .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-leading {
+  top: 6px;
+  right: 8px;
+}
+.nm-input--textarea.nm-input--lg .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__field {
+  margin-right: -10px;
+  padding-right: 42px;
+}
+.nm-input--textarea.nm-input--xl .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__field {
+  margin-right: -10px;
+  padding-right: 50px;
+}
+.nm-input--textarea.nm-input--lg .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-trailing,
+.nm-input--textarea.nm-input--lg .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-leading,
+.nm-input--textarea.nm-input--xl .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-trailing,
+.nm-input--textarea.nm-input--xl .nm-input__container:has(.nm-input__icon-trailing, .nm-input__icon-leading) .nm-input__icon-leading {
+  top: 8px;
+  right: 16px;
+}
+/* Textarea toolbar: `.nm-input__toolbar*` has no styling in namirial-theme.css at all, so it was
+   rendering as unstyled inline buttons crammed onto one line with the field. Give it the same
+   shape as the protected `.nm-textarea__toolbar` reference (row, 8px gap, bottom border, wraps)
+   stacked above the field via flex-column, and style its buttons after the real ghost/secondary
+   icon-button tokens (`.nm-button--ghost.nm-button--secondary`) so they read as the same
+   component family instead of bespoke elements. */
+/* 3-class selector needed to beat namirial-theme.css's own per-size
+   `.nm-input--{size} .nm-input__container` padding rule (2-class specificity). */
+.nm-input--textarea .nm-input__container.nm-input__container--toolbar {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+}
+.nm-input__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--nm-input-border);
+  flex-wrap: wrap;
+}
+.nm-input__toolbar-select,
+.nm-input__toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 24px;
+  padding-inline: 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--nm-button-ghost-secondary-fg);
+  font: 600 12px "Open Sans", system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;
+}
+.nm-input__toolbar-btn { width: 24px; padding-inline: 0; }
+.nm-input__toolbar-select svg, .nm-input__toolbar-btn svg { width: 14px; height: 14px; }
+.nm-input__toolbar-select:hover,
+.nm-input__toolbar-btn:hover {
+  background-color: var(--nm-button-secondary-hover-bg);
+  border-color: var(--nm-button-secondary-hover-border);
+  color: var(--nm-button-secondary-fg);
+}
+.nm-input__toolbar-btn[aria-pressed="true"] {
+  background-color: var(--nm-button-secondary-active-bg);
+  border-color: var(--nm-button-secondary-active-border);
+  color: var(--nm-button-secondary-fg);
+}
+.nm-input__toolbar-divider {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1px;
+  height: 20px;
+  background-color: var(--nm-input-border);
+  align-self: center;
+}
+/* The toolbar container's own padding is 0 (see above), so unlike the plain-field case there's
+   no existing padding to pull the field through — a real (positive) margin on the right/bottom
+   is what carves out the same breathing room here for the resize handle. */
+.nm-input__container--toolbar .nm-input__field {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 8px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+}
+.nm-input--textarea.nm-input--xs .nm-input__container--toolbar .nm-input__field { padding-left: 8px; margin-right: 2px; margin-bottom: 2px; }
+.nm-input--textarea.nm-input--lg .nm-input__container--toolbar .nm-input__field,
+.nm-input--textarea.nm-input--xl .nm-input__container--toolbar .nm-input__field { padding-left: 16px; margin-right: 10px; margin-bottom: 4px; }
 .nm-button--primary[data-state="hover"]   { background-color:var(--nm-button-primary-hover-bg);   border-color:var(--nm-button-primary-hover-border); }
 .nm-button--secondary[data-state="hover"] { background-color:var(--nm-button-secondary-hover-bg); border-color:var(--nm-button-secondary-hover-border); }
 .nm-button--accent[data-state="hover"]    { background-color:var(--nm-button-accent-hover-bg);    border-color:var(--nm-button-accent-hover-border); }
@@ -159,8 +427,8 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .nm-switch[data-state="focus"] { outline:2px solid var(--palette-focus-700); outline-offset:2px; }
 .nm-input__container[data-state="hover"] { background-color:var(--nm-input-bg-hover); }
 .nm-input__container[data-state="focus"] { outline:none; box-shadow:0 0 0 2px var(--nm-input-focus-ring); }
+.nm-input__field:focus::placeholder { color:transparent; }
 .code-field { display:flex; gap:8px; }
 .code-field .nm-input { width:32px; }
 .code-field .nm-input__field { text-align:center; }
 .code-field .nm-input__container { border-radius:8px; padding-left:4px; padding-right:4px; }
-.code-field .nm-input__field:focus::placeholder { color:transparent; }

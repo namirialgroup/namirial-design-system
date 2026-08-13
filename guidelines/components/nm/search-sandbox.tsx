@@ -57,6 +57,9 @@ export function SearchSandbox() {
               placeholder="Search documents"
               value={value}
               onChange={(e) => setValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') e.preventDefault();
+              }}
               readOnly={state === 'readonly'}
             />
             {hasValue && state !== 'readonly' && (

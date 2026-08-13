@@ -145,7 +145,7 @@ export function TextareaSandbox() {
               readOnly={state === "readonly"}
             />
             {showStatusIcon && (
-              <span className="nm-input__icon-status">
+              <span className="nm-input__icon-trailing">
                 <Ic n={INTENT_ICON[intent as Exclude<Intent, "default">]} />
               </span>
             )}
@@ -291,7 +291,7 @@ export function TextareaSandbox() {
             {"\n    "}
             <span className="tok-tag">&lt;span</span>{" "}
             <span className="tok-attr">class</span>=
-            <span className="tok-str">&quot;nm-input__icon-status&quot;</span>
+            <span className="tok-str">&quot;nm-input__icon-trailing&quot;</span>
             <span className="tok-tag">&gt;&lt;/span&gt;</span>
           </>
         )}
