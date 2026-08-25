@@ -1224,14 +1224,14 @@
   --nm-tag-bg: var(--palette-tag-badge-primary-soft);
   --nm-tag-border: var(--palette-tag-badge-primary-medium-tag);
   --nm-tag-fg: var(--palette-surface-950);
-  --nm-tag-remove-fg: var(--palette-neutral-600);
-  --nm-tag-remove-hover-fg: var(--palette-surface-950);
+  --nm-tag-remove-fg: var(--palette-surface-950);
+  --nm-tag-remove-hover-fg: var(--palette-neutral-600);
 }
 
 [data-theme=dark], .dark {
   --nm-tag-fg: var(--palette-surface-50);
-  --nm-tag-remove-fg: var(--palette-neutral-400);
-  --nm-tag-remove-hover-fg: var(--palette-surface-50);
+  --nm-tag-remove-fg: var(--palette-surface-50);
+  --nm-tag-remove-hover-fg: var(--palette-neutral-400);
 }
 
 .nm-tag {
