@@ -1,8 +1,221 @@
 ---
 title: Message
-description: Coming soon.
+description: Messages are compact, floating snippets of feedback anchored near the content they refer to.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Messaging</p>
+
+<p className="lede">A message is a small, elevated, inline-sized snippet — a step up from inline field help, a step down from an alert. Namirial messages are built from <code>--nm-message-*</code> tokens defined in <code>namirial-theme.css</code>, keep a neutral card background across every intent, and only recolor their text, icon, and link.</p>
+
+<div className="hero-stage">
+  <div className="nm-message">
+    <span className="nm-message__icon"><Ic n="info" s={24} /></span>
+    <span>Default message</span>
+  </div>
+  <div className="nm-message nm-message--positive">
+    <span className="nm-message__icon"><Ic n="circle-check" s={24} /></span>
+    <span>Draft saved</span>
+    <span className="nm-message__link">Undo</span>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A message is a compact, self-sized snippet of feedback — it hugs its content instead of stretching full-width like an alert, and it floats with a shadow rather than sitting flush in the layout. It's meant to sit near what it describes: beside a button, under a small action row, next to a list item.
+
+### When to use
+
+Use a message when:
+
+- The feedback is short (a few words) and tied to a specific, local action or spot on the page.
+- You want a floating, self-contained snippet rather than a full-width banner.
+
+Consider another component when:
+
+- The message applies to the whole page or section — use [Alert](/docs/components/messaging/alert) instead.
+- The feedback should appear briefly and disappear on its own, independent of scroll position — use [Toast](/docs/components/messaging/toast).
+- The feedback belongs to a single form field — use the field's own help/error text.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A message is an icon, a short text run, and an optional inline link — all on one row, in a card with a fixed shadow.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="stage" style={{width:'600px',height:'200px'}}>
+    <div className="nm-message giant" style={{pointerEvents:'none',position:'absolute',top:'80px',left:'170px'}}>
+      <span className="nm-message__icon"><Ic n="info" s={24} /></span>
+      <span>Default message</span>
+      <span className="nm-message__link">Click here</span>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'600px',height:'200px',pointerEvents:'none'}} viewBox="0 0 600 200">
+      <line x1="90" y1="34" x2="195" y2="90" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="300" y1="34" x2="300" y2="94" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="34" x2="430" y2="90" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'10px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>1 · <b>Icon</b></div></div>
+    <div style={{position:'absolute',top:'10px',left:'240px'}}><div className="labelpoint" style={{position:'static'}}>2 · <b>Text</b></div></div>
+    <div style={{position:'absolute',top:'10px',left:'440px'}}><div className="labelpoint" style={{position:'static'}}>3 · <b>Link</b></div></div>
+  </div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill (fixed, neutral) | `--nm-message-bg` |
+| Container | Shadow | `--nm-message-shadow` — `0 4px 16px` |
+| Container | Radius / padding / gap | `border-radius: 8px` · `padding: 8px 12px` · `gap: 16px` |
+| Icon | Color | `--nm-message-additional` — recolored per intent |
+| Text | Color | `--nm-message-fg` — recolored per intent |
+| Link | Color / weight | `--nm-message-additional`, `font-weight: 600`, underlined |
+
+</section>
+
+<section className="block" id="variants">
+
+## Intent variants
+
+Message ships seven intents, defaulting to `info`. Unlike Alert, the container fill never changes — only the icon, link, and text color shift.
+
+<div className="example stacked">
+  <div className="nm-message nm-message--primary"><span className="nm-message__icon"><Ic n="megaphone" s={24} /></span><span>Primary message</span></div>
+  <div className="nm-message nm-message--secondary"><span className="nm-message__icon"><Ic n="info" s={24} /></span><span>Secondary message</span></div>
+  <div className="nm-message nm-message--accent"><span className="nm-message__icon"><Ic n="sparkles" s={24} /></span><span>Accent message</span></div>
+  <div className="nm-message nm-message--info"><span className="nm-message__icon"><Ic n="info" s={24} /></span><span>Info message</span></div>
+  <div className="nm-message nm-message--positive"><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Positive message</span></div>
+  <div className="nm-message nm-message--warning"><span className="nm-message__icon"><Ic n="alert-triangle" s={24} /></span><span>Warning message</span></div>
+  <div className="nm-message nm-message--negative"><span className="nm-message__icon"><Ic n="alert-circle" s={24} /></span><span>Negative message</span></div>
+</div>
+
+</section>
+
+<section className="block" id="content-types">
+
+## Content types
+
+### With a link
+
+`.nm-message__link` shares the icon's `--nm-message-additional` color, so both recolor together and stay distinct from the plain body text.
+
+<div className="example">
+  <div className="nm-message nm-message--positive">
+    <span className="nm-message__icon"><Ic n="circle-check" s={24} /></span>
+    <span>Draft saved</span>
+    <span className="nm-message__link">Undo</span>
+  </div>
+</div>
+
+### Text only
+
+<div className="example">
+  <div className="nm-message nm-message--info"><span className="nm-message__icon"><Ic n="info" s={24} /></span><span>3 items in your cart</span></div>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+The message card fill and shadow are explicitly remapped under `.dark`, since — unlike Alert — its background doesn't come from the intent-driven callout scale.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-message nm-message--positive"><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Draft saved</span><span className="nm-message__link">Undo</span></div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-message nm-message--positive"><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Draft saved</span><span className="nm-message__link">Undo</span></div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-message nm-message--positive"><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Draft saved</span><span className="nm-message__link">Undo</span></div></div><div className="desc">Keep the message short and place it right next to the action it confirms.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-message nm-message--positive" style={{maxWidth:'260px'}}><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Your draft has been saved successfully and will be available the next time you open this document.</span></div></div><div className="desc">Don't use a message for a long explanation — switch to Alert or inline help text.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-message nm-message--negative"><span className="nm-message__icon"><Ic n="alert-circle" s={24} /></span><span>Link expired</span></div></div><div className="desc">Use the intent that matches what actually happened.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-message"><span className="nm-message__icon"><Ic n="alert-circle" s={24} /></span><span>Link expired</span></div></div><div className="desc">Don't pair a negative icon with the default intent's color — icon and color must agree.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Give the message `role="status"` so assistive tech picks it up as a polite live-region update without stealing focus.
+- Mark the icon `aria-hidden="true"` — it duplicates the color/text signal already carried by the message.
+
+#### Focus & dismissal
+
+- A message that appears in response to an action shouldn't steal keyboard focus — announce it, don't move focus to it.
+- If a message includes an "Undo" or similar link, make it a real focusable `<button>`/`<a>`, not a styled `<span>` with a click handler.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-message-bg</td><td>Container fill — fixed, not intent-driven</td></tr>
+<tr><td className="tok">--nm-message-shadow</td><td>Drop shadow color</td></tr>
+<tr><td className="tok">--nm-message-fg</td><td>Body text color — recolored per intent</td></tr>
+<tr><td className="tok">--nm-message-additional</td><td>Icon and link color — recolored per intent</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+No JavaScript is required for a static message.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-message nm-message--positive" role="status">
+  <span class="nm-message__icon" aria-hidden="true"><!-- icon --></span>
+  <span>Draft saved</span>
+  <span class="nm-message__link">Undo</span>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-message--{intent}` | primary · secondary · accent · info · positive · negative · warning — omit for `info` | — (`info`) |
+| `nm-message__icon` | Leading icon slot, 24×24px | — |
+| `nm-message__link` | Inline emphasized link, shares icon color | — |
+
+</section>

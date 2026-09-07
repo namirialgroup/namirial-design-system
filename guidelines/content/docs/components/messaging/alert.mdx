@@ -1,8 +1,236 @@
 ---
 title: Alert
-description: Coming soon.
+description: Alerts surface important, page-level information that needs attention without blocking the user.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Messaging</p>
+
+<p className="lede">An alert is a bordered, page-level banner that surfaces information the user should notice but isn't required to act on immediately. Namirial alerts are built from <code>--nm-alert-*</code> tokens defined in <code>namirial-theme.css</code>, ship at a single fixed size, and default to the <code>info</code> intent when no modifier is applied.</p>
+
+<div className="hero-stage">
+  <div className="nm-alert" style={{width:'340px'}}>
+    <span className="nm-alert__icon"><Ic n="info" s={24} /></span>
+    <span className="nm-alert__body">Your session will expire in 5 minutes.</span>
+  </div>
+  <div className="nm-alert nm-alert--negative" style={{width:'340px'}}>
+    <span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span>
+    <span className="nm-alert__body">Signing failed. Please try again.</span>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+An alert lives inline in the page layout — above a form, at the top of a section — and stays visible until the underlying condition changes or the user dismisses it. It never floats above content and never disappears on its own.
+
+### When to use
+
+Use an alert when:
+
+- The information applies to the whole page or section, not a single field (system status, an expired session, a pending review).
+- The message should persist until the user deals with it or navigates away — not vanish after a few seconds.
+
+Consider another component when:
+
+- The feedback is tied to a single field's value — use the input's own error/warning/success state instead.
+- The message is a one-off confirmation of an action the user just took and can safely disappear on its own — use [Toast](/docs/components/messaging/toast).
+- The message needs to interrupt the user and block further action until resolved — use a [Dialog](/docs/components/messaging/dialogs).
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+An alert is a single-row container with a leading icon, a text body, and an optional close button — three parts sharing one set of intent tokens.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="stage" style={{width:'600px',height:'200px'}}>
+    <div className="nm-alert giant" style={{width:'360px',pointerEvents:'none',position:'absolute',top:'70px',left:'120px'}}>
+      <span className="nm-alert__icon"><Ic n="info" s={24} /></span>
+      <span className="nm-alert__body">Your plan renews on <span className="nm-alert__link">March 12</span>.</span>
+      <button type="button" className="nm-alert__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'600px',height:'200px',pointerEvents:'none'}} viewBox="0 0 600 200">
+      <line x1="90" y1="34" x2="140" y2="86" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="300" y1="34" x2="300" y2="88" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="34" x2="460" y2="86" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'10px',left:'10px'}}>
+      <div className="labelpoint" style={{position:'static'}}>1 · <b>Icon</b></div>
+    </div>
+    <div style={{position:'absolute',top:'10px',left:'240px'}}>
+      <div className="labelpoint" style={{position:'static'}}>2 · <b>Body</b></div>
+    </div>
+    <div style={{position:'absolute',top:'10px',left:'440px'}}>
+      <div className="labelpoint" style={{position:'static'}}>3 · <b>Close</b></div>
+    </div>
+  </div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill | `--nm-alert-bg` |
+| Container | Border | `--nm-alert-border` |
+| Container | Radius / padding / gap | `border-radius: 8px` · `padding: 8px 12px` · `gap: 16px` |
+| Icon | Color | `--nm-alert-fg` |
+| Body text | Color | `--nm-alert-fg` |
+| Link (inline) | Color / weight | `--nm-alert-fg` (inherited), `font-weight: 600`, underlined |
+| Close button | Color | `--nm-alert-fg`, `opacity: 0.7` hover / `0.5` active |
+
+</section>
+
+<section className="block" id="variants">
+
+## Intent variants
+
+An alert ships seven intents. With no modifier class, `.nm-alert` renders as `info` — the same as adding `nm-alert--info` explicitly.
+
+<div className="example stacked">
+  <div className="nm-alert nm-alert--primary" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="megaphone" s={24} /></span><span className="nm-alert__body">Primary — general product messaging.</span></div>
+  <div className="nm-alert nm-alert--secondary" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="info" s={24} /></span><span className="nm-alert__body">Secondary — lower-emphasis note.</span></div>
+  <div className="nm-alert nm-alert--accent" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="sparkles" s={24} /></span><span className="nm-alert__body">Accent — highlight a new feature.</span></div>
+  <div className="nm-alert nm-alert--info" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="info" s={24} /></span><span className="nm-alert__body">Info — neutral, default intent.</span></div>
+  <div className="nm-alert nm-alert--positive" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="circle-check" s={24} /></span><span className="nm-alert__body">Positive — confirms a successful state.</span></div>
+  <div className="nm-alert nm-alert--warning" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="alert-triangle" s={24} /></span><span className="nm-alert__body">Warning — needs attention soon.</span></div>
+  <div className="nm-alert nm-alert--negative" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Negative — something failed or is blocked.</span></div>
+</div>
+
+</section>
+
+<section className="block" id="content-types">
+
+## Content types
+
+### With a link
+
+`.nm-alert__link` inherits the alert's text color and only adds weight and underline — it never introduces a separate link color, so it stays legible against every intent.
+
+<div className="example">
+  <div className="nm-alert nm-alert--warning" style={{width:'360px'}}>
+    <span className="nm-alert__icon"><Ic n="alert-triangle" s={24} /></span>
+    <span className="nm-alert__body">Your card expires soon. <span className="nm-alert__link">Update payment method</span>.</span>
+  </div>
+</div>
+
+### Dismissible
+
+Add `.nm-alert__close` as a real `<button>` when the condition is safe for the user to acknowledge and hide. Don't add a close button when the alert reflects a state the user still needs to resolve.
+
+<div className="example">
+  <div className="nm-alert nm-alert--info" style={{width:'360px'}}>
+    <span className="nm-alert__icon"><Ic n="info" s={24} /></span>
+    <span className="nm-alert__body">We've updated our terms of service.</span>
+    <button type="button" className="nm-alert__close" aria-label="Dismiss"><Ic n="x" s={16} /></button>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Alert tokens read from the shared `--palette-callout-*` scale, so no per-component dark override is needed — the palette layer already remaps under `data-theme="dark"`.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-alert nm-alert--negative" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Signing failed. Try again.</span></div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-alert nm-alert--negative" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Signing failed. Try again.</span></div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-alert nm-alert--warning" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-triangle" s={24} /></span><span className="nm-alert__body">Your trial ends in 3 days.</span></div></div><div className="desc">Match the intent to the message — warning for something needing attention soon.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-alert nm-alert--negative" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Your trial ends in 3 days.</span></div></div><div className="desc">Don't reach for the most severe intent by default — reserve negative for actual failures.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-alert nm-alert--negative" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Payment failed. Update your card to continue.</span></div></div><div className="desc">Say what happened and what to do next.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-alert nm-alert--negative" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Something went wrong.</span></div></div><div className="desc">Don't leave the user without a next step.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Give the alert container `role="status"` for informational intents, or `role="alert"` for `negative`/`warning` so assistive tech announces it immediately.
+- The icon is decorative and duplicates the intent already carried by color and text — mark it `aria-hidden="true"`.
+
+#### Dismissal
+
+- The close button must be a real `<button>` with `aria-label="Dismiss"` (or similarly explicit) — never a bare icon with a click handler.
+- Removing an alert from the DOM on dismiss is enough; no focus management is required unless the alert was the page's only interactive landmark.
+
+#### Color
+
+- Never rely on the border/background color alone to communicate severity — the icon and text must independently make the intent clear.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-alert-bg</td><td>Container fill — recolored per intent</td></tr>
+<tr><td className="tok">--nm-alert-border</td><td>Container border — recolored per intent</td></tr>
+<tr><td className="tok">--nm-alert-fg</td><td>Icon, body text, and link color — recolored per intent</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+No JavaScript is required for a static alert — it's a styled `<div>` with a text body, only the optional close button needs a click handler.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-alert nm-alert--warning" role="alert">
+  <span class="nm-alert__icon" aria-hidden="true"><!-- icon --></span>
+  <span class="nm-alert__body">Your trial ends in 3 days.</span>
+  <button type="button" class="nm-alert__close" aria-label="Dismiss"><!-- x icon --></button>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-alert--{intent}` | primary · secondary · accent · info · positive · negative · warning — omit for `info` | — (`info`) |
+| `nm-alert__icon` | Leading icon slot, 24×24px | — |
+| `nm-alert__link` | Inline emphasized link inside the body | — |
+| `nm-alert__close` | Dismiss button, 24×24px, must be a `<button>` | — |
+
+</section>

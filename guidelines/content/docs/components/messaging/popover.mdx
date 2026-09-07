@@ -1,8 +1,231 @@
 ---
 title: Popover
-description: Coming soon.
+description: Popovers reveal richer, interactive content anchored to a trigger, and stay open until dismissed.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+<p className="eyebrow">Components · Messaging</p>
+
+<p className="lede">A popover is an anchored panel with a title, a divider, and body content — richer than a tooltip and interactive rather than transient. Namirial popovers are built from <code>--nm-popover-*</code> tokens defined in <code>namirial-theme.css</code>, share the same position and pointer system as tooltip, and default to the <code>primary</code> intent.</p>
+
+<div className="hero-stage">
+  <div className="nm-popover nm-popover--bottom">
+    <span className="nm-popover__title">Filters</span>
+    <hr className="nm-popover__divider" />
+    <span className="nm-popover__content">Narrow results by status, owner, or date.</span>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A popover opens on click (not hover) and stays open until the user dismisses it — by clicking its trigger again, clicking outside, or pressing `Escape`. That persistence is what separates it from a tooltip: a popover can hold interactive content because the user has time to engage with it.
+
+### When to use
+
+Use a popover when:
+
+- The content needs to stay visible while the user reads it or interacts with something inside it (a filter panel, a small form, a list of actions).
+- The trigger should toggle the panel open and closed on click, not just on hover.
+
+Consider another component when:
+
+- The content is a short, single-idea hint that only needs to appear on hover/focus — use [Tooltip](/docs/components/messaging/tooltip).
+- The content is a full task or requires the rest of the page to be inert while it's open — use a [Dialog](/docs/components/messaging/dialogs).
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A popover is a title, a divider, and a content region, plus the same directional pointer used by tooltip.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="stage" style={{width:'600px',height:'240px'}}>
+    <div className="nm-popover nm-popover--bottom giant" style={{pointerEvents:'none',position:'absolute',top:'50px',left:'210px'}}>
+      <span className="nm-popover__title">Filters</span>
+      <hr className="nm-popover__divider" />
+      <span className="nm-popover__content">Narrow by status or owner.</span>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'600px',height:'240px',pointerEvents:'none'}} viewBox="0 0 600 240">
+      <line x1="90" y1="30" x2="230" y2="65" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="90" y1="110" x2="220" y2="95" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="150" x2="380" y2="120" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'10px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>1 · <b>Title</b></div></div>
+    <div style={{position:'absolute',top:'90px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>2 · <b>Divider</b></div></div>
+    <div style={{position:'absolute',top:'130px',left:'420px'}}><div className="labelpoint" style={{position:'static'}}>3 · <b>Content</b></div></div>
+  </div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill | `--nm-popover-bg` |
+| Container | Border | `--nm-popover-border` |
+| Container | Radius / padding / gap | `border-radius: 8px` · `padding: 8px` · `gap: 6px` |
+| Container | Size bounds | `min-width: 160px` · `max-width: 320px` |
+| Title | Color / weight | `--nm-popover-fg`, `font-weight: 700` |
+| Divider | Color | `--nm-popover-fg` at `opacity: 0.6` |
+| Content | Color | `--nm-popover-fg`, `font-weight: 400` |
+| Pointer | Fill | `--nm-popover-border` (8px triangle, via `::before`) |
+
+</section>
+
+<section className="block" id="positions">
+
+## Positions
+
+Popover shares tooltip's 12-position system — four sides, each with a centered default plus `-start`/`-end` alignment.
+
+<div className="example stacked">
+  <div className="nm-popover nm-popover--top"><span className="nm-popover__title">Top</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Centered above the trigger.</span></div>
+  <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Bottom</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Centered below the trigger.</span></div>
+  <div className="nm-popover nm-popover--left"><span className="nm-popover__title">Left</span><hr className="nm-popover__divider" /><span className="nm-popover__content">To the left of the trigger.</span></div>
+  <div className="nm-popover nm-popover--right"><span className="nm-popover__title">Right</span><hr className="nm-popover__divider" /><span className="nm-popover__content">To the right of the trigger.</span></div>
+</div>
+
+</section>
+
+<section className="block" id="variants">
+
+## Intent variants
+
+Popover ships seven intents, defaulting to `primary`.
+
+<div className="example stacked">
+  <div className="nm-popover nm-popover--primary"><span className="nm-popover__title">Primary</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Default appearance.</span></div>
+  <div className="nm-popover nm-popover--info"><span className="nm-popover__title">Info</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Neutral, explanatory content.</span></div>
+  <div className="nm-popover nm-popover--warning"><span className="nm-popover__title">Warning</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Flags a caveat before an action.</span></div>
+  <div className="nm-popover nm-popover--negative"><span className="nm-popover__title">Negative</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Confirms a destructive choice.</span></div>
+</div>
+
+</section>
+
+<section className="block" id="content-types">
+
+## Content types
+
+### Title + content
+
+<div className="example">
+  <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Filters</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Narrow results by status, owner, or date.</span></div>
+</div>
+
+### Content only
+
+Drop the title and divider when the popover doesn't need a heading — a short action list or a single line of text stands on its own.
+
+<div className="example">
+  <div className="nm-popover nm-popover--bottom"><span className="nm-popover__content">Copied to clipboard.</span></div>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Popover tokens read from the shared `--palette-callout-*` scale, so no per-component dark override is needed.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Filters</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Narrow by status or owner.</span></div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Filters</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Narrow by status or owner.</span></div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Share</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Anyone with the link can view.</span></div></div><div className="desc">Use a popover for a small, focused chunk of interactive content anchored to its trigger.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-popover nm-popover--bottom" style={{maxWidth:'260px'}}><span className="nm-popover__title">Settings</span><hr className="nm-popover__divider" /><span className="nm-popover__content">A full multi-step settings form doesn't fit a 320px-wide anchored panel — use a dialog or a dedicated page instead.</span></div></div><div className="desc">Don't cram a full workflow into a popover — move to a Dialog or a page.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-popover nm-popover--bottom"><span className="nm-popover__content">Copied to clipboard.</span></div></div><div className="desc">Let the user click outside or press Escape to close — never trap them inside a popover.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Confirm</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Are you sure you want to delete this? This can't be undone.</span></div></div><div className="desc">Don't use a popover for a destructive confirmation that blocks the rest of the page — use a Confirmation Dialog.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Give the trigger `aria-haspopup="true"` and `aria-expanded`, toggled with the panel's open state.
+- Connect trigger and panel with `aria-controls` pointing at the panel's `id`.
+
+#### Keyboard
+
+- The trigger must open/close the popover on `Enter`/`Space`, not only on click.
+- `Escape` closes the popover and returns focus to the trigger.
+- Tab must be able to reach every interactive element inside the popover before it can reach anything behind it.
+
+#### Focus
+
+- On open, move focus into the popover only if it contains interactive content the user is expected to use immediately; otherwise leave focus on the trigger.
+- On close, always return focus to the trigger.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-popover-bg</td><td>Container fill — recolored per intent</td></tr>
+<tr><td className="tok">--nm-popover-border</td><td>Container border and pointer fill — recolored per intent</td></tr>
+<tr><td className="tok">--nm-popover-fg</td><td>Title, divider, and content color — recolored per intent</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+Positioning and open/close state need JavaScript; the markup and visuals are pure CSS.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-popover nm-popover--bottom" role="dialog" id="pop-1">
+  <span class="nm-popover__title">Filters</span>
+  <hr class="nm-popover__divider">
+  <span class="nm-popover__content">Narrow results by status, owner, or date.</span>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-popover--{position}` | top · top-start · top-end · bottom · bottom-start · bottom-end · left · left-start · left-end · right · right-start · right-end | — |
+| `nm-popover--{intent}` | primary · secondary · accent · info · positive · negative · warning — omit for `primary` | — (`primary`) |
+| `nm-popover__title` | Bold heading row | — |
+| `nm-popover__divider` | `<hr>`-style rule between title and content | — |
+| `nm-popover__content` | Body content | — |
+
+</section>

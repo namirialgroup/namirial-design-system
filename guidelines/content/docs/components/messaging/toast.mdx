@@ -1,8 +1,258 @@
 ---
 title: Toast
-description: Coming soon.
+description: Toasts are transient, self-dismissing notifications that confirm an action without demanding attention.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Messaging</p>
+
+<p className="lede">A toast is a floating notification that appears in response to an action, stays for a short time, and disappears on its own. Namirial toasts are built from <code>--nm-toast-*</code> tokens defined in <code>namirial-theme.css</code>, default to the <code>primary</code> intent, and can optionally carry action buttons that recolor to match the toast's intent.</p>
+
+<div className="hero-stage">
+  <div className="nm-toast nm-toast--positive" style={{width:'300px'}}>
+    <div className="nm-toast__notification">
+      <span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span>
+      <div className="nm-toast__text">
+        <span className="nm-toast__title">Invoice sent</span>
+        <span className="nm-toast__body">Your client will receive it shortly.</span>
+      </div>
+      <button type="button" className="nm-toast__close" aria-label="Dismiss"><Ic n="x" s={16} /></button>
+    </div>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A toast confirms that something just happened — a save, a send, an undo window — without interrupting the user's flow. It appears near a screen edge (commonly bottom-right), stacks with other toasts, and dismisses itself after a few seconds or when the user closes it.
+
+### When to use
+
+Use a toast when:
+
+- You need to confirm the result of an action the user just took, and the confirmation doesn't need to persist.
+- The notification is independent of scroll position — it should stay visible even if the triggering element scrolls out of view.
+
+Consider another component when:
+
+- The information must stay visible until the user acts on it — use [Alert](/docs/components/messaging/alert).
+- The feedback is tied to a specific spot in the layout rather than floating at a screen edge — use [Message](/docs/components/messaging/message).
+- The action needs explicit confirmation before it happens (not after) — use a [Confirmation Dialog](/docs/components/messaging/dialogs).
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A toast is an icon, a title + body text stack, a close button, and an optional row of action buttons.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="stage" style={{width:'640px',height:'260px'}}>
+    <div className="nm-toast nm-toast--positive giant" style={{width:'280px',pointerEvents:'none',position:'absolute',top:'40px',left:'180px'}}>
+      <div className="nm-toast__notification">
+        <span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span>
+        <div className="nm-toast__text">
+          <span className="nm-toast__title">Invoice sent</span>
+          <span className="nm-toast__body">Delivered to client.</span>
+        </div>
+        <button type="button" className="nm-toast__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button>
+      </div>
+      <div className="nm-toast__actions">
+        <button type="button" className="nm-button nm-button--ghost nm-button--secondary nm-button--sm" tabIndex={-1}>View</button>
+      </div>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'640px',height:'260px',pointerEvents:'none'}} viewBox="0 0 640 260">
+      <line x1="80" y1="34" x2="200" y2="65" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="80" y1="130" x2="245" y2="80" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="560" y1="34" x2="440" y2="65" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="560" y1="220" x2="400" y2="185" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'10px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>1 · <b>Icon</b></div></div>
+    <div style={{position:'absolute',top:'105px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>2 · <b>Title / body</b></div></div>
+    <div style={{position:'absolute',top:'10px',left:'490px'}}><div className="labelpoint" style={{position:'static'}}>3 · <b>Close</b></div></div>
+    <div style={{position:'absolute',top:'195px',left:'440px'}}><div className="labelpoint" style={{position:'static'}}>4 · <b>Actions</b></div></div>
+  </div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill | `--nm-toast-bg` |
+| Container | Border | `--nm-toast-border` |
+| Container | Shadow | `--nm-toast-shadow` — `0 4px 16px` |
+| Container | Radius / padding / gap | `border-radius: 24px` · `padding: 16px` · `gap: 24px` |
+| Container | Size bound | `max-width: 480px` |
+| Icon | Color | `--nm-toast-fg` |
+| Title | Color / size | `--nm-toast-fg`, 20px / 600 |
+| Body | Color / size | `--nm-toast-fg`, 16px / 400 |
+| Close | Color | `--nm-toast-fg`, `opacity: 0.7` hover / `0.5` active |
+| Ghost-secondary action button | Color | `--nm-button-ghost-{intent}-fg` — matches the toast's intent |
+
+</section>
+
+<section className="block" id="variants">
+
+## Intent variants
+
+Toast ships seven intents, defaulting to `primary`. Every part of the card — background, border, text, and icon — recolors together, and any `nm-button--ghost.nm-button--secondary` action inside picks up the matching button palette.
+
+<div className="example stacked">
+  <div className="nm-toast nm-toast--primary" style={{width:'280px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="megaphone" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Primary</span><span className="nm-toast__body">General confirmation.</span></div></div></div>
+  <div className="nm-toast nm-toast--info" style={{width:'280px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="info" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Info</span><span className="nm-toast__body">Neutral update.</span></div></div></div>
+  <div className="nm-toast nm-toast--positive" style={{width:'280px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Positive</span><span className="nm-toast__body">Action succeeded.</span></div></div></div>
+  <div className="nm-toast nm-toast--warning" style={{width:'280px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="alert-triangle" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Warning</span><span className="nm-toast__body">Completed with caveats.</span></div></div></div>
+  <div className="nm-toast nm-toast--negative" style={{width:'280px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="alert-circle" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Negative</span><span className="nm-toast__body">Action failed.</span></div></div></div>
+</div>
+
+</section>
+
+<section className="block" id="content-types">
+
+## Content types
+
+### With actions
+
+<div className="example">
+  <div className="nm-toast nm-toast--positive" style={{width:'300px'}}>
+    <div className="nm-toast__notification">
+      <span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span>
+      <div className="nm-toast__text"><span className="nm-toast__title">Invoice sent</span><span className="nm-toast__body">Delivered to client.</span></div>
+      <button type="button" className="nm-toast__close" aria-label="Dismiss"><Ic n="x" s={16} /></button>
+    </div>
+    <div className="nm-toast__actions">
+      <button type="button" className="nm-button nm-button--ghost nm-button--secondary nm-button--sm">View invoice</button>
+    </div>
+  </div>
+</div>
+
+### Without actions
+
+<div className="example">
+  <div className="nm-toast nm-toast--info" style={{width:'280px'}}>
+    <div className="nm-toast__notification">
+      <span className="nm-toast__icon"><Ic n="info" s={24} /></span>
+      <div className="nm-toast__text"><span className="nm-toast__title">Copied</span><span className="nm-toast__body">Link copied to clipboard.</span></div>
+      <button type="button" className="nm-toast__close" aria-label="Dismiss"><Ic n="x" s={16} /></button>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Only the toast's shadow is remapped under `.dark` — its background, border, and text already come from the intent-driven `--palette-callout-alt-*` scale.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-toast nm-toast--positive" style={{width:'260px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Invoice sent</span><span className="nm-toast__body">Delivered to client.</span></div></div></div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-toast nm-toast--positive" style={{width:'260px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Invoice sent</span><span className="nm-toast__body">Delivered to client.</span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-toast nm-toast--positive" style={{width:'260px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Saved</span><span className="nm-toast__body">Your changes are safe.</span></div></div></div></div><div className="desc">Keep the message short — a toast is glanced at, not read closely.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-toast nm-toast--positive" style={{width:'320px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="circle-check" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Your changes have been saved</span><span className="nm-toast__body">All fields you edited in this form, including the attached documents and their metadata, have been persisted to the server.</span></div></div></div></div><div className="desc">Don't use a toast for content that needs to be read carefully — use Alert or Message instead.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-toast nm-toast--negative" style={{width:'280px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="alert-circle" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Upload failed</span><span className="nm-toast__body">Check your connection and retry.</span></div></div><div className="nm-toast__actions"><button type="button" className="nm-button nm-button--ghost nm-button--secondary nm-button--sm">Retry</button></div></div></div><div className="desc">Give a failure toast a way to recover — a Retry action, when one makes sense.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-toast nm-toast--negative" style={{width:'260px'}}><div className="nm-toast__notification"><span className="nm-toast__icon"><Ic n="alert-circle" s={24} /></span><div className="nm-toast__text"><span className="nm-toast__title">Upload failed</span></div></div></div></div><div className="desc">Don't let a critical failure disappear on a timer with no way to act on it — use a persistent Alert instead.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Render the toast region with `role="status"` (`aria-live="polite"`) for routine confirmations, or `role="alert"` (`aria-live="assertive"`) for failures that need immediate attention.
+- Mark the icon `aria-hidden="true"`.
+
+#### Timing & dismissal
+
+- Give the user enough time to read the message before auto-dismissing — don't use a fixed short timer regardless of content length; pause the timer on hover/focus.
+- Always provide a manual close button in addition to any auto-dismiss timer — some users need more time or use assistive tech that doesn't race the clock.
+
+#### Focus
+
+- A toast must never steal keyboard focus on appearance — it's a passive notification, not an interruption.
+- Any action button inside it must still be reachable by keyboard for users who choose to engage with it.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-toast-bg</td><td>Container fill — recolored per intent</td></tr>
+<tr><td className="tok">--nm-toast-border</td><td>Container border — recolored per intent</td></tr>
+<tr><td className="tok">--nm-toast-fg</td><td>Icon, title, and body text color — recolored per intent</td></tr>
+<tr><td className="tok">--nm-toast-additional</td><td>Reserved accent slot, mirrors border — recolored per intent</td></tr>
+<tr><td className="tok">--nm-toast-shadow</td><td>Drop shadow color</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+Auto-dismiss timing and stacking multiple toasts need JavaScript; the card itself is pure CSS.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-toast nm-toast--positive" role="status" aria-live="polite">
+  <div class="nm-toast__notification">
+    <span class="nm-toast__icon" aria-hidden="true"><!-- icon --></span>
+    <div class="nm-toast__text">
+      <span class="nm-toast__title">Invoice sent</span>
+      <span class="nm-toast__body">Delivered to client.</span>
+    </div>
+    <button type="button" class="nm-toast__close" aria-label="Dismiss"><!-- x icon --></button>
+  </div>
+  <div class="nm-toast__actions">
+    <button type="button" class="nm-button nm-button--ghost nm-button--secondary nm-button--sm">View invoice</button>
+  </div>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-toast--{intent}` | primary · secondary · accent · info · positive · negative · warning — omit for `primary` | — (`primary`) |
+| `nm-toast__notification` | Icon + text + close row | — |
+| `nm-toast__actions` | Bottom action row, right-aligned | — |
+| `nm-toast__close` | Dismiss button, 24×24px, must be a `<button>` | — |
+
+</section>
