@@ -1,8 +1,236 @@
 ---
 title: Tooltip
-description: Coming soon.
+description: Tooltips reveal a short hint about an element on hover or focus, anchored with a directional pointer.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Messaging</p>
+
+<p className="lede">A tooltip is a small, transient label anchored to a trigger element with a directional pointer. Namirial tooltips are built from <code>--nm-tooltip-*</code> tokens defined in <code>namirial-theme.css</code>, position in four sides × three alignments, and default to the <code>primary</code> intent.</p>
+
+<div className="hero-stage">
+  <div className="nm-tooltip nm-tooltip--top">
+    <span className="nm-tooltip__icon"><Ic n="info" s={24} /></span>
+    <span className="nm-tooltip__text">Saves your changes automatically</span>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A tooltip supplements a control that's already understandable on its own — it clarifies an icon-only button, spells out an abbreviation, or adds a hint. It appears on hover/focus of its trigger and disappears the moment that trigger loses hover/focus.
+
+### When to use
+
+Use a tooltip when:
+
+- The trigger is already usable without it (an icon button, a truncated label) and the tooltip only adds a supplementary hint.
+- The content is a short, single idea — a label, a shortcut, a brief clarification.
+
+Consider another component when:
+
+- The content needs to stay open while the user reads or interacts with it, or contains its own actions — use [Popover](/docs/components/messaging/popover).
+- The information is essential to complete the task, not supplementary — put it inline instead of hiding it behind hover.
+- The trigger is touch-only — hover-based tooltips are unreliable on touch devices; pair with a tap-to-toggle popover instead.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A tooltip is an icon, a text run, and a triangular pointer positioned by a `::before` pseudo-element that points back at the trigger.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="stage" style={{width:'600px',height:'220px'}}>
+    <div className="nm-tooltip nm-tooltip--bottom giant" style={{pointerEvents:'none',position:'absolute',top:'60px',left:'220px'}}>
+      <span className="nm-tooltip__icon"><Ic n="info" s={24} /></span>
+      <span className="nm-tooltip__text">Autosaved</span>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'600px',height:'220px',pointerEvents:'none'}} viewBox="0 0 600 220">
+      <line x1="90" y1="34" x2="255" y2="80" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="34" x2="360" y2="80" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="300" y1="180" x2="300" y2="120" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'10px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>1 · <b>Icon</b></div></div>
+    <div style={{position:'absolute',top:'10px',left:'420px'}}><div className="labelpoint" style={{position:'static'}}>2 · <b>Text</b></div></div>
+    <div style={{position:'absolute',top:'190px',left:'250px'}}><div className="labelpoint" style={{position:'static'}}>3 · <b>Pointer</b></div></div>
+  </div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill | `--nm-tooltip-bg` |
+| Container | Border | `--nm-tooltip-border` |
+| Container | Radius / padding / gap | `border-radius: 8px` · `padding: 8px` · `gap: 8px` |
+| Container | Size bounds | `min-width: 56px` · `max-width: 320px` |
+| Icon / text | Color | `--nm-tooltip-fg` |
+| Pointer | Fill | `--nm-tooltip-border` (8px triangle, via `::before`) |
+| Shadow | Fixed | `2px 2px 4px rgba(0,0,0,0.25)` |
+
+</section>
+
+<section className="block" id="positions">
+
+## Positions
+
+Tooltip supports four sides (`top`, `bottom`, `left`, `right`), each with a centered default plus `-start`/`-end` alignment — 12 positions in total, each carrying its own pointer placement.
+
+<div className="example stacked">
+  <div className="nm-tooltip nm-tooltip--top"><span className="nm-tooltip__text">top</span></div>
+  <div className="nm-tooltip nm-tooltip--top-start"><span className="nm-tooltip__text">top-start</span></div>
+  <div className="nm-tooltip nm-tooltip--top-end"><span className="nm-tooltip__text">top-end</span></div>
+  <div className="nm-tooltip nm-tooltip--bottom"><span className="nm-tooltip__text">bottom</span></div>
+  <div className="nm-tooltip nm-tooltip--bottom-start"><span className="nm-tooltip__text">bottom-start</span></div>
+  <div className="nm-tooltip nm-tooltip--bottom-end"><span className="nm-tooltip__text">bottom-end</span></div>
+  <div className="nm-tooltip nm-tooltip--left"><span className="nm-tooltip__text">left</span></div>
+  <div className="nm-tooltip nm-tooltip--right"><span className="nm-tooltip__text">right</span></div>
+</div>
+
+<p className="caption">Pick the side with the most free space around the trigger; fall back to the opposite side if the tooltip would clip the viewport.</p>
+
+</section>
+
+<section className="block" id="variants">
+
+## Intent variants
+
+Tooltip ships seven intents, defaulting to `primary`.
+
+<div className="example stacked">
+  <div className="nm-tooltip nm-tooltip--primary"><span className="nm-tooltip__text">Primary</span></div>
+  <div className="nm-tooltip nm-tooltip--secondary"><span className="nm-tooltip__text">Secondary</span></div>
+  <div className="nm-tooltip nm-tooltip--accent"><span className="nm-tooltip__text">Accent</span></div>
+  <div className="nm-tooltip nm-tooltip--info"><span className="nm-tooltip__text">Info</span></div>
+  <div className="nm-tooltip nm-tooltip--positive"><span className="nm-tooltip__text">Positive</span></div>
+  <div className="nm-tooltip nm-tooltip--warning"><span className="nm-tooltip__text">Warning</span></div>
+  <div className="nm-tooltip nm-tooltip--negative"><span className="nm-tooltip__text">Negative</span></div>
+</div>
+
+Reach for a non-default intent only when the hint itself carries that meaning (e.g. `warning` on a control that has a caveat) — most tooltips should stay `primary`.
+
+</section>
+
+<section className="block" id="content-types">
+
+## Content types
+
+### Text only
+
+<div className="example">
+  <div className="nm-tooltip nm-tooltip--top"><span className="nm-tooltip__text">Delete</span></div>
+</div>
+
+### Icon + text
+
+<div className="example">
+  <div className="nm-tooltip nm-tooltip--top"><span className="nm-tooltip__icon"><Ic n="info" s={24} /></span><span className="nm-tooltip__text">Autosaves every 30 seconds</span></div>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Tooltip tokens read from the shared `--palette-callout-*` scale, so no per-component dark override is needed.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-tooltip nm-tooltip--bottom"><span className="nm-tooltip__icon"><Ic n="info" s={24} /></span><span className="nm-tooltip__text">Autosaved</span></div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-tooltip nm-tooltip--bottom"><span className="nm-tooltip__icon"><Ic n="info" s={24} /></span><span className="nm-tooltip__text">Autosaved</span></div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-tooltip nm-tooltip--top"><span className="nm-tooltip__text">Duplicate</span></div></div><div className="desc">Use a tooltip to label an icon-only control that's otherwise ambiguous.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-tooltip nm-tooltip--top" style={{maxWidth:'220px'}}><span className="nm-tooltip__text">This action duplicates the current record along with all of its attached files and permissions.</span></div></div><div className="desc">Don't hide required information in a long tooltip — surface it inline instead.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><button className="nm-button nm-button--secondary nm-button--md nm-button--icon-only" aria-label="Settings" style={{pointerEvents:'none'}}><Ic n="settings" /></button></div><div className="desc">Pair every icon-only trigger with a tooltip and a matching <code>aria-label</code>.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><button className="nm-button nm-button--secondary nm-button--md nm-button--icon-only" style={{pointerEvents:'none'}}><Ic n="settings" /></button></div><div className="desc">Don't ship an icon-only trigger with no tooltip and no accessible label.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Connect the tooltip to its trigger with `aria-describedby`, pointing at the tooltip's `id`.
+- Use `role="tooltip"` on the container.
+
+#### Keyboard
+
+- A tooltip must appear on keyboard focus of its trigger, not only on mouse hover — otherwise keyboard users never see it.
+- Dismiss on `Escape` and on blur; never require a click to close it.
+
+#### Timing
+
+- Don't rely on a tooltip alone to convey information required to complete a task — mouse-only hover and short auto-dismiss timers make it an unreliable single source of truth.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-tooltip-bg</td><td>Container fill — recolored per intent</td></tr>
+<tr><td className="tok">--nm-tooltip-border</td><td>Container border and pointer fill — recolored per intent</td></tr>
+<tr><td className="tok">--nm-tooltip-fg</td><td>Icon and text color — recolored per intent</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+Positioning and show/hide timing need a small amount of JavaScript (or a floating-UI library); the markup and visuals are pure CSS.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-tooltip nm-tooltip--top" role="tooltip" id="tip-1">
+  <span class="nm-tooltip__icon" aria-hidden="true"><!-- icon --></span>
+  <span class="nm-tooltip__text">Autosaves every 30 seconds</span>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-tooltip--{position}` | top · top-start · top-end · bottom · bottom-start · bottom-end · left · left-start · left-end · right · right-start · right-end | — |
+| `nm-tooltip--{intent}` | primary · secondary · accent · info · positive · negative · warning — omit for `primary` | — (`primary`) |
+| `nm-tooltip__icon` | Leading icon slot, 24×24px | — |
+| `nm-tooltip__text` | Text content | — |
+
+</section>

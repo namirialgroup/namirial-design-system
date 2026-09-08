@@ -1,8 +1,310 @@
 ---
 title: Dialogs
-description: Coming soon.
+description: Confirmation and modal dialogs interrupt the page to ask for a decision or hold a focused task.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Messaging</p>
+
+<p className="lede">A dialog sits on a full-screen backdrop and makes the rest of the page inert until it's resolved. Namirial ships two dialog patterns from the same <code>--nm-dialog-*</code> tokens in <code>namirial-theme.css</code>: a compact <strong>Confirmation Dialog</strong> for yes/no decisions, and a general-purpose <strong>Modal Dialog</strong> — optionally collapsible — for short focused tasks.</p>
+
+<div className="hero-stage" style={{background:'var(--palette-surface-950-2)',padding:'32px',borderRadius:'12px'}}>
+  <div className="nm-dialog nm-dialog--confirmation nm-dialog--negative">
+    <div className="nm-dialog__header">
+      <span className="nm-dialog__header-icon"><Ic n="alert-circle" s={24} /></span>
+      <h3 className="nm-dialog__title">Delete this document?</h3>
+    </div>
+    <div className="nm-dialog__body">
+      <p className="nm-dialog__description">This action can't be undone.</p>
+    </div>
+    <div className="nm-dialog__footer">
+      <button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button>
+      <button type="button" className="nm-button nm-button--negative nm-button--md">Delete</button>
+    </div>
+  </div>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+Both patterns share the same `.nm-dialog` card and sit inside a `.nm-dialog-backdrop` that dims and blocks the page behind them. They differ in scope: a Confirmation Dialog only ever asks for a single yes/no decision; a Modal Dialog can hold any short, focused task.
+
+### When to use — Confirmation Dialog
+
+- Before a destructive or hard-to-reverse action (delete, discard, cancel a subscription).
+- The decision is binary — proceed or don't — and needs no other input.
+
+### When to use — Modal Dialog
+
+- A short, self-contained task that needs the user's full attention (a quick edit form, a single setting, reviewing terms before continuing).
+- Content that's too long for a Confirmation Dialog's single description line but still doesn't warrant its own page.
+
+### Consider another component when:
+
+- The feedback doesn't need to block the page — use [Alert](/docs/components/messaging/alert) or [Toast](/docs/components/messaging/toast).
+- The content is anchored to a specific trigger and the rest of the page should stay usable — use [Popover](/docs/components/messaging/popover).
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+Every dialog is a header (icon, title, close), a body, and a footer of actions, floating on a backdrop. Confirmation Dialog indents its body to align with the title, next to the header icon; Modal Dialog does not.
+
+<div className="anatomy" aria-hidden="true">
+  <div className="stage" style={{width:'640px',height:'280px'}}>
+    <div className="nm-dialog nm-dialog--confirmation nm-dialog--info giant" style={{width:'340px',pointerEvents:'none',position:'absolute',top:'30px',left:'150px'}}>
+      <div className="nm-dialog__header">
+        <span className="nm-dialog__header-icon"><Ic n="info" s={24} /></span>
+        <h3 className="nm-dialog__title">Leave without saving?</h3>
+        <button type="button" className="nm-dialog__close" aria-label="Close" tabIndex={-1}><Ic n="x" s={16} /></button>
+      </div>
+      <div className="nm-dialog__body"><p className="nm-dialog__description">Your changes will be lost.</p></div>
+      <div className="nm-dialog__footer">
+        <button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost" tabIndex={-1}>Stay</button>
+        <button type="button" className="nm-button nm-button--primary nm-button--md" tabIndex={-1}>Leave</button>
+      </div>
+    </div>
+    <svg style={{position:'absolute',top:0,left:0,width:'640px',height:'280px',pointerEvents:'none'}} viewBox="0 0 640 280">
+      <line x1="80" y1="20" x2="180" y2="55" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="560" y1="20" x2="460" y2="55" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="80" y1="130" x2="200" y2="120" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="560" y1="230" x2="440" y2="180" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+    </svg>
+    <div style={{position:'absolute',top:'0px',left:'0px'}}><div className="labelpoint" style={{position:'static'}}>1 · <b>Header icon / title</b></div></div>
+    <div style={{position:'absolute',top:'0px',left:'440px'}}><div className="labelpoint" style={{position:'static'}}>2 · <b>Close</b></div></div>
+    <div style={{position:'absolute',top:'110px',left:'0px'}}><div className="labelpoint" style={{position:'static'}}>3 · <b>Body</b></div></div>
+    <div style={{position:'absolute',top:'210px',left:'440px'}}><div className="labelpoint" style={{position:'static'}}>4 · <b>Footer actions</b></div></div>
+  </div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Card | Fill | `--nm-dialog-bg` (fixed, neutral) |
+| Card | Border | `--nm-dialog-border` — recolored per intent |
+| Card | Shadow | `--nm-dialog-shadow` (default), `--nm-dialog-shadow-2` (confirmation) |
+| Card | Radius / padding / gap | `border-radius: 24px` · `padding: 16px` · `gap: 24px` |
+| Title | Color / size | `--nm-dialog-fg`, 20px / 600 |
+| Header icon | Color | `--nm-dialog-icon-color` — recolored per intent |
+| Close / collapse toggle | Color | `--nm-dialog-fg`, `opacity: 0.7` hover / `0.5` active |
+| Description | Color / size | `--nm-dialog-fg`, 16px / 400 |
+| Backdrop | Fill | `--nm-dialog-backdrop` |
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes (Modal Dialog)
+
+Modal Dialog scales via `max-width`, defaulting to `md`. Confirmation Dialog is fixed at its own 480px max-width and doesn't use these size modifiers.
+
+<div className="scale-row"><span className="sz">xs/sm</span><div className="metric">max-width <b>320px</b></div></div>
+<div className="scale-row"><span className="sz">md</span><div className="metric">max-width <b>560px</b> (default)</div></div>
+<div className="scale-row"><span className="sz">lg</span><div className="metric">max-width <b>800px</b></div></div>
+<div className="scale-row"><span className="sz">xl</span><div className="metric">max-width <b>1024px</b></div></div>
+
+</section>
+
+<section className="block" id="variants">
+
+## Intent variants
+
+Both patterns share seven intents that recolor the border and header icon; the card fill always stays neutral (`--nm-dialog-bg`).
+
+<div className="example stacked">
+  <div className="nm-dialog nm-dialog--confirmation nm-dialog--primary" style={{width:'340px'}}>
+    <div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="megaphone" s={24} /></span><h3 className="nm-dialog__title">Primary</h3></div>
+    <div className="nm-dialog__body"><p className="nm-dialog__description">General-purpose confirmation.</p></div>
+    <div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--primary nm-button--md">Confirm</button></div>
+  </div>
+  <div className="nm-dialog nm-dialog--confirmation nm-dialog--warning" style={{width:'340px'}}>
+    <div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="alert-triangle" s={24} /></span><h3 className="nm-dialog__title">Warning</h3></div>
+    <div className="nm-dialog__body"><p className="nm-dialog__description">Flags a caveat before proceeding.</p></div>
+    <div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--warning nm-button--md">Proceed</button></div>
+  </div>
+  <div className="nm-dialog nm-dialog--confirmation nm-dialog--negative" style={{width:'340px'}}>
+    <div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="alert-circle" s={24} /></span><h3 className="nm-dialog__title">Negative</h3></div>
+    <div className="nm-dialog__body"><p className="nm-dialog__description">Confirms a destructive action.</p></div>
+    <div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--negative nm-button--md">Delete</button></div>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="content-types">
+
+## Content types
+
+### Confirmation Dialog
+
+Fixed-width, header icon paired with an indented, single-purpose description, and exactly two footer actions — a neutral escape and one committing action.
+
+<div className="example">
+  <div className="nm-dialog nm-dialog--confirmation nm-dialog--negative" style={{width:'340px'}}>
+    <div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="alert-circle" s={24} /></span><h3 className="nm-dialog__title">Delete this document?</h3></div>
+    <div className="nm-dialog__body"><p className="nm-dialog__description">This action can't be undone.</p></div>
+    <div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--negative nm-button--md">Delete</button></div>
+  </div>
+</div>
+
+### Modal Dialog
+
+General body content, no forced indentation, sized to fit what it holds.
+
+<div className="example">
+  <div className="nm-dialog" style={{width:'400px'}}>
+    <div className="nm-dialog__header"><h3 className="nm-dialog__title">Edit display name</h3><button type="button" className="nm-dialog__close" aria-label="Close"><Ic n="x" s={16} /></button></div>
+    <div className="nm-dialog__body"><p className="nm-dialog__description">This is how your name appears to other users.</p></div>
+    <div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--primary nm-button--md">Save</button></div>
+  </div>
+</div>
+
+### Modal Dialog — collapsible
+
+`.nm-dialog--collapsible` animates its body and footer between shown and `.is-collapsed`, toggled by `.nm-dialog__toggle` instead of (or alongside) a close button — useful for "show details" style disclosure inside a modal.
+
+<div className="example">
+  <div className="nm-dialog nm-dialog--collapsible" style={{width:'340px'}}>
+    <div className="nm-dialog__header"><h3 className="nm-dialog__title">Advanced options</h3><button type="button" className="nm-dialog__toggle" aria-label="Expand" aria-expanded="false"><Ic n="chevron-down" s={16} /></button></div>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+`--nm-dialog-bg`, `-fg`, `-icon-color`, and both shadow tokens are explicitly remapped under `.dark` — the card stays a neutral surface color independent of intent in both themes.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-dialog nm-dialog--confirmation nm-dialog--negative" style={{width:'260px'}}>
+        <div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="alert-circle" s={24} /></span><h3 className="nm-dialog__title">Delete?</h3></div>
+        <div className="nm-dialog__body"><p className="nm-dialog__description">Can't be undone.</p></div>
+        <div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--negative nm-button--md">Delete</button></div>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-dialog nm-dialog--confirmation nm-dialog--negative" style={{width:'260px'}}>
+        <div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="alert-circle" s={24} /></span><h3 className="nm-dialog__title">Delete?</h3></div>
+        <div className="nm-dialog__body"><p className="nm-dialog__description">Can't be undone.</p></div>
+        <div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--negative nm-button--md">Delete</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-dialog nm-dialog--confirmation nm-dialog--negative" style={{width:'260px'}}><div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="alert-circle" s={24} /></span><h3 className="nm-dialog__title">Delete this document?</h3></div><div className="nm-dialog__body"><p className="nm-dialog__description">This can't be undone.</p></div><div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--negative nm-button--md">Delete</button></div></div></div><div className="desc">Name the destructive action on the button itself ("Delete"), not a generic "OK."</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-dialog nm-dialog--confirmation nm-dialog--negative" style={{width:'260px'}}><div className="nm-dialog__header"><span className="nm-dialog__header-icon"><Ic n="alert-circle" s={24} /></span><h3 className="nm-dialog__title">Are you sure?</h3></div><div className="nm-dialog__body"><p className="nm-dialog__description">Do you want to continue?</p></div><div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">No</button><button type="button" className="nm-button nm-button--negative nm-button--md">Yes</button></div></div></div><div className="desc">Don't use vague titles or Yes/No labels that force the user to re-read the description to know what they're agreeing to.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-dialog" style={{width:'300px'}}><div className="nm-dialog__header"><h3 className="nm-dialog__title">Edit display name</h3><button type="button" className="nm-dialog__close" aria-label="Close"><Ic n="x" s={16} /></button></div><div className="nm-dialog__body"><p className="nm-dialog__description">Shown to other users.</p></div><div className="nm-dialog__footer"><button type="button" className="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button><button type="button" className="nm-button nm-button--primary nm-button--md">Save</button></div></div></div><div className="desc">Keep a Modal Dialog to one focused task — one form, one decision.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-dialog" style={{width:'300px'}}><div className="nm-dialog__header"><h3 className="nm-dialog__title">Account settings</h3></div><div className="nm-dialog__body"><p className="nm-dialog__description">A full multi-section settings page doesn't belong stacked inside a modal — give it its own page instead.</p></div></div></div><div className="desc">Don't nest an entire settings page inside a modal — it removes the URL, back button, and scroll context users expect.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- Give the card `role="dialog"` (or `role="alertdialog"` for a Confirmation Dialog on a destructive action), `aria-modal="true"`, and label it with `aria-labelledby` pointing at `.nm-dialog__title`.
+- Describe it with `aria-describedby` pointing at `.nm-dialog__description`.
+
+#### Focus
+
+- On open, move focus to the dialog — the title, the first focusable element, or the least destructive footer action (never the destructive one by default).
+- Trap Tab/Shift+Tab focus inside the dialog while it's open; nothing behind the backdrop should be reachable.
+- On close, return focus to whatever triggered the dialog.
+
+#### Keyboard
+
+- `Escape` closes the dialog, equivalent to the close button — unless the dialog represents an unsavable, irreversible in-progress action.
+- Clicking the backdrop should close the dialog the same way `Escape` does, unless doing so would silently discard unsaved input.
+
+#### Labeling
+
+- Never make the destructive action the visually dominant one by default focus/color alone — pair it with a clear, specific label.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+<table className="tokens-table">
+<thead><tr><th>Token</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td className="tok">--nm-dialog-bg</td><td>Card fill — fixed, not intent-driven</td></tr>
+<tr><td className="tok">--nm-dialog-fg</td><td>Title and description text color</td></tr>
+<tr><td className="tok">--nm-dialog-border</td><td>Card border — recolored per intent</td></tr>
+<tr><td className="tok">--nm-dialog-icon-color</td><td>Header icon color — recolored per intent</td></tr>
+<tr><td className="tok">--nm-dialog-shadow</td><td>Shadow — Confirmation Dialog</td></tr>
+<tr><td className="tok">--nm-dialog-shadow-2</td><td>Shadow — Modal Dialog (default)</td></tr>
+<tr><td className="tok">--nm-dialog-backdrop</td><td>Backdrop fill</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+Open/close state, focus trapping, and backdrop click handling need JavaScript (or the native `<dialog>` element); the card and backdrop themselves are pure CSS.
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<div class="nm-dialog-backdrop">
+  <div class="nm-dialog nm-dialog--confirmation nm-dialog--negative" role="alertdialog" aria-modal="true" aria-labelledby="dlg-title" aria-describedby="dlg-desc">
+    <div class="nm-dialog__header">
+      <span class="nm-dialog__header-icon" aria-hidden="true"><!-- icon --></span>
+      <h3 class="nm-dialog__title" id="dlg-title">Delete this document?</h3>
+    </div>
+    <div class="nm-dialog__body">
+      <p class="nm-dialog__description" id="dlg-desc">This action can't be undone.</p>
+    </div>
+    <div class="nm-dialog__footer">
+      <button type="button" class="nm-button nm-button--secondary nm-button--md nm-button--ghost">Cancel</button>
+      <button type="button" class="nm-button nm-button--negative nm-button--md">Delete</button>
+    </div>
+  </div>
+</div>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-dialog--{size}` | xs · sm · md · lg · xl — omit for the `md` default (Modal Dialog only) | — (`md`) |
+| `nm-dialog--confirmation` | Fixed-width Confirmation Dialog layout, indented body | — |
+| `nm-dialog--collapsible` + `.is-collapsed` | Animates body/footer open/closed | — |
+| `nm-dialog--{intent}` | primary · secondary · accent · info · positive · negative · warning | — |
+| `nm-dialog__close` / `nm-dialog__toggle` | Close button / collapse toggle, 24×24px | — |
+| `nm-dialog-backdrop` | Full-screen dimmed backdrop wrapping the card | — |
+
+</section>
