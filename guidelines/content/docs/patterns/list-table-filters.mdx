@@ -1,8 +1,16 @@
 ---
-title: List Table Filters
-description: Coming soon.
+title: List, Table & Filters
+description: List & Table Layouts
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+This page defines standard layout patterns for placing filters, search inputs, bulk actions, and control toolbars around lists and tables.
+
+## Layout Order
+
+When present, controls and data views are arranged in the following sequence:
+
+1. **Search Input (Optional):** Positioned first on the row when included.
+2. **Filters (Optional):** Follow immediately after search. If multiple filters are added, they wrap automatically to subsequent lines within the control container.
+    * **Reset Filters (Conditional):** Appears at the very end of the filters list only when one or more active filters are applied, allowing users to clear all selections at once.
+3. **Data Container:** The **List** or **Table** always follows the controls section. If no search or filters are required, the data container occupies the primary layout area directly.
+4. **Pagination (Optional):** Placed directly after the data container (centered or right-aligned) to enable navigation across multi-page datasets.

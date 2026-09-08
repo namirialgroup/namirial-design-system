@@ -1,8 +1,262 @@
 ---
 title: Tag
-description: Coming soon.
+description: Tags label, categorize, or filter content with a compact, removable chip.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Data display</p>
+
+<p className="lede">A tag is a compact chip that labels, categorizes, or filters a piece of content. Namirial tags are built from <code>--nm-tag-*</code> tokens defined in <code>namirial-theme.css</code>, ship in seven soft intents, two sizes, and an optional remove action.</p>
+
+<div className="hero-stage">
+  <span className="nm-tag nm-tag--accent nm-tag--lg"><span className="nm-tag__label">Design System</span></span>
+  <span className="nm-tag nm-tag--positive"><span className="nm-tag__label">Live</span><button className="nm-tag__remove" aria-label="Remove tag" style={{pointerEvents:'none'}}><Ic n="x" s={12} /></button></span>
+  <span className="nm-tag nm-tag--info"><span className="nm-tag__label">React</span></span>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A tag names a single attribute of the thing it's attached to — a category, a keyword, a status. Unlike a badge, a tag carries text as its primary content and can be dismissed by the user; unlike a button, it never triggers a page-level action on its own (only its optional remove control does).
+
+### When to use
+
+- To label content with a category or keyword (`React`, `Design System`)
+- To show active filters that the user can remove (`Status: Active ✕`)
+- To let users build a multi-value input, like recipients or skills
+
+### When not to use
+
+- To show a count or a short status indicator with no removable text — use a **badge**.
+- To trigger navigation or a standalone action — use a **button** or **link**.
+- For a single mutually-exclusive choice — use a **segmented control** or **radio group**.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A tag is an inline flex container: a soft-tinted background, a tinted border, a text label, and an optional remove button. Every part reads its color from a `--nm-tag-*` custom property that the intent modifier reassigns.
+
+<div className="anatomy" aria-hidden="true">
+  <span className="nm-tag nm-tag--accent giant" style={{pointerEvents:'none'}}>
+    <span className="nm-tag__label">Design System</span>
+    <button className="nm-tag__remove" aria-label="Remove tag" tabIndex={-1}><Ic n="x" s={12} /></button>
+  </span>
+  <div className="labelpoint" style={{top:'30px',left:'20px'}}>1 · <b>Container</b></div>
+  <div className="dot" style={{top:'58px',left:'110px'}}></div>
+  <div className="labelpoint" style={{top:'30px',right:'20px'}}>2 · <b>Border</b></div>
+  <div className="dot" style={{top:'58px',right:'110px'}}></div>
+  <div className="labelpoint" style={{bottom:'36px',left:'80px'}}>3 · <b>Label</b></div>
+  <div className="dot" style={{bottom:'66px',left:'150px'}}></div>
+  <div className="labelpoint" style={{bottom:'36px',right:'60px'}}>4 · <b>Remove button</b></div>
+  <div className="dot" style={{bottom:'66px',right:'110px'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Container | Fill | `--nm-tag-bg` |
+| Container | Border | `--nm-tag-border` |
+| Container | Radius | `border-radius: 6px` (fixed) |
+| Container | Padding | `2px 6px` (`4px 8px` on `--lg`) |
+| Label | Color | `--nm-tag-fg` |
+| Label | Size / weight | `12px` / SemiBold (`14px` on `--lg`) |
+| Remove icon | Color at rest | `--nm-tag-remove-fg` |
+| Remove icon | Color on hover | `--nm-tag-remove-hover-fg` |
+
+</section>
+
+<section className="block" id="intents">
+
+## Intents
+
+Every intent pairs a soft background with a tinted border and a solid-colored label — quieter than a button, but still legible at a glance. Pick the intent that matches what the tag communicates, not the color you like.
+
+<div className="example">
+  <span className="nm-tag nm-tag--primary"><span className="nm-tag__label">Primary</span></span>
+  <span className="nm-tag nm-tag--secondary"><span className="nm-tag__label">Secondary</span></span>
+  <span className="nm-tag nm-tag--accent"><span className="nm-tag__label">Accent</span></span>
+  <span className="nm-tag nm-tag--info"><span className="nm-tag__label">Info</span></span>
+  <span className="nm-tag nm-tag--positive"><span className="nm-tag__label">Positive</span></span>
+  <span className="nm-tag nm-tag--negative"><span className="nm-tag__label">Negative</span></span>
+  <span className="nm-tag nm-tag--warning"><span className="nm-tag__label">Warning</span></span>
+</div>
+
+<p className="caption">Seven intents · sm · soft background + tinted border + solid label</p>
+
+</section>
+
+<section className="block" id="remove">
+
+## With remove
+
+Add a `.nm-tag__remove` button to let users dismiss the tag — typically an applied filter or a value in a multi-select input. The icon inherits `--nm-tag-remove-fg` and darkens on hover.
+
+<div className="example">
+  <span className="nm-tag"><span className="nm-tag__label">Label</span><button className="nm-tag__remove" aria-label="Remove tag"><Ic n="x" s={12} /></button></span>
+  <span className="nm-tag nm-tag--primary"><span className="nm-tag__label">Primary</span><button className="nm-tag__remove" aria-label="Remove"><Ic n="x" s={12} /></button></span>
+  <span className="nm-tag nm-tag--info"><span className="nm-tag__label">Info</span><button className="nm-tag__remove" aria-label="Remove"><Ic n="x" s={12} /></button></span>
+  <span className="nm-tag nm-tag--negative"><span className="nm-tag__label">Negative</span><button className="nm-tag__remove" aria-label="Remove"><Ic n="x" s={12} /></button></span>
+</div>
+
+<p className="caption">Every removable tag needs an <code>aria-label</code> on the remove button — "Remove tag" or, better, "Remove {'{'}value{'}'}".</p>
+
+</section>
+
+<section className="block" id="sizes">
+
+## Sizes
+
+Two sizes, set with `nm-tag--lg` (omit for the default, `sm`-equivalent size).
+
+<div className="size-strip" style={{display:'flex',alignItems:'center',gap:'16px',padding:'16px 0'}}>
+  <span className="size-label">Default</span>
+  <span className="nm-tag nm-tag--info"><span className="nm-tag__label">Label</span></span>
+  <span className="nm-tag nm-tag--info"><span className="nm-tag__label">Label</span><button className="nm-tag__remove" aria-label="Remove"><Ic n="x" s={12} /></button></span>
+</div>
+<div className="size-strip" style={{display:'flex',alignItems:'center',gap:'16px',padding:'16px 0'}}>
+  <span className="size-label">lg</span>
+  <span className="nm-tag nm-tag--info nm-tag--lg"><span className="nm-tag__label">Label</span></span>
+  <span className="nm-tag nm-tag--info nm-tag--lg"><span className="nm-tag__label">Label</span><button className="nm-tag__remove" aria-label="Remove"><Ic n="x" s={12} /></button></span>
+</div>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+`--nm-tag-fg`, `--nm-tag-remove-fg`, and `--nm-tag-remove-hover-fg` remap under `data-theme` so labels stay legible against the soft background in both themes; `--nm-tag-bg` and `--nm-tag-border` come from the shared tag/badge palette and don't need remapping.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <span className="nm-tag nm-tag--primary"><span className="nm-tag__label">Primary</span></span>
+      <span className="nm-tag nm-tag--accent"><span className="nm-tag__label">Accent</span><button className="nm-tag__remove" aria-label="Remove" tabIndex={-1}><Ic n="x" s={12} /></button></span>
+      <span className="nm-tag nm-tag--negative"><span className="nm-tag__label">Negative</span></span>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <span className="nm-tag nm-tag--primary"><span className="nm-tag__label">Primary</span></span>
+      <span className="nm-tag nm-tag--accent"><span className="nm-tag__label">Accent</span><button className="nm-tag__remove" aria-label="Remove" tabIndex={-1}><Ic n="x" s={12} /></button></span>
+      <span className="nm-tag nm-tag--negative"><span className="nm-tag__label">Negative</span></span>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher. Toggle the page theme to see the rest of the documentation cascade.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><span className="nm-tag nm-tag--info"><span className="nm-tag__label">Design</span></span><span className="nm-tag nm-tag--info"><span className="nm-tag__label">Engineering</span></span></div><div className="desc">Keep tag text to one or two words — a category name, not a sentence.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><span className="nm-tag nm-tag--info"><span className="nm-tag__label">This document was last edited yesterday</span></span></div><div className="desc">Don't use a tag for long or sentence-like text — it will truncate awkwardly. Use a paragraph or a table cell instead.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><span className="nm-tag nm-tag--positive"><span className="nm-tag__label">Status: Active</span><button className="nm-tag__remove" aria-label="Remove status filter" tabIndex={-1}><Ic n="x" s={12} /></button></span></div><div className="desc">Add a remove button when the tag represents something the user can clear, like an applied filter.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><span className="nm-tag nm-tag--positive" style={{cursor:'pointer'}}><span className="nm-tag__label">Click to filter</span></span></div><div className="desc">Don't make the whole tag clickable to trigger navigation — that's what a button or link chip is for.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+#### Semantics
+
+- A plain tag is a `<span>` — it carries no interaction and needs no special role.
+- The remove control must be a real `<button>` with an `aria-label` (`"Remove {'{'}value{'}'}"`); the icon alone is not accessible text.
+
+#### Keyboard
+
+- Non-removable tags are not focusable — they're static labels.
+- The remove button follows normal tab order and activates on Space / Enter.
+
+#### Contrast
+
+- All seven intents meet WCAG 2.2 **AA** for label-over-background in both themes.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+| Token | Role |
+|-------|------|
+| `--nm-tag-bg` | Container fill |
+| `--nm-tag-border` | Container border |
+| `--nm-tag-fg` | Label color |
+| `--nm-tag-remove-fg` | Remove icon color at rest |
+| `--nm-tag-remove-hover-fg` | Remove icon color on hover |
+
+<p className="caption">Each <code>nm-tag--{'{intent}'}</code> modifier reassigns <code>--nm-tag-bg</code>, <code>--nm-tag-border</code>, and (for accent/info/positive/negative/warning) <code>--nm-tag-fg</code>. <code>{'{intent}'}</code> = primary · secondary · accent · info · positive · negative · warning.</p>
+
+#### Index palette — categorical colors beyond the 7 intents
+
+For content that needs many distinguishable colors with no semantic meaning (user-created labels, calendar categories, chart legends), `namirial-theme.css` ships a 10-hue categorical palette: `--palette-index-{'{n}'}-50` (soft), `--palette-index-{'{n}'}-75` (border/mid), and `--palette-index-{'{n}'}-100` (solid), for `{'{n}'}` = 1–10. These are fixed hex values — they don't remap per theme. There's no dedicated `nm-tag--index-{'{n}'}` modifier class yet, so wire them up per instance:
+
+<div className="example" style={{gap:'8px'}}>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-1-50)','--nm-tag-border':'var(--palette-index-1-75)','--nm-tag-fg':'var(--palette-index-1-100)'}}><span className="nm-tag__label">Category 1</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-2-50)','--nm-tag-border':'var(--palette-index-2-75)','--nm-tag-fg':'var(--palette-index-2-100)'}}><span className="nm-tag__label">Category 2</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-3-50)','--nm-tag-border':'var(--palette-index-3-75)','--nm-tag-fg':'var(--palette-index-3-100)'}}><span className="nm-tag__label">Category 3</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-4-50)','--nm-tag-border':'var(--palette-index-4-75)','--nm-tag-fg':'var(--palette-index-4-100)'}}><span className="nm-tag__label">Category 4</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-5-50)','--nm-tag-border':'var(--palette-index-5-75)','--nm-tag-fg':'var(--palette-index-5-100)'}}><span className="nm-tag__label">Category 5</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-6-50)','--nm-tag-border':'var(--palette-index-6-75)','--nm-tag-fg':'var(--palette-index-6-100)'}}><span className="nm-tag__label">Category 6</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-7-50)','--nm-tag-border':'var(--palette-index-7-75)','--nm-tag-fg':'var(--palette-index-7-100)'}}><span className="nm-tag__label">Category 7</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-8-50)','--nm-tag-border':'var(--palette-index-8-75)','--nm-tag-fg':'var(--palette-index-8-100)'}}><span className="nm-tag__label">Category 8</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-9-50)','--nm-tag-border':'var(--palette-index-9-75)','--nm-tag-fg':'var(--palette-index-9-100)'}}><span className="nm-tag__label">Category 9</span></span>
+  <span className="nm-tag" style={{'--nm-tag-bg':'var(--palette-index-10-50)','--nm-tag-border':'var(--palette-index-10-75)','--nm-tag-fg':'var(--palette-index-10-100)'}}><span className="nm-tag__label">Category 10</span></span>
+</div>
+
+```html
+<span class="nm-tag" style="
+  --nm-tag-bg: var(--palette-index-3-50);
+  --nm-tag-border: var(--palette-index-3-75);
+  --nm-tag-fg: var(--palette-index-3-100);
+">
+  <span class="nm-tag__label">Category 3</span>
+</span>
+```
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<span class="nm-tag nm-tag--accent">
+  <span class="nm-tag__label">Design System</span>
+  <button class="nm-tag__remove" aria-label="Remove tag">
+    <i class="icon-x"></i>
+  </button>
+</span>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-tag--{intent}` | primary · secondary · accent · info · positive · negative · warning | none (base tokens) |
+| `nm-tag--lg` | larger padding, gap, and font size | omit for default size |
+| `nm-tag__label` | required wrapper for the text content | — |
+| `nm-tag__remove` | optional dismiss button, requires `aria-label` | — |
+
+</section>

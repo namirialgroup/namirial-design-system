@@ -1,8 +1,76 @@
 ---
 title: Dropdown
-description: Coming soon.
+description: A dropdown list
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+Dropdowns are ideal when you have multiple options to choose from: hovering or clicking on the trigger reveals a menu that allows you to select an option and execute the relevant action.
+
+The component supports two selection modes: **single select**, which highlights the active option with a left-edge indicator bar, and **multi select**, which uses a checkbox per item. Both modes support disabled options and a separator to group related items.
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+All dropdown tokens are remapped under `data-theme="light"` and `data-theme="dark"` — background, border, shadow, and item colors adapt automatically.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <div className="nm-dropdown" role="listbox" style={{width: '220px'}}>
+        <div className="nm-dropdown__item" role="option">
+          <span className="nm-dropdown__item-label">Option one</span>
+        </div>
+        <div className="nm-dropdown__item is-selected" role="option" aria-selected="true">
+          <span className="nm-dropdown__item-label">Option two — selected</span>
+        </div>
+        <hr className="nm-dropdown__separator" />
+        <div className="nm-dropdown__item nm-dropdown__item--disabled" role="option" aria-disabled="true">
+          <span className="nm-dropdown__item-label">Option three — disabled</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <div className="nm-dropdown" role="listbox" style={{width: '220px'}}>
+        <div className="nm-dropdown__item" role="option">
+          <span className="nm-dropdown__item-label">Option one</span>
+        </div>
+        <div className="nm-dropdown__item is-selected" role="option" aria-selected="true">
+          <span className="nm-dropdown__item-label">Option two — selected</span>
+        </div>
+        <hr className="nm-dropdown__separator" />
+        <div className="nm-dropdown__item nm-dropdown__item--disabled" role="option" aria-disabled="true">
+          <span className="nm-dropdown__item-label">Option three — disabled</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher. Toggle the page theme to see the rest of the documentation cascade.</p>
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+Every dropdown surface and item state resolves to a handful of custom properties. Override these on a wrapper — never on the `.nm-dropdown` rule itself.
+
+| Token | Role |
+|-------|------|
+| `--nm-dropdown-bg` | Menu container background |
+| `--nm-dropdown-border` | Menu container border |
+| `--nm-dropdown-shadow` | Drop shadow under the menu |
+| `--nm-dropdown-item-text` | Default item label color |
+| `--nm-dropdown-item-hover-bg` | Item background on hover |
+| `--nm-dropdown-item-active-bg` | Selected item background |
+| `--nm-dropdown-item-active-fg` | Selected item label color and indicator bar color |
+| `--nm-dropdown-separator` | `<hr>` divider color between item groups |
+
+<p className="caption">Geometry is fixed, not tokenized: 8px container radius, 4px padding, 32px minimum item height, 4px hover/selected item radius.</p>
+
+</section>

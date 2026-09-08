@@ -1,8 +1,65 @@
 ---
 title: Radius
-description: Coming soon.
+description: How corner radius is chosen for standalone and nested elements.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+Corner radius communicates approachability and helps group related content. We keep a small, deliberate scale rather than arbitrary values, and we derive nested radii mathematically so parent and child corners stay visually aligned.
+
+## Standalone elements
+
+The default radius for elements that aren't nested inside another rounded container is **8px**.
+
+<div style={{display: 'grid', gap: '16px', justifyItems: 'center', gridTemplateColumns: 'repeat(3, 1fr)', margin: '24px 0'}}>
+  <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+    <div style={{width: '110px', height: '72px', borderRadius: '4px', background: 'var(--palette-surface-50)', border: '1px solid var(--palette-neutral-600)'}} />
+    <code style={{fontSize: '12px'}}>4px — small</code>
+  </div>
+  <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+    <div style={{width: '110px', height: '72px', borderRadius: '8px', background: 'var(--palette-surface-50)', border: '1px solid var(--palette-neutral-600)'}} />
+    <code style={{fontSize: '12px'}}>8px — default</code>
+  </div>
+  <div style={{display: 'grid', gap: '12px', justifyItems: 'center'}}>
+    <div style={{width: '110px', height: '72px', borderRadius: '14px', background: 'var(--palette-surface-50)', border: '1px solid var(--palette-neutral-600)'}} />
+    <code style={{fontSize: '12px'}}>12–16px — large</code>
+  </div>
+</div>
+
+| Scale | Radius | Applies to |
+|-------|--------|------------|
+| Small | `4px` | Compact elements: chips, tags, small buttons. |
+| Default | `8px` | Buttons, inputs, cards, panels that are not nested. |
+| Large | `12–16px` | Large surfaces: hero panels, feature cards. |
+
+**Purpose:** ensures visual consistency and approachability across the UI.
+
+## Nested elements
+
+When a rounded container wraps another rounded element, the parent's radius should be derived from the child's radius and the padding between them, so the two curves stay concentric:
+
+```
+Parent Radius = Child Radius + Padding
+```
+
+**Applies to:** containers wrapping content with rounded corners — cards with inner elements, dialogs, panels.
+
+**Example:** child radius `4px` + padding `8px` → parent radius `12px`.
+
+<div style={{display: 'flex', justifyContent: 'center', margin: '24px 0'}}>
+  <div style={{padding: '8px', borderRadius: '12px', background: 'var(--palette-surface-50)', border: '1px solid var(--palette-neutral-600)'}}>
+    <div style={{width: '160px', height: '80px', borderRadius: '4px', background: 'var(--palette-surface-100)', border: '1px solid var(--palette-neutral-600)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <code style={{fontSize: '12px'}}>child: 4px</code>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Parent radius (12px) = child radius (4px) + padding (8px).</p>
+
+**Purpose:** aligns parent and child corners for a seamless, visually balanced design.
+
+## Implementation notes
+
+- Use design tokens or CSS variables wherever possible instead of hardcoding values:
+
+  ```css
+  --parent-radius: calc(var(--child-radius) + var(--padding));
+  ```

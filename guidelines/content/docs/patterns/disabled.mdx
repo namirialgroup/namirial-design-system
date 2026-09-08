@@ -1,8 +1,13 @@
 ---
 title: Disabled
-description: Coming soon.
+description: Disabled States & Accessibility
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+We do not use native `disabled` states for interactive elements. Disabled controls are non-focusable and invisible to screen readers, creating barriers for assistive technologies and leaving users without feedback on why an action is unavailable.
+Instead, use **read-only** or **inactive** states paired with clear visual styling and contextual inline feedback (such as tooltips, helper text, or validation messages) to explain how to proceed.
+
+## Buttons
+Namirial buttons never ship a disabled appearance. A button that can be clicked but can't act is a dead end — users don't know what's wrong or how to fix it. Instead, keep the button enabled and let it trigger an inline error, field-level validation, or a toast that explains what needs to change.
+
+## Input, Select, Radio and checkbox
+Like every Namirial control, inputs never ship a browser-default disabled look. Use read-only (`nm-input--readonly`) when a value can't change right now but should still be visible and still submit with the form.

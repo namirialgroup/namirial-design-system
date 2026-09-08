@@ -1,8 +1,270 @@
 ---
 title: Badge
-description: Coming soon.
+description: Badges surface a count, short status, or presence indicator on top of another element.
 ---
 
-<Callout type="info">
-  This page hasn't been ported from the Docusaurus site yet. Check back soon.
-</Callout>
+import { Ic } from '@/components/nm/icon';
+
+<p className="eyebrow">Components · Data display</p>
+
+<p className="lede">A badge is a small, saturated marker that surfaces a count, a short status word, or a presence dot — usually anchored to the corner of another element. Namirial badges are built from <code>--nm-badge-*</code> tokens defined in <code>namirial-theme.css</code>, and ship in seven intents and a dot variant.</p>
+
+<div className="hero-stage">
+  <span style={{position:'relative', display:'inline-block'}}>
+    <button className="nm-button nm-button--secondary nm-button--lg" style={{minWidth:'140px', pointerEvents:'none'}}><Ic n="bell" />Alerts</button>
+    <span className="nm-badge nm-badge--negative" style={{position:'absolute', top:'-8px', right:'-8px'}}>12</span>
+  </span>
+  <span className="nm-badge nm-badge--accent" style={{fontSize:'14px', padding:'4px 10px'}}>BETA</span>
+  <span className="nm-badge nm-badge--dot nm-badge--positive"></span>
+</div>
+
+<section className="block" id="overview">
+
+## Overview
+
+A badge draws the eye to a number or a state without demanding a click. It carries very little content — a count, a short label, or nothing at all (the dot variant) — and almost always overlays or sits directly beside the element it describes.
+
+### When to use
+
+- To show an unread or pending count (`12` unread messages)
+- To flag a short, glanceable status (`NEW`, `BETA`, `LIVE`)
+- To indicate presence or activity without a count — the dot variant (`online`, `unread`, `has update`)
+
+### When not to use
+
+- For removable, text-first labels — use a **tag**.
+- For a longer status message that needs explanation — use an **alert** or **tooltip**.
+- As a standalone clickable element — a badge never carries its own interaction; wrap the element it's attached to instead.
+
+</section>
+
+<section className="block" id="anatomy">
+
+## Anatomy
+
+A badge is a small pill or circle: a saturated fill, a contrasting outline, and centered content. The dot variant strips the content and padding down to a single 8px circle.
+
+<div className="anatomy" aria-hidden="true">
+  <span className="nm-badge nm-badge--negative giant" style={{pointerEvents:'none'}}>12</span>
+  <div className="labelpoint" style={{top:'40px',left:'60px'}}>1 · <b>Fill</b></div>
+  <div className="dot" style={{top:'70px',left:'150px'}}></div>
+  <div className="labelpoint" style={{top:'40px',right:'60px'}}>2 · <b>Outline</b></div>
+  <div className="dot" style={{top:'70px',right:'150px'}}></div>
+  <div className="labelpoint" style={{bottom:'44px',left:'50%',transform:'translateX(-50%)'}}>3 · <b>Content (count / label)</b></div>
+  <div className="dot" style={{bottom:'80px',left:'50%',transform:'translateX(-50%)'}}></div>
+</div>
+
+#### Tokens and values that drive each part
+
+| Part | Role | Source |
+|------|------|--------|
+| Fill | Background | `--nm-badge-bg` |
+| Outline | Border | `--nm-badge-border` (fixed to a surface-contrast color, not per-intent) |
+| Content | Label / count color | `--nm-badge-fg` |
+| Container | Shape | `border-radius: 999px`, min `20×20px` (`8×8px` for `--dot`) |
+
+</section>
+
+<section className="block" id="intents">
+
+## Intents
+
+Unlike tags, badges use a saturated (not soft) background so a small chip still reads clearly at a glance.
+
+<div className="example">
+  <span className="nm-badge nm-badge--primary">12</span>
+  <span className="nm-badge nm-badge--secondary">3</span>
+  <span className="nm-badge nm-badge--accent">7</span>
+  <span className="nm-badge nm-badge--info">42</span>
+  <span className="nm-badge nm-badge--positive">99</span>
+  <span className="nm-badge nm-badge--negative">5</span>
+  <span className="nm-badge nm-badge--warning">18</span>
+</div>
+
+<p className="caption">Seven intents · saturated background + solid label</p>
+
+</section>
+
+<section className="block" id="labels">
+
+## Text labels
+
+Badges aren't limited to numbers — short, all-caps labels work the same way and are common for feature flags or lifecycle markers.
+
+<div className="example">
+  <span className="nm-badge nm-badge--primary">NEW</span>
+  <span className="nm-badge nm-badge--accent">BETA</span>
+  <span className="nm-badge nm-badge--info">INFO</span>
+  <span className="nm-badge nm-badge--positive">LIVE</span>
+  <span className="nm-badge nm-badge--negative">HOT</span>
+  <span className="nm-badge nm-badge--warning">DRAFT</span>
+</div>
+
+<p className="caption">Keep labels to one short word — the pill doesn't wrap and isn't meant to hold a phrase.</p>
+
+</section>
+
+<section className="block" id="dot">
+
+## Dot indicators
+
+The `nm-badge--dot` modifier drops padding and content to an 8px circle — use it to signal presence or an update without a count.
+
+<div className="example" style={{gap:'24px'}}>
+  <span className="nm-badge nm-badge--dot nm-badge--primary"></span>
+  <span className="nm-badge nm-badge--dot nm-badge--secondary"></span>
+  <span className="nm-badge nm-badge--dot nm-badge--accent"></span>
+  <span className="nm-badge nm-badge--dot nm-badge--info"></span>
+  <span className="nm-badge nm-badge--dot nm-badge--positive"></span>
+  <span className="nm-badge nm-badge--dot nm-badge--negative"></span>
+  <span className="nm-badge nm-badge--dot nm-badge--warning"></span>
+</div>
+
+</section>
+
+<section className="block" id="context">
+
+## In context
+
+Badges almost always attach to another element — most often absolutely positioned over its top-right corner.
+
+<div className="example" style={{gap:'24px'}}>
+  <span style={{position:'relative', display:'inline-block'}}>
+    <button className="nm-button nm-button--secondary" style={{minWidth:'120px'}}><Ic n="mail" /> Inbox</button>
+    <span className="nm-badge nm-badge--negative" style={{position:'absolute', top:'-8px', right:'-8px'}}>12</span>
+  </span>
+  <span style={{position:'relative', display:'inline-block'}}>
+    <button className="nm-button nm-button--secondary" style={{minWidth:'120px'}}><Ic n="bell" /> Alerts</button>
+    <span className="nm-badge nm-badge--dot nm-badge--positive" style={{position:'absolute', top:'-4px', right:'-4px'}}></span>
+  </span>
+  <span style={{position:'relative', display:'inline-block'}}>
+    <button className="nm-button nm-button--secondary" style={{minWidth:'120px'}}><Ic n="user" /> Profile</button>
+    <span className="nm-badge nm-badge--accent" style={{position:'absolute', top:'-8px', right:'-8px'}}>NEW</span>
+  </span>
+</div>
+
+<p className="caption">Anchor the parent with <code>position: relative</code> and absolutely position the badge over the corner that reads most naturally for the surface (usually top-right).</p>
+
+</section>
+
+<section className="block" id="dark">
+
+## Light & dark theme
+
+Badge intents resolve through the same `--palette-tag-badge-*` primitives the theme layer already remaps per `data-theme` — no badge-specific dark overrides are needed, the saturated fill and outline just follow the palette.
+
+<div className="theme-pair">
+  <div className="theme-card" data-theme="light">
+    <div className="theme-label">Light <span>data-theme="light"</span></div>
+    <div className="theme-frame">
+      <span className="nm-badge nm-badge--primary">12</span>
+      <span className="nm-badge nm-badge--accent">NEW</span>
+      <span className="nm-badge nm-badge--dot nm-badge--positive"></span>
+    </div>
+  </div>
+  <div className="theme-card" data-theme="dark">
+    <div className="theme-label">Dark <span>data-theme="dark"</span></div>
+    <div className="theme-frame">
+      <span className="nm-badge nm-badge--primary">12</span>
+      <span className="nm-badge nm-badge--accent">NEW</span>
+      <span className="nm-badge nm-badge--dot nm-badge--positive"></span>
+    </div>
+  </div>
+</div>
+
+<p className="caption">Both previews are locked — they don't follow the page theme switcher. Toggle the page theme to see the rest of the documentation cascade.</p>
+
+</section>
+
+<section className="block" id="dodont">
+
+## Do & don't
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><span className="nm-badge nm-badge--negative">9</span><span className="nm-badge nm-badge--negative">99</span></div><div className="desc">Keep counts short — cap at a value like 99 and consider a "99+" style label beyond that.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><span className="nm-badge nm-badge--negative" style={{minWidth:'auto', padding:'2px 8px'}}>2,481</span></div><div className="desc">Don't stretch a badge to fit a long number — it breaks the pill shape and stops reading as a quick glance marker.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><span style={{position:'relative', display:'inline-block'}}><button className="nm-button nm-button--secondary" style={{pointerEvents:'none'}}><Ic n="bell" /></button><span className="nm-badge nm-badge--dot nm-badge--positive" style={{position:'absolute', top:'-2px', right:'-2px'}}></span></span></div><div className="desc">Use the dot variant when presence matters more than an exact count.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><span className="nm-badge nm-badge--positive" style={{cursor:'pointer'}}>3</span></div><div className="desc">Don't make the badge itself clickable — attach it to a button or link and let that element carry the interaction.</div></div>
+</div>
+
+</section>
+
+<section className="block" id="a11y">
+
+## Accessibility
+
+- A badge is decorative-adjacent: it reinforces information that should also exist elsewhere (e.g. a count in an `aria-label` on the parent button, like `aria-label="Inbox, 12 unread"`).
+- Never rely on the dot variant's color alone to convey status — pair it with a text label nearby or in an `aria-label`, since color alone isn't accessible to all users.
+- All seven intents meet WCAG 2.2 **AA** contrast for content-over-fill.
+
+</section>
+
+<section className="block" id="tokens">
+
+## Token reference
+
+| Token | Role |
+|-------|------|
+| `--nm-badge-bg` | Container fill |
+| `--nm-badge-border` | Container outline (fixed, not per-intent) |
+| `--nm-badge-fg` | Content color |
+
+<p className="caption">Each <code>nm-badge--{'{intent}'}</code> modifier reassigns <code>--nm-badge-bg</code> and <code>--nm-badge-fg</code>. <code>{'{intent}'}</code> = primary · secondary · accent · info · positive · negative · warning.</p>
+
+#### Index palette — categorical colors beyond the 7 intents
+
+The same 10-hue categorical palette documented on the [Tag](/docs/components/data-display/tag#tokens) page is available for badges: `--palette-index-{'{n}'}-50` (soft), `-75` (mid), and `-100` (solid), for `{'{n}'}` = 1–10 — fixed hex values that don't remap per theme. There's no dedicated `nm-badge--index-{'{n}'}` modifier class, so wire them up per instance:
+
+<div className="example" style={{gap:'8px'}}>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-1-50)','--nm-badge-border':'var(--palette-index-1-75)','--nm-badge-fg':'var(--palette-index-1-100)'}}>1</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-2-50)','--nm-badge-border':'var(--palette-index-2-75)','--nm-badge-fg':'var(--palette-index-2-100)'}}>2</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-3-50)','--nm-badge-border':'var(--palette-index-3-75)','--nm-badge-fg':'var(--palette-index-3-100)'}}>3</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-4-50)','--nm-badge-border':'var(--palette-index-4-75)','--nm-badge-fg':'var(--palette-index-4-100)'}}>4</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-5-50)','--nm-badge-border':'var(--palette-index-5-75)','--nm-badge-fg':'var(--palette-index-5-100)'}}>5</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-6-50)','--nm-badge-border':'var(--palette-index-6-75)','--nm-badge-fg':'var(--palette-index-6-100)'}}>6</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-7-50)','--nm-badge-border':'var(--palette-index-7-75)','--nm-badge-fg':'var(--palette-index-7-100)'}}>7</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-8-50)','--nm-badge-border':'var(--palette-index-8-75)','--nm-badge-fg':'var(--palette-index-8-100)'}}>8</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-9-50)','--nm-badge-border':'var(--palette-index-9-75)','--nm-badge-fg':'var(--palette-index-9-100)'}}>9</span>
+  <span className="nm-badge" style={{'--nm-badge-bg':'var(--palette-index-10-50)','--nm-badge-border':'var(--palette-index-10-75)','--nm-badge-fg':'var(--palette-index-10-100)'}}>10</span>
+</div>
+
+```html
+<span class="nm-badge" style="
+  --nm-badge-bg: var(--palette-index-3-50);
+  --nm-badge-border: var(--palette-index-3-75);
+  --nm-badge-fg: var(--palette-index-3-100);
+">
+  3
+</span>
+```
+
+</section>
+
+<section className="block" id="code-usage">
+
+## Implementation
+
+```html
+<link rel="stylesheet" href="namirial-theme.css">
+
+<span style="position:relative; display:inline-block;">
+  <button class="nm-button nm-button--secondary">
+    <i class="icon-bell"></i> Alerts
+  </button>
+  <span class="nm-badge nm-badge--negative" style="position:absolute; top:-8px; right:-8px;">
+    12
+  </span>
+</span>
+```
+
+#### CSS classes
+
+| Class | Values | Default |
+|-------|--------|---------|
+| `nm-badge--{intent}` | primary · secondary · accent · info · positive · negative · warning | none (base tokens) |
+| `nm-badge--dot` | strips content/padding to an 8px circle | omit for count/label badges |
+
+</section>

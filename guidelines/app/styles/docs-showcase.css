@@ -83,7 +83,78 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .theme-pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0 8px; }
 @media (max-width:760px) { .theme-pair { grid-template-columns:1fr; } }
 .theme-card { border-radius:12px; overflow:hidden; border:1px solid var(--palette-neutral-100); background:var(--palette-surface-50); color:var(--palette-surface-950); }
-.theme-card[data-theme='dark'] { background:var(--palette-surface-950); color:var(--palette-surface-50); border-color:var(--palette-neutral-800); }
+.theme-card[data-theme='dark'] { background:var(--palette-surface-950); color:var(--palette-surface-50); border-color:var(--palette-neutral-800);
+  /* --nm-badge-border is declared only once, at :root, and is never
+     reassigned by .nm-badge--{intent} (unlike bg/fg). A var() substitution
+     resolves at the element where the *referencing* declaration lives — since
+     that's :root, it always follows the page's real theme, ignoring any
+     override of --palette-tag-badge-fg-alt made further down. Re-declaring
+     --nm-badge-border itself (not just its dependency) here fixes it. */
+  --nm-badge-border: var(--palette-surface-950);
+}
+/* namirial-theme.css only defines light values on :root and dark values on
+   [data-theme=dark]/.dark — there is no [data-theme=light] rule. A locked
+   "light" theme-card would otherwise inherit dark custom properties when an
+   ancestor (<html class="dark">) is in dark mode. Re-pin every token used by
+   a locked-light preview here, mirroring the :root light values. */
+.theme-card[data-theme='light'] {
+  --nm-dropdown-bg: var(--palette-surface-50);
+  --nm-dropdown-border: var(--palette-neutral-100);
+  --nm-dropdown-shadow: var(--palette-surface-900-1);
+  --nm-dropdown-item-text: var(--palette-surface-950);
+  --nm-dropdown-item-hover-bg: var(--palette-neutral-100);
+  --nm-dropdown-item-active-bg: var(--palette-neutral-50);
+  --nm-dropdown-item-active-fg: var(--palette-accent-900);
+  --nm-dropdown-separator: var(--palette-neutral-100);
+
+  /* .nm-tag--{intent} and .nm-badge--{intent} re-derive their color from
+     --palette-tag-badge-* directly on the leaf element, so re-pinning
+     --nm-tag-bg/--nm-badge-bg here would be overridden right back — the
+     underlying palette layer has to be pinned instead. */
+  --palette-tag-badge-fg-alt: var(--palette-surface-50);
+  --palette-tag-badge-primary-soft: var(--palette-neutral-50);
+  --palette-tag-badge-primary-medium-tag: var(--palette-neutral-800);
+  --palette-tag-badge-primary-medium-badge: var(--palette-neutral-800);
+  --palette-tag-badge-primary-solid: var(--palette-surface-50);
+  --palette-tag-badge-secondary-soft: var(--palette-surface-100);
+  --palette-tag-badge-secondary-medium-tag: var(--palette-neutral-600);
+  --palette-tag-badge-secondary-medium-badge: var(--palette-neutral-50);
+  --palette-tag-badge-secondary-solid: var(--palette-neutral-950);
+  --palette-tag-badge-accent-soft: var(--palette-accent-50);
+  --palette-tag-badge-accent-medium-tag: var(--palette-accent-600);
+  --palette-tag-badge-accent-medium-badge: var(--palette-accent-200);
+  --palette-tag-badge-accent-solid: var(--palette-accent-950);
+  --palette-tag-badge-info-soft: var(--palette-info-50);
+  --palette-tag-badge-info-medium-tag: var(--palette-info-600);
+  --palette-tag-badge-info-medium-badge: var(--palette-info-200);
+  --palette-tag-badge-info-solid: var(--palette-info-950);
+  --palette-tag-badge-positive-soft: var(--palette-positive-50);
+  --palette-tag-badge-positive-medium-tag: var(--palette-positive-600);
+  --palette-tag-badge-positive-medium-badge: var(--palette-positive-200);
+  --palette-tag-badge-positive-solid: var(--palette-positive-950);
+  --palette-tag-badge-negative-soft: var(--palette-negative-50);
+  --palette-tag-badge-negative-medium-tag: var(--palette-negative-600);
+  --palette-tag-badge-negative-medium-badge: var(--palette-negative-200);
+  --palette-tag-badge-negative-solid: var(--palette-negative-950);
+  --palette-tag-badge-warning-soft: var(--palette-warning-50);
+  --palette-tag-badge-warning-medium-tag: var(--palette-warning-600);
+  --palette-tag-badge-warning-medium-badge: var(--palette-warning-200);
+  --palette-tag-badge-warning-solid: var(--palette-warning-950);
+
+  /* Base (no-intent) tag tokens are set directly on :root/[data-theme=dark],
+     not via the palette-tag-badge layer, so they need their own re-pin. */
+  --nm-tag-fg: var(--palette-surface-950);
+  --nm-tag-remove-fg: var(--palette-surface-950);
+  --nm-tag-remove-hover-fg: var(--palette-neutral-600);
+
+  /* Same root-only-declaration issue as the dark card above, see that
+     comment — --nm-badge-border must be re-pinned directly. */
+  --nm-badge-border: var(--palette-surface-50);
+}
+/* .nm-tag--secondary has its own `.dark .nm-tag--secondary` descendant rule
+   in namirial-theme.css, which fires on any element under <html class="dark">
+   regardless of a locked-light ancestor. Out-specificity it here. */
+.theme-card[data-theme='light'] .nm-tag--secondary { --nm-tag-fg: var(--palette-surface-900); }
 .theme-card .theme-label { padding:10px 16px; font:700 11px/1 "Open Sans",sans-serif; letter-spacing:0.08em; text-transform:uppercase; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent); }
 .theme-card .theme-label span { font:500 11px/1 ui-monospace,Menlo,monospace; opacity:0.6; text-transform:none; letter-spacing:0; }
 .theme-card .theme-frame { padding:28px 24px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px; min-height:120px; }
@@ -164,3 +235,7 @@ section.block code { font:500 13px/1 ui-monospace,"SF Mono",Menlo,monospace; bac
 .code-field .nm-input__field { text-align:center; }
 .code-field .nm-input__container { border-radius:8px; padding-left:4px; padding-right:4px; }
 .code-field .nm-input__field:focus::placeholder { color:transparent; }
+/* namirial-theme.css overrides border on .nm-dropdown__separator (an <hr>)
+   but not margin, so it falls back to the UA stylesheet's default hr margin
+   (~0.5em top/bottom) stacked on top of the .nm-dropdown flex gap. */
+.nm-dropdown__separator { margin: 0; }

@@ -1,5 +1,12 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'The Namirial Design System',
+  description:
+    'Foundations, components and patterns for building consistent Namirial products.',
+};
 
 // In CI viene valorizzato da GitHub Pages (es. "/namirial-design-system"); in locale resta "".
 // Il basePath NON viene applicato da Next agli url() nei CSS, quindi lo iniettiamo come
