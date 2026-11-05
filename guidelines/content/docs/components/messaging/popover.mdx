@@ -3,15 +3,18 @@ title: Popover
 description: Popovers reveal richer, interactive content anchored to a trigger, and stay open until dismissed.
 ---
 
+import { Ic } from '@/components/nm/icon';
+import { PopoverSandbox } from '@/components/nm/popover-sandbox';
+
 <p className="eyebrow">Components · Messaging</p>
 
 <p className="lede">A popover is an anchored panel with a title, a divider, and body content — richer than a tooltip and interactive rather than transient. Namirial popovers are built from <code>--nm-popover-*</code> tokens defined in <code>namirial-theme.css</code>, share the same position and pointer system as tooltip, and default to the <code>primary</code> intent.</p>
 
 <div className="hero-stage">
   <div className="nm-popover nm-popover--bottom">
-    <span className="nm-popover__title">Filters</span>
+    <span className="nm-popover__title">Popover</span>
     <hr className="nm-popover__divider" />
-    <span className="nm-popover__content">Narrow results by status, owner, or date.</span>
+    <span className="nm-popover__content">Place structured content here for more details.</span>
   </div>
 </div>
 
@@ -25,8 +28,7 @@ A popover opens on click (not hover) and stays open until the user dismisses it 
 
 Use a popover when:
 
-- The content needs to stay visible while the user reads it or interacts with something inside it (a filter panel, a small form, a list of actions).
-- The trigger should toggle the panel open and closed on click, not just on hover.
+- The content needs to stay visible while the user reads it or interacts with something inside it (e.g. for contextual help, rich information, interactive guidance).
 
 Consider another component when:
 
@@ -43,15 +45,15 @@ A popover is a title, a divider, and a content region, plus the same directional
 
 <div className="anatomy" aria-hidden="true">
   <div className="stage" style={{width:'600px',height:'240px'}}>
-    <div className="nm-popover nm-popover--bottom giant" style={{pointerEvents:'none',position:'absolute',top:'50px',left:'210px'}}>
-      <span className="nm-popover__title">Filters</span>
+    <div className="nm-popover nm-popover--bottom giant" style={{pointerEvents:'none',position:'absolute',top:'40px',left:'170px',transform:'scale(1.5)'}}>
+      <span className="nm-popover__title">Popover</span>
       <hr className="nm-popover__divider" />
-      <span className="nm-popover__content">Narrow by status or owner.</span>
+      <span className="nm-popover__content">Structured content here.</span>
     </div>
     <svg style={{position:'absolute',top:0,left:0,width:'600px',height:'240px',pointerEvents:'none'}} viewBox="0 0 600 240">
-      <line x1="90" y1="30" x2="230" y2="65" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="90" y1="110" x2="220" y2="95" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="510" y1="150" x2="380" y2="120" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="90" y1="30" x2="133" y2="50" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="90" y1="110" x2="160" y2="75" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="510" y1="150" x2="408" y2="103" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
     </svg>
     <div style={{position:'absolute',top:'10px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>1 · <b>Title</b></div></div>
     <div style={{position:'absolute',top:'90px',left:'10px'}}><div className="labelpoint" style={{position:'static'}}>2 · <b>Divider</b></div></div>
@@ -96,10 +98,13 @@ Popover shares tooltip's 12-position system — four sides, each with a centered
 Popover ships seven intents, defaulting to `primary`.
 
 <div className="example stacked">
-  <div className="nm-popover nm-popover--primary"><span className="nm-popover__title">Primary</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Default appearance.</span></div>
-  <div className="nm-popover nm-popover--info"><span className="nm-popover__title">Info</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Neutral, explanatory content.</span></div>
-  <div className="nm-popover nm-popover--warning"><span className="nm-popover__title">Warning</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Flags a caveat before an action.</span></div>
-  <div className="nm-popover nm-popover--negative"><span className="nm-popover__title">Negative</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Confirms a destructive choice.</span></div>
+  <div className="nm-popover nm-popover--right nm-popover--primary"><span className="nm-popover__title">Primary</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Default appearance.</span></div>
+  <div className="nm-popover nm-popover--right nm-popover--secondary"><span className="nm-popover__title">Secondary</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Muted, lower-emphasis appearance.</span></div>
+  <div className="nm-popover nm-popover--right nm-popover--accent"><span className="nm-popover__title">Accent</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Calls out a highlighted feature.</span></div>
+  <div className="nm-popover nm-popover--right nm-popover--info"><span className="nm-popover__title">Info</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Neutral, explanatory content.</span></div>
+  <div className="nm-popover nm-popover--right nm-popover--positive"><span className="nm-popover__title">Positive</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Confirms a successful outcome.</span></div>
+  <div className="nm-popover nm-popover--right nm-popover--warning"><span className="nm-popover__title">Warning</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Flags a caveat before an action.</span></div>
+  <div className="nm-popover nm-popover--right nm-popover--negative"><span className="nm-popover__title">Negative</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Confirms a destructive choice.</span></div>
 </div>
 
 </section>
@@ -111,7 +116,7 @@ Popover ships seven intents, defaulting to `primary`.
 ### Title + content
 
 <div className="example">
-  <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Filters</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Narrow results by status, owner, or date.</span></div>
+  <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Popover</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Place structured content here for more details.</span></div>
 </div>
 
 ### Content only
@@ -119,7 +124,7 @@ Popover ships seven intents, defaulting to `primary`.
 Drop the title and divider when the popover doesn't need a heading — a short action list or a single line of text stands on its own.
 
 <div className="example">
-  <div className="nm-popover nm-popover--bottom"><span className="nm-popover__content">Copied to clipboard.</span></div>
+  <div className="nm-popover nm-popover--bottom"><span className="nm-popover__content">Place structured content here for more details.</span></div>
 </div>
 
 </section>
@@ -134,13 +139,13 @@ Popover tokens read from the shared `--palette-callout-*` scale, so no per-compo
   <div className="theme-card" data-theme="light">
     <div className="theme-label">Light <span>data-theme="light"</span></div>
     <div className="theme-frame">
-      <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Filters</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Narrow by status or owner.</span></div>
+      <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Popover</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Place structured content here for more details.</span></div>
     </div>
   </div>
   <div className="theme-card" data-theme="dark">
     <div className="theme-label">Dark <span>data-theme="dark"</span></div>
     <div className="theme-frame">
-      <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Filters</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Narrow by status or owner.</span></div>
+      <div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Popover</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Place structured content here for more details.</span></div>
     </div>
   </div>
 </div>
@@ -154,13 +159,75 @@ Popover tokens read from the shared `--palette-callout-*` scale, so no per-compo
 ## Do & don't
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Share</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Anyone with the link can view.</span></div></div><div className="desc">Use a popover for a small, focused chunk of interactive content anchored to its trigger.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-popover nm-popover--bottom" style={{maxWidth:'260px'}}><span className="nm-popover__title">Settings</span><hr className="nm-popover__divider" /><span className="nm-popover__content">A full multi-step settings form doesn't fit a 320px-wide anchored panel — use a dialog or a dedicated page instead.</span></div></div><div className="desc">Don't cram a full workflow into a popover — move to a Dialog or a page.</div></div>
+  <div className="card do">
+    <div className="bar"><span className="pill">✓</span>Do</div>
+    <div className="frame">
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'2px'}}>
+        <button type="button" className="nm-button nm-button--primary nm-button--icon-only nm-button--md nm-button--ghost" aria-label="View signature status" style={{pointerEvents:'none'}}>
+          <Ic n="shield-check" s={20} />
+        </button>
+        <div className="nm-popover nm-popover--bottom nm-popover--secondary" style={{width:'260px'}}>
+          <span className="nm-popover__title" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'8px',whiteSpace:'nowrap'}}>
+            <span>Signature status</span>
+            <span className="nm-tag nm-tag--positive">Valid</span>
+          </span>
+          <hr className="nm-popover__divider" />
+          <span className="nm-popover__content" style={{display:'flex',justifyContent:'space-between',gap:'16px'}}>
+            <span>Signed by</span>
+            <b>Anna Müller</b>
+          </span>
+          <span className="nm-popover__content" style={{display:'flex',justifyContent:'space-between',gap:'16px'}}>
+            <span>Date</span>
+            <b>05 Nov 2026</b>
+          </span>
+          <span className="nm-popover__content" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'16px'}}>
+            <span>Certificate</span>
+            <span className="nm-tag nm-tag--positive">Verified</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div className="desc">Use popovers for richer contextual information, optionally with a small link or button.</div>
+  </div>
+  <div className="card dont">
+    <div className="bar"><span className="pill">✕</span>Don't</div>
+    <div className="frame">
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'2px'}}>
+        <button type="button" className="nm-button nm-button--primary nm-button--icon-only nm-button--md nm-button--ghost" aria-label="Open account settings" style={{pointerEvents:'none'}}>
+          <Ic n="settings" s={20} />
+        </button>
+        <div className="nm-popover nm-popover--bottom nm-popover--secondary" style={{width:'260px',gap:'10px'}}>
+          <span className="nm-popover__title">Account settings</span>
+          <hr className="nm-popover__divider" />
+          <div className="nm-input nm-input--xs">
+            <label className="nm-input__label">Email</label>
+            <div className="nm-input__container"><input className="nm-input__field" placeholder="you@company.com" /></div>
+          </div>
+          <div className="nm-input nm-input--xs">
+            <label className="nm-input__label">Password</label>
+            <div className="nm-input__container"><input type="password" className="nm-input__field" placeholder="••••••••" /></div>
+          </div>
+          <div className="nm-input nm-input--select nm-input--xs">
+            <label className="nm-input__label">Theme</label>
+            <div className="nm-input__container" role="combobox">
+              <span className="nm-input__select-value nm-input__select-value--placeholder">System</span>
+              <span className="nm-input__icon-trailing"><Ic n="chevron-down" /></span>
+            </div>
+          </div>
+          <div style={{display:'flex',justifyContent:'flex-end',gap:'8px'}}>
+            <button type="button" className="nm-button nm-button--ghost nm-button--secondary nm-button--sm">Cancel</button>
+            <button type="button" className="nm-button nm-button--primary nm-button--sm">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="desc">Don't cram a full multi-step settings form into a popover — move to a Dialog or a dedicated page.</div>
+  </div>
 </div>
 
 <div className="dodont">
-  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-popover nm-popover--bottom"><span className="nm-popover__content">Copied to clipboard.</span></div></div><div className="desc">Let the user click outside or press Escape to close — never trap them inside a popover.</div></div>
-  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-popover nm-popover--bottom"><span className="nm-popover__title">Confirm</span><hr className="nm-popover__divider" /><span className="nm-popover__content">Are you sure you want to delete this? This can't be undone.</span></div></div><div className="desc">Don't use a popover for a destructive confirmation that blocks the rest of the page — use a Confirmation Dialog.</div></div>
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div data-theme="light" style={{position:'relative',height:'240px',width:'100%',borderRadius:'10px',overflow:'hidden',background:'var(--palette-surface-50)',border:'1px solid var(--palette-surface-200)',padding:'12px'}}><div style={{height:'8px',width:'70%',borderRadius:'4px',background:'var(--palette-surface-200)'}} /><div style={{marginTop:'8px',height:'6px',width:'50%',borderRadius:'3px',background:'var(--palette-surface-200)'}} /><div style={{marginTop:'8px',height:'6px',width:'60%',borderRadius:'3px',background:'var(--palette-surface-200)'}} /><div style={{position:'absolute',bottom:'12px',left:'50%',transform:'translateX(-50%)',display:'flex',flexDirection:'column',alignItems:'center',gap:'12px'}}><div className="nm-popover nm-popover--top nm-popover--secondary" style={{width:'220px'}}><span className="nm-popover__title" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'8px',whiteSpace:'nowrap'}}><span>Signature status</span><span className="nm-tag nm-tag--positive">Valid</span></span><hr className="nm-popover__divider" /><span className="nm-popover__content" style={{display:'flex',justifyContent:'space-between',gap:'12px'}}><span>Signed by</span><b>Anna Müller</b></span><span className="nm-popover__content" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'12px'}}><span>Certificate</span><span className="nm-tag nm-tag--positive">Verified</span></span></div><div style={{position:'relative',width:'220px',display:'flex',justifyContent:'center'}}><button type="button" className="nm-button nm-button--secondary nm-button--icon-only nm-button--sm nm-button--ghost" aria-label="View signature status" style={{pointerEvents:'none'}}><Ic n="shield-check" s={20} /></button><span style={{position:'absolute',left:'calc(50% + 24px)',top:'50%',transform:'translateY(-50%)',display:'inline-flex',alignItems:'center',gap:'4px',fontSize:'11px',fontWeight:600,color:'var(--palette-surface-900)',whiteSpace:'nowrap'}}><Ic n="mouse-pointer-2" s={14} />Click</span></div></div></div></div><div className="desc">Open on click and stay open until dismissed.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div data-theme="light" style={{position:'relative',height:'240px',width:'100%',borderRadius:'10px',overflow:'hidden',background:'var(--palette-surface-50)',border:'1px solid var(--palette-surface-200)',padding:'12px'}}><div style={{height:'8px',width:'70%',borderRadius:'4px',background:'var(--palette-surface-200)'}} /><div style={{marginTop:'8px',height:'6px',width:'50%',borderRadius:'3px',background:'var(--palette-surface-200)'}} /><div style={{marginTop:'8px',height:'6px',width:'60%',borderRadius:'3px',background:'var(--palette-surface-200)'}} /><button type="button" className="nm-button nm-button--secondary nm-button--icon-only nm-button--sm nm-button--ghost" aria-label="View signature status" style={{position:'absolute',bottom:'12px',left:'50%',transform:'translateX(-50%)',pointerEvents:'none'}}><Ic n="shield-check" s={20} /></button><div style={{position:'absolute',inset:0,background:'rgba(0,0,0,0.55)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-end',paddingBottom:'56px'}}><div style={{position:'relative'}}><div className="nm-popover nm-popover--top nm-popover--secondary" style={{position:'static',width:'220px'}}><span className="nm-popover__title" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'8px',whiteSpace:'nowrap'}}><span>Signature status</span><span className="nm-tag nm-tag--positive">Valid</span></span><hr className="nm-popover__divider" /><span className="nm-popover__content" style={{display:'flex',justifyContent:'space-between',gap:'12px'}}><span>Signed by</span><b>Anna Müller</b></span><span className="nm-popover__content" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'12px'}}><span>Certificate</span><span className="nm-tag nm-tag--positive">Verified</span></span></div><span style={{position:'absolute',bottom:'-18px',left:'-6px',color:'var(--palette-surface-50)',display:'inline-flex'}}><Ic n="mouse-pointer-2" s={22} /></span></div></div></div></div><div className="desc">Don't trigger on hover or block interaction with the rest of the page.</div></div>
 </div>
 
 </section>
@@ -184,6 +251,16 @@ Popover tokens read from the shared `--palette-callout-*` scale, so no per-compo
 
 - On open, move focus into the popover only if it contains interactive content the user is expected to use immediately; otherwise leave focus on the trigger.
 - On close, always return focus to the trigger.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+Try every position, intent, and content type, and copy the generated markup.
+
+<PopoverSandbox />
 
 </section>
 
@@ -212,9 +289,9 @@ Positioning and open/close state need JavaScript; the markup and visuals are pur
 <link rel="stylesheet" href="namirial-theme.css">
 
 <div class="nm-popover nm-popover--bottom" role="dialog" id="pop-1">
-  <span class="nm-popover__title">Filters</span>
+  <span class="nm-popover__title">Popover</span>
   <hr class="nm-popover__divider">
-  <span class="nm-popover__content">Narrow results by status, owner, or date.</span>
+  <span class="nm-popover__content">Place structured content here for more details.</span>
 </div>
 ```
 

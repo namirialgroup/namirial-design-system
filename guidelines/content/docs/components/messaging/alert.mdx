@@ -1,22 +1,20 @@
 ---
 title: Alert
-description: Alerts surface important, page-level information that needs attention without blocking the user.
+description: Alerts surface important information that needs attention.
 ---
 
 import { Ic } from '@/components/nm/icon';
+import { AlertSandbox } from '@/components/nm/alert-sandbox';
 
 <p className="eyebrow">Components · Messaging</p>
 
-<p className="lede">An alert is a bordered, page-level banner that surfaces information the user should notice but isn't required to act on immediately. Namirial alerts are built from <code>--nm-alert-*</code> tokens defined in <code>namirial-theme.css</code>, ship at a single fixed size, and default to the <code>info</code> intent when no modifier is applied.</p>
+<p className="lede">Alerts provide prominent contextual, non-modal feedback, surfacing information users should notice across success, info, warning, and error states. Namirial alerts are built from <code>--nm-alert-*</code> tokens defined in <code>namirial-theme.css</code>, ship at a single fixed size, and default to the <code>info</code> intent when no modifier is applied.</p>
 
 <div className="hero-stage">
-  <div className="nm-alert" style={{width:'340px'}}>
+  <div className="nm-alert" style={{width:'100%'}}>
     <span className="nm-alert__icon"><Ic n="info" s={24} /></span>
-    <span className="nm-alert__body">Your session will expire in 5 minutes.</span>
-  </div>
-  <div className="nm-alert nm-alert--negative" style={{width:'340px'}}>
-    <span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span>
-    <span className="nm-alert__body">Signing failed. Please try again.</span>
+    <span className="nm-alert__body">This document is read-only. You can view the content, but you cannot make changes.</span>
+    <button type="button" className="nm-alert__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button>
   </div>
 </div>
 
@@ -24,19 +22,18 @@ import { Ic } from '@/components/nm/icon';
 
 ## Overview
 
-An alert lives inline in the page layout — above a form, at the top of a section — and stays visible until the underlying condition changes or the user dismisses it. It never floats above content and never disappears on its own.
+An alert will float at the bottom of the viewport above the content or live inline within the page layout near the interaction area — for example, at the top of a section, above a form, in a dialog, or within a specific page content. It stays visible until the underlying condition changes or the user dismisses it.
 
 ### When to use
 
 Use an alert when:
-
-- The information applies to the whole page or section, not a single field (system status, an expired session, a pending review).
-- The message should persist until the user deals with it or navigates away — not vanish after a few seconds.
+- The information needs attention and deserves a prominent placement (e.g. system status, an expired session, a pending review).
+- The action needs prominent feedback because no other visual change indicates the result (e.g. saving changes without navigating away).
 
 Consider another component when:
-
 - The feedback is tied to a single field's value — use the input's own error/warning/success state instead.
-- The message is a one-off confirmation of an action the user just took and can safely disappear on its own — use [Toast](/docs/components/messaging/toast).
+- The information is minor or only relevant to a nearby interaction - use [Message](/docs/components/messaging/message).
+- The feedback requires user action or decision but should not block the UI — use [Toast](/docs/components/messaging/toast) (e.g. cookie consent or an action-required system notification).
 - The message needs to interrupt the user and block further action until resolved — use a [Dialog](/docs/components/messaging/dialogs).
 
 </section>
@@ -49,24 +46,27 @@ An alert is a single-row container with a leading icon, a text body, and an opti
 
 <div className="anatomy" aria-hidden="true">
   <div className="stage" style={{width:'600px',height:'200px'}}>
-    <div className="nm-alert giant" style={{width:'360px',pointerEvents:'none',position:'absolute',top:'70px',left:'120px'}}>
+    <div className="nm-alert" style={{width:'480px',pointerEvents:'none',position:'absolute',top:'80px',left:'90px',transform:'scale(1)',transformOrigin:'center'}}>
       <span className="nm-alert__icon"><Ic n="info" s={24} /></span>
-      <span className="nm-alert__body">Your plan renews on <span className="nm-alert__link">March 12</span>.</span>
+      <span className="nm-alert__body">Your changes affect all signers. <span className="nm-alert__link">Review signers</span>.</span>
       <button type="button" className="nm-alert__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button>
     </div>
     <svg style={{position:'absolute',top:0,left:0,width:'600px',height:'200px',pointerEvents:'none'}} viewBox="0 0 600 200">
-      <line x1="90" y1="34" x2="140" y2="86" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="300" y1="34" x2="300" y2="88" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="510" y1="34" x2="460" y2="86" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="105" y1="32" x2="114" y2="78" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="340" y1="32" x2="150" y2="80" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <line x1="520" y1="32" x2="500" y2="98" stroke="var(--palette-accent-500)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
     </svg>
-    <div style={{position:'absolute',top:'10px',left:'10px'}}>
+    <div style={{position:'absolute',top:'10px',left:'70px'}}>
       <div className="labelpoint" style={{position:'static'}}>1 · <b>Icon</b></div>
+      <div className="dot" style={{top:'68px',left:'44px'}}></div>
     </div>
-    <div style={{position:'absolute',top:'10px',left:'240px'}}>
+    <div style={{position:'absolute',top:'10px',left:'300px'}}>
       <div className="labelpoint" style={{position:'static'}}>2 · <b>Body</b></div>
+      <div className="dot" style={{top:'70px',left:'-150px'}}></div>
     </div>
-    <div style={{position:'absolute',top:'10px',left:'440px'}}>
+    <div style={{position:'absolute',top:'10px',left:'480px'}}>
       <div className="labelpoint" style={{position:'static'}}>3 · <b>Close</b></div>
+      <div className="dot" style={{top:'88px',left:'20px'}}></div>
     </div>
   </div>
 </div>
@@ -89,16 +89,13 @@ An alert is a single-row container with a leading icon, a text body, and an opti
 
 ## Intent variants
 
-An alert ships seven intents. With no modifier class, `.nm-alert` renders as `info` — the same as adding `nm-alert--info` explicitly.
+An alert ships four intents. With no modifier class, `.nm-alert` renders as `info` — the same as adding `nm-alert--info` explicitly.
 
 <div className="example stacked">
-  <div className="nm-alert nm-alert--primary" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="megaphone" s={24} /></span><span className="nm-alert__body">Primary — general product messaging.</span></div>
-  <div className="nm-alert nm-alert--secondary" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="info" s={24} /></span><span className="nm-alert__body">Secondary — lower-emphasis note.</span></div>
-  <div className="nm-alert nm-alert--accent" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="sparkles" s={24} /></span><span className="nm-alert__body">Accent — highlight a new feature.</span></div>
-  <div className="nm-alert nm-alert--info" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="info" s={24} /></span><span className="nm-alert__body">Info — neutral, default intent.</span></div>
-  <div className="nm-alert nm-alert--positive" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="circle-check" s={24} /></span><span className="nm-alert__body">Positive — confirms a successful state.</span></div>
-  <div className="nm-alert nm-alert--warning" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="alert-triangle" s={24} /></span><span className="nm-alert__body">Warning — needs attention soon.</span></div>
-  <div className="nm-alert nm-alert--negative" style={{width:'320px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Negative — something failed or is blocked.</span></div>
+  <div className="nm-alert nm-alert--info" style={{width:'100%'}}><span className="nm-alert__icon"><Ic n="info" s={24} /></span><span className="nm-alert__body">Info — Provides helpful, non-urgent information that gives context or helps users make an informed decision.</span><button type="button" className="nm-alert__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button></div>
+  <div className="nm-alert nm-alert--positive" style={{width:'100%'}}><span className="nm-alert__icon"><Ic n="circle-check" s={24} /></span><span className="nm-alert__body">Positive — Confirms that an action was completed successfully or that a desired state has been reached.</span><button type="button" className="nm-alert__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button></div>
+  <div className="nm-alert nm-alert--warning" style={{width:'100%'}}><span className="nm-alert__icon"><Ic n="alert-triangle" s={24} /></span><span className="nm-alert__body">Warning — Highlights a potentially risky or attention-worthy condition that does not prevent users from continuing.</span><button type="button" className="nm-alert__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button></div>
+  <div className="nm-alert nm-alert--negative" style={{width:'100%'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Negative — Communicates an error, failure, or invalid state that requires attention or action to resolve.</span><button type="button" className="nm-alert__close" aria-label="Dismiss" tabIndex={-1}><Ic n="x" s={16} /></button></div>
 </div>
 
 </section>
@@ -112,7 +109,7 @@ An alert ships seven intents. With no modifier class, `.nm-alert` renders as `in
 `.nm-alert__link` inherits the alert's text color and only adds weight and underline — it never introduces a separate link color, so it stays legible against every intent.
 
 <div className="example">
-  <div className="nm-alert nm-alert--warning" style={{width:'360px'}}>
+  <div className="nm-alert nm-alert--warning" style={{width:'500px'}}>
     <span className="nm-alert__icon"><Ic n="alert-triangle" s={24} /></span>
     <span className="nm-alert__body">Your card expires soon. <span className="nm-alert__link">Update payment method</span>.</span>
   </div>
@@ -123,10 +120,92 @@ An alert ships seven intents. With no modifier class, `.nm-alert` renders as `in
 Add `.nm-alert__close` as a real `<button>` when the condition is safe for the user to acknowledge and hide. Don't add a close button when the alert reflects a state the user still needs to resolve.
 
 <div className="example">
-  <div className="nm-alert nm-alert--info" style={{width:'360px'}}>
+  <div className="nm-alert nm-alert--info" style={{width:'500px'}}>
     <span className="nm-alert__icon"><Ic n="info" s={24} /></span>
-    <span className="nm-alert__body">We've updated our terms of service.</span>
+    <span className="nm-alert__body">This document is shared. Changes affect all users.</span>
     <button type="button" className="nm-alert__close" aria-label="Dismiss"><Ic n="x" s={16} /></button>
+  </div>
+</div>
+
+</section>
+
+<section className="block" id="layout">
+
+## Position & full-width
+
+`.nm-alert` carries no `width`, no `position`, and no placement logic of its own — it's a `display:flex` row with intrinsic sizing. Where it sits on the page and how wide it renders are entirely decided by the markup around it, not by a modifier class.
+
+### Position possibilities
+
+An alert isn't anchored to a trigger, so it just sits wherever it's placed in the document flow:
+
+- **Page banner** — floating above the main content.
+- **Section / inline banner** — scoped to a section, card, or form.
+- **Dialog context** — inside `.nm-dialog__body`, inheriting the dialog's width.
+
+<div className="example" style={{gap:'16px'}}>
+  <div style={{display:'flex',gap:'16px',width:'100%',flexWrap:'wrap'}}>
+    <div style={{flex:'1 1 220px'}}>
+      <div style={{position:'relative',height:'160px',borderRadius:'10px',overflow:'hidden',background:'var(--palette-surface-50)',border:'1px solid var(--palette-surface-200)'}}>
+        <div style={{position:'absolute',top:'10px',left:'10px',right:'10px',height:'8px',borderRadius:'4px',background:'var(--palette-surface-200)'}} />
+        <div style={{position:'absolute',top:'26px',left:'10px',width:'70%',height:'6px',borderRadius:'3px',background:'var(--palette-surface-200)'}} />
+        <div style={{position:'absolute',top:'42px',left:'10px',width:'50%',height:'6px',borderRadius:'3px',background:'var(--palette-surface-200)'}} />
+        <div style={{position:'absolute',bottom:'8px',left:'8px',right:'8px',overflow:'hidden'}}>
+          <div className="nm-alert nm-alert--info" style={{transform:'scale(0.85)',transformOrigin:'top left',width:'117.6%'}}>
+            <span className="nm-alert__icon"><Ic n="info" s={16} /></span>
+            <span className="nm-alert__body" style={{fontSize:'11px'}}>Page banner</span>
+          </div>
+        </div>
+      </div>
+      <p className="caption" style={{textAlign:'center',marginTop:'8px'}}>Page banner — full-width above the content</p>
+    </div>
+    <div style={{flex:'1 1 220px'}}>
+      <div style={{position:'relative',height:'160px',borderRadius:'10px',overflow:'hidden',background:'var(--palette-surface-50)',border:'1px solid var(--palette-surface-200)',padding:'10px'}}>
+        <div style={{height:'8px',width:'60%',borderRadius:'4px',background:'var(--palette-surface-200)',marginBottom:'10px'}} />
+        <div style={{border:'1px solid var(--palette-surface-200)',borderRadius:'8px',padding:'8px'}}>
+          <div className="nm-alert nm-alert--warning" style={{width:'117.6%',transform:'scale(0.85)',transformOrigin:'top left'}}>
+            <span className="nm-alert__icon"><Ic n="alert-triangle" s={16} /></span>
+            <span className="nm-alert__body" style={{fontSize:'11px'}}>Inline banner</span>
+          </div>
+          <div style={{marginTop:'8px',height:'6px',width:'80%',borderRadius:'3px',background:'var(--palette-surface-200)'}} />
+          <div style={{marginTop:'6px',height:'6px',width:'60%',borderRadius:'3px',background:'var(--palette-surface-200)'}} />
+        </div>
+      </div>
+      <p className="caption" style={{textAlign:'center',marginTop:'8px'}}>Section / inline banner — scoped to a card</p>
+    </div>
+    <div style={{flex:'1 1 220px'}}>
+      <div style={{position:'relative',height:'160px',borderRadius:'10px',overflow:'hidden',background:'var(--palette-surface-950-2)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+        <div style={{width:'80%',background:'var(--palette-surface-50)',borderRadius:'10px',padding:'10px',boxShadow:'0 8px 24px rgba(0,0,0,0.35)'}}>
+          <div style={{height:'7px',width:'50%',borderRadius:'3px',background:'var(--palette-surface-200)',marginBottom:'8px'}} />
+          <div className="nm-alert nm-alert--negative" style={{width:'125%',transform:'scale(0.8)',transformOrigin:'top left',marginBottom:'8px'}}>
+            <span className="nm-alert__icon"><Ic n="alert-circle" s={16} /></span>
+            <span className="nm-alert__body" style={{fontSize:'11px'}}>Dialog context</span>
+          </div>
+          <div style={{height:'6px',width:'90%',borderRadius:'3px',background:'var(--palette-surface-200)',marginBottom:'6px'}} />
+          <div style={{height:'6px',width:'65%',borderRadius:'3px',background:'var(--palette-surface-200)',marginBottom:'12px'}} />
+          <div style={{display:'flex',justifyContent:'flex-end',gap:'6px'}}>
+            <div style={{height:'14px',width:'36px',borderRadius:'6px',background:'var(--palette-surface-200)'}} />
+            <div style={{height:'14px',width:'36px',borderRadius:'6px',background:'var(--palette-negative-500)'}} />
+          </div>
+        </div>
+      </div>
+      <p className="caption" style={{textAlign:'center',marginTop:'8px'}}>Dialog context — inside <code>.nm-dialog__body</code></p>
+    </div>
+  </div>
+</div>
+
+### Full-width behaviour
+
+`.nm-alert` sets no `width`, so it always stretches to fill 100% of its parent. Don't give it a fixed width; let it track its container at every breakpoint.
+
+On very large screens, cap the alert with a max-width and center it. Beyond a certain viewport width, a full-bleed alert’s line length becomes hard to read.
+
+<div className="example">
+  <div style={{maxWidth:'960px', width:'100%'}}>
+    <div className="nm-alert nm-alert--info" style={{width:'100%'}}>
+      <span className="nm-alert__icon"><Ic n="info" s={24} /></span>
+      <span className="nm-alert__body">Still full-width at every size, capped at max-width: 960px only once the viewport is wide enough to need it.</span>
+    </div>
   </div>
 </div>
 
@@ -153,8 +232,6 @@ Alert tokens read from the shared `--palette-callout-*` scale, so no per-compone
   </div>
 </div>
 
-<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
-
 </section>
 
 <section className="block" id="dodont">
@@ -169,6 +246,11 @@ Alert tokens read from the shared `--palette-callout-*` scale, so no per-compone
 <div className="dodont">
   <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-alert nm-alert--negative" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Payment failed. Update your card to continue.</span></div></div><div className="desc">Say what happened and what to do next.</div></div>
   <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-alert nm-alert--negative" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="alert-circle" s={24} /></span><span className="nm-alert__body">Something went wrong.</span></div></div><div className="desc">Don't leave the user without a next step.</div></div>
+</div>
+
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-alert nm-alert--info" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="info" s={24} /></span><span className="nm-alert__body">Your document needs review before it can be signed. <span className="nm-alert__link">Review document</span></span></div></div><div className="desc">Use alerts for important information that deserves prominent attention.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-alert nm-alert--info" style={{width:'260px'}}><span className="nm-alert__icon"><Ic n="info" s={24} /></span><span className="nm-alert__body">Link copied to clipboard.</span></div></div><div className="desc">Don't use alerts for minor feedback; use a Message instead.</div></div>
 </div>
 
 </section>
@@ -190,6 +272,16 @@ Alert tokens read from the shared `--palette-callout-*` scale, so no per-compone
 #### Color
 
 - Never rely on the border/background color alone to communicate severity — the icon and text must independently make the intent clear.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+Try every intent, message, content type, and dismiss state, and copy the generated markup.
+
+<AlertSandbox />
 
 </section>
 

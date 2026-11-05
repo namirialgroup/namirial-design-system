@@ -3,9 +3,9 @@
   "pages": [
     "alert",
     "message",
+    "toast",
     "tooltip",
     "popover",
-    "toast",
     "dialogs"
   ]
 }

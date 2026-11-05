@@ -4,19 +4,16 @@ description: Messages are compact, floating snippets of feedback anchored near t
 ---
 
 import { Ic } from '@/components/nm/icon';
+import { MessageSandbox } from '@/components/nm/message-sandbox';
 
 <p className="eyebrow">Components · Messaging</p>
 
-<p className="lede">A message is a small, elevated, inline-sized snippet — a step up from inline field help, a step down from an alert. Namirial messages are built from <code>--nm-message-*</code> tokens defined in <code>namirial-theme.css</code>, keep a neutral card background across every intent, and only recolor their text, icon, and link.</p>
+<p className="lede">Namirial messages are compact, elevated snippets built from <code>--nm-message-*</code> tokens defined in <code>namirial-theme.css</code>. They use a neutral card background across all intents, with color applied to the text, icon, and link.</p>
 
 <div className="hero-stage">
-  <div className="nm-message">
-    <span className="nm-message__icon"><Ic n="info" s={24} /></span>
-    <span>Default message</span>
-  </div>
   <div className="nm-message nm-message--positive">
     <span className="nm-message__icon"><Ic n="circle-check" s={24} /></span>
-    <span>Draft saved</span>
+    <span>Item moved to folder X.</span>
     <span className="nm-message__link">Undo</span>
   </div>
 </div>
@@ -25,20 +22,20 @@ import { Ic } from '@/components/nm/icon';
 
 ## Overview
 
-A message is a compact, self-sized snippet of feedback — it hugs its content instead of stretching full-width like an alert, and it floats with a shadow rather than sitting flush in the layout. It's meant to sit near what it describes: beside a button, under a small action row, next to a list item.
+Messages provide compact, contextual feedback near the relevant interaction or content. They hug their content and float with a shadow rather than stretching full-width. Messages are automatically dismissed after a defined period or when the relevant content changes.
 
 ### When to use
 
 Use a message when:
-
-- The feedback is short (a few words) and tied to a specific, local action or spot on the page.
-- You want a floating, self-contained snippet rather than a full-width banner.
+- The feedback is brief and relates to a specific interaction or content area.
+- The feedback is small and local, such as confirming that a link was copied or an item was duplicated.
+- An action also changes surrounding content or elements, such as adding an item to a list.
 
 Consider another component when:
-
-- The message applies to the whole page or section — use [Alert](/docs/components/messaging/alert) instead.
-- The feedback should appear briefly and disappear on its own, independent of scroll position — use [Toast](/docs/components/messaging/toast).
-- The feedback belongs to a single form field — use the field's own help/error text.
+- The feedback belongs to a single form field — use the field's own help or validation text.
+- The information needs prominent attention — use [Alert](/docs/components/messaging/alert) instead.
+- The message requires user action but should not block the UI — use [Toast](/docs/components/messaging/toast).
+- The message needs to interrupt the user and block further action until resolved — use a [Dialog](/docs/components/messaging/dialogs).
 
 </section>
 
@@ -46,7 +43,7 @@ Consider another component when:
 
 ## Anatomy
 
-A message is an icon, a short text run, and an optional inline link — all on one row, in a card with a fixed shadow.
+A message consists of an icon, concise text, and an optional inline link, arranged in a single row with a subtle shadow.
 
 <div className="anatomy" aria-hidden="true">
   <div className="stage" style={{width:'600px',height:'200px'}}>
@@ -83,16 +80,13 @@ A message is an icon, a short text run, and an optional inline link — all on o
 
 ## Intent variants
 
-Message ships seven intents, defaulting to `info`. Unlike Alert, the container fill never changes — only the icon, link, and text color shift.
+Message has four intents. The background container fill stays the same across all of them. Only the icon, link, and text pick up the intent color.
 
 <div className="example stacked">
-  <div className="nm-message nm-message--primary"><span className="nm-message__icon"><Ic n="megaphone" s={24} /></span><span>Primary message</span></div>
-  <div className="nm-message nm-message--secondary"><span className="nm-message__icon"><Ic n="info" s={24} /></span><span>Secondary message</span></div>
-  <div className="nm-message nm-message--accent"><span className="nm-message__icon"><Ic n="sparkles" s={24} /></span><span>Accent message</span></div>
-  <div className="nm-message nm-message--info"><span className="nm-message__icon"><Ic n="info" s={24} /></span><span>Info message</span></div>
-  <div className="nm-message nm-message--positive"><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Positive message</span></div>
-  <div className="nm-message nm-message--warning"><span className="nm-message__icon"><Ic n="alert-triangle" s={24} /></span><span>Warning message</span></div>
-  <div className="nm-message nm-message--negative"><span className="nm-message__icon"><Ic n="alert-circle" s={24} /></span><span>Negative message</span></div>
+  <div className="nm-message nm-message--info"><span className="nm-message__icon"><Ic n="info" s={24} /></span><span>Info — Provides helpful context or guidance.</span></div>
+  <div className="nm-message nm-message--positive"><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Positive — Confirms a successful action.</span></div>
+  <div className="nm-message nm-message--warning"><span className="nm-message__icon"><Ic n="alert-triangle" s={24} /></span><span>Warning — Highlights a potential issue that needs attention.</span></div>
+  <div className="nm-message nm-message--negative"><span className="nm-message__icon"><Ic n="alert-circle" s={24} /></span><span>Negative — Indicates an action failed or could not be completed.</span></div>
 </div>
 
 </section>
@@ -119,6 +113,25 @@ Message ships seven intents, defaulting to `info`. Unlike Alert, the container f
   <div className="nm-message nm-message--info"><span className="nm-message__icon"><Ic n="info" s={24} /></span><span>3 items in your cart</span></div>
 </div>
 
+## Position, Hug & Dismissal
+
+### Position
+
+Messages are positioned close to the interaction or content they refer to. Their placement should make the relationship clear without obscuring relevant content.
+
+### Hug
+
+Messages use a self-sized layout that hugs their content rather than stretching to fill the available width. The container grows according to the text and optional inline link.
+
+### Dismissal behaviour
+
+Messages are automatically dismissed after a defined period or when the relevant content changes. They do not provide a manual dismiss control.
+
+- Use timed dismissal for brief, non-essential feedback.
+- Use content-change dismissal when the feedback should remain visible as long as the related content stays unchanged.
+- Allow sufficient time to read and interact with the message, including actions such as Undo. [See accessible timing](#dismissal--timing)
+- If users need control over dismissal, use an Alert instead.
+
 </section>
 
 <section className="block" id="dark">
@@ -142,8 +155,6 @@ The message card fill and shadow are explicitly remapped under `.dark`, since �
   </div>
 </div>
 
-<p className="caption">Both previews are locked — they don't follow the page theme switcher.</p>
-
 </section>
 
 <section className="block" id="dodont">
@@ -160,6 +171,11 @@ The message card fill and shadow are explicitly remapped under `.dark`, since �
   <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-message"><span className="nm-message__icon"><Ic n="alert-circle" s={24} /></span><span>Link expired</span></div></div><div className="desc">Don't pair a negative icon with the default intent's color — icon and color must agree.</div></div>
 </div>
 
+<div className="dodont">
+  <div className="card do"><div className="bar"><span className="pill">✓</span>Do</div><div className="frame"><div className="nm-message nm-message--positive"><span className="nm-message__icon"><Ic n="circle-check" s={24} /></span><span>Settings applied</span></div></div><div className="desc">Use Messages for brief feedback that can disappear automatically.</div></div>
+  <div className="card dont"><div className="bar"><span className="pill">✕</span>Don't</div><div className="frame"><div className="nm-message nm-message--warning"><span className="nm-message__icon"><Ic n="alert-triangle" s={24} /></span><span>Review required</span></div></div><div className="desc">Don't use a temporary Message for information that requires sustained attention — use an Alert instead.</div></div>
+</div>
+
 </section>
 
 <section className="block" id="a11y">
@@ -171,10 +187,26 @@ The message card fill and shadow are explicitly remapped under `.dark`, since �
 - Give the message `role="status"` so assistive tech picks it up as a polite live-region update without stealing focus.
 - Mark the icon `aria-hidden="true"` — it duplicates the color/text signal already carried by the message.
 
-#### Focus & dismissal
+#### Focus 
 
 - A message that appears in response to an action shouldn't steal keyboard focus — announce it, don't move focus to it.
 - If a message includes an "Undo" or similar link, make it a real focusable `<button>`/`<a>`, not a styled `<span>` with a click handler.
+
+#### Dismissal & Timing
+- Ensure users have sufficient time to perceive and interact with messages, including users relying on assistive technologies.
+- Use 5 seconds as a starting point for brief, non-interactive messages. Adjust the duration based on content complexity and interaction requirements, and validate it through usability testing rather than treating it as a fixed rule.
+- Do not dismiss messages while users are interacting with them.
+- Ensure important information and actions remain accessible after the message disappears.
+
+</section>
+
+<section className="block" id="sandbox">
+
+## Playground
+
+Try every intent, message, and content type, and copy the generated markup.
+
+<MessageSandbox />
 
 </section>
 
