@@ -1,7 +1,17 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/preset.css';
 @import './styles/namirial-theme.css';
+/* v2 tokens: active only on v2 pages, where they take precedence over v1 (see postcss/docs-css.mjs). */
+/* biome-ignore lint/correctness/noUnknownMediaFeatureName: version condition handled by the PostCSS plugin at build time */
+@import './styles/namirial-theme-v2.css' (docs-version: v2);
 @import './styles/fumadocs-theme.css';
+/* Locked light/dark previews ([data-theme] elements, e.g. .theme-card): rules generated from the
+   theme files so previews never follow the site theme (see postcss/docs-css.mjs).
+   Must come after all the theme imports above. */
+/* biome-ignore lint/correctness/noUnknownMediaFeatureName: handled by the PostCSS plugin at build time */
+@import './styles/namirial-theme.css' (docs-theme-previews);
+/* biome-ignore lint/correctness/noUnknownMediaFeatureName: handled by the PostCSS plugin at build time */
+@import './styles/fumadocs-theme.css' (docs-theme-previews);
 @import './styles/docs-showcase.css';
 
 html {
@@ -13,14 +23,14 @@ html > body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0px !important;
 }
 
-html.light #nd-home-layout main {
+html #nd-home-layout main {
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: cover !important;
 }
 
-/* Le variabili --home-bg-* sono iniettate su <main> in app/(home)/page.tsx,
-   così includono il basePath (che Next non applica agli url() nel CSS). */
+/* The --home-bg-* variables are injected on <main> in app/(home)/page.tsx,
+   so they include the basePath (which Next does not apply to url() in CSS). */
 html.light #nd-home-layout main.with-bg {
   background-image: var(--home-bg-light) !important;
 }
@@ -55,15 +65,29 @@ html.dark #nd-home-layout main.with-bg {
   display: none !important;
 }
 
+/* Version home (/docs/v1, /docs/v2): the sidebar would only repeat the main links.
+   We hide it but keep its column, so the content stays centered as on the other
+   pages (the mobile drawer remains available). */
+#nd-notebook-layout:has([data-version-home]) [data-sidebar-placeholder] {
+  visibility: hidden;
+}
+
 @media (max-width: 48rem) {
-  header#nd-nav {
+  /* On docs pages the DocsLayout header (with the sidebar toggle) replaces the global
+     navbar; on the home page, where it does not exist, the global navbar stays visible. */
+  body:has(#nd-subnav) header#nd-nav {
     display: none !important;
   }
+  /* Above the sidebar drawer (z-40) but below the search dialog (z-50). */
   #nd-subnav {
     display: flex !important;
-    z-index: 9999;
+    z-index: 45;
   }
   aside#nd-sidebar-mobile.max-w-\[380px\] {
     min-width: 100% !important;
   }
+}
+
+p img {
+  border-radius: var(--radius-xl);
 }

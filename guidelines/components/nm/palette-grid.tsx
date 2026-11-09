@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from 'react';
 
-// Reads --palette-* custom properties straight from the loaded stylesheets,
-// so swatch values are never duplicated and always reflect namirial-theme.css.
+// Reads --palette-* custom properties from the loaded stylesheets, so swatch values are
+// never duplicated. Names come from the :root rules; values are resolved on <html>, so on
+// v2 pages they come from namirial-theme-v2.css (its rules are scoped, not plain :root).
 
 type Vars = Record<string, string>;
 
 const NUMERIC = /^\d+$/;
 
 function readPaletteVars(): Vars {
-  const out: Vars = {};
+  const names = new Set<string>();
   for (const sheet of Array.from(document.styleSheets)) {
     let rules: CSSRuleList | undefined;
     try {
@@ -27,12 +28,16 @@ function readPaletteVars(): Vars {
       ) {
         for (let i = 0; i < rule.style.length; i++) {
           const prop = rule.style[i];
-          if (prop.startsWith('--palette-')) {
-            out[prop] = rule.style.getPropertyValue(prop).trim();
-          }
+          if (prop.startsWith('--palette-')) names.add(prop);
         }
       }
     }
+  }
+
+  const root = getComputedStyle(document.documentElement);
+  const out: Vars = {};
+  for (const name of names) {
+    out[name] = root.getPropertyValue(name).trim().toLowerCase();
   }
   return out;
 }

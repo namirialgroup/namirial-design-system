@@ -42,6 +42,19 @@
   --color-fd-ring: var(--palette-focus-300);
 }
 
+/*
+ * Documentation font, per version: v1 Open Sans, v2 Noto Sans (same `data-docs-version`
+ * marker as the v2 tokens, see postcss/docs-css.mjs). Fonts are loaded with
+ * next/font in app/layout.tsx; use var(--docs-font-family) instead of a font name.
+ */
+:root {
+  --docs-font-family: var(--font-open-sans), system-ui, sans-serif;
+}
+
+:root:has([data-docs-version='v2']) {
+  --docs-font-family: var(--font-noto-sans), system-ui, sans-serif;
+}
+
 body {
-  font-family: 'Open Sans', system-ui, sans-serif;
+  font-family: var(--docs-font-family);
 }

@@ -1,0 +1,17 @@
+{
+  "title": "Patterns",
+  "root": true,
+  "pages": [
+    "index",
+    "body-background",
+    "headings",
+    "list-table-filters",
+    "form",
+    "wizard",
+    "button-usage",
+    "disabled",
+    "sidenav",
+    "typography",
+    "language-country-switcher"
+  ]
+}

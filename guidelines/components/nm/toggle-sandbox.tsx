@@ -29,7 +29,7 @@ export function ToggleSandbox() {
     bg === 'dark'
       ? {
           background:
-            'radial-gradient(ellipse at top,rgba(3,148,140,0.22),transparent 60%),var(--palette-surface-950)',
+            'radial-gradient(ellipse at top,var(--palette-accent-950),transparent 60%),var(--palette-surface-950)',
           color: 'var(--palette-surface-50)',
         }
       : {

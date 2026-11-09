@@ -5,8 +5,8 @@
       "name": "guidelines-dev",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--prefix", "guidelines"],
-      "port": 7779,
-      "autoPort": true
+      "port": 7777,
+      "autoPort": false
     }
   ]
 }

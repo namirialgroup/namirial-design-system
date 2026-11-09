@@ -820,6 +820,7 @@
 }
 .nm-input__select-value--placeholder {
   color: var(--nm-input-placeholder);
+  flex: 1;
 }
 .nm-input__help {
   font-family: "Open Sans", system-ui, sans-serif;
@@ -1202,19 +1203,19 @@
   --nm-input-label-required: var(--palette-positive-700);
 }
 
-[data-theme=dark] .nm-textarea--error {
+[data-theme=dark] .nm-textarea--error, .dark .nm-textarea--error {
   --nm-input-border: var(--palette-negative-200);
   --nm-input-help-fg: var(--palette-negative-200);
   --nm-input-label-required: var(--palette-negative-200);
 }
 
-[data-theme=dark] .nm-textarea--warning {
+[data-theme=dark] .nm-textarea--warning, .dark .nm-textarea--warning {
   --nm-input-border: var(--palette-warning-200);
   --nm-input-help-fg: var(--palette-warning-200);
   --nm-input-label-required: var(--palette-warning-200);
 }
 
-[data-theme=dark] .nm-textarea--success {
+[data-theme=dark] .nm-textarea--success, .dark .nm-textarea--success {
   --nm-input-border: var(--palette-positive-200);
   --nm-input-help-fg: var(--palette-positive-200);
   --nm-input-label-required: var(--palette-positive-200);

@@ -1,0 +1,11 @@
+{
+  "title": "Messaging",
+  "pages": [
+    "alert",
+    "message",
+    "tooltip",
+    "popover",
+    "toast",
+    "dialogs"
+  ]
+}

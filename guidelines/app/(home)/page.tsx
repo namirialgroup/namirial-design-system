@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
+import { defaultDocsRoute, defaultVersion } from '@/lib/shared';
 
 export const metadata: Metadata = {
   title: 'The Namirial Design System',
@@ -8,33 +9,38 @@ export const metadata: Metadata = {
     'Foundations, components and patterns for building consistent Namirial products.',
 };
 
-// In CI viene valorizzato da GitHub Pages (es. "/namirial-design-system"); in locale resta "".
-// Il basePath NON viene applicato da Next agli url() nei CSS, quindi lo iniettiamo come
-// CSS variable sul <main> e lo referenziamo con var(...) in global.css.
+// Set by GitHub Pages in CI (e.g. "/namirial-design-system"); stays "" locally.
+// Next does NOT apply the basePath to url() in CSS, so we inject it as a CSS variable
+// on <main> and reference it with var(...) in global.css.
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+// The home page follows the default version. Images live in public/img/<version>/: v1 keeps
+// the original names, other versions add a "-<version>" suffix (e.g. v2/background-light-v2.svg).
+const bgSuffix = defaultVersion === 'v1' ? '' : `-${defaultVersion}`;
+const bgDir = `${basePath}/img/${defaultVersion}`;
 const bgVars = {
-  '--home-bg-light': `url(${basePath}/img/background-light.svg)`,
-  '--home-bg-dark': `url(${basePath}/img/background-dark.svg)`,
+  '--home-bg-light': `url(${bgDir}/background-light${bgSuffix}.svg)`,
+  '--home-bg-dark': `url(${bgDir}/background-dark${bgSuffix}.svg)`,
 } as CSSProperties;
 
+// Home links point to the default version (see `defaultVersion` in lib/shared.ts).
 const sections = [
   {
-    href: '/docs/accessibility',
+    href: `${defaultDocsRoute}/accessibility`,
     title: 'Accessibility',
     description: 'How the system meets WCAG standards and inclusive-design principles.',
   },
   {
-    href: '/docs/components',
+    href: `${defaultDocsRoute}/components`,
     title: 'Components',
     description: 'Buttons, forms, navigation, data display and messaging building blocks.',
   },
   {
-    href: '/docs/foundation',
+    href: `${defaultDocsRoute}/foundation`,
     title: 'Foundation',
     description: 'Color, typography, radius, shadows and icons — the visual primitives.',
   },
   {
-    href: '/docs/patterns',
+    href: `${defaultDocsRoute}/patterns`,
     title: 'Patterns',
     description: 'Recommended compositions for common product flows.',
   },
@@ -45,6 +51,8 @@ export default function HomePage() {
     <main
       className="with-bg flex flex-1 flex-col items-center px-4 py-24 text-center"
       style={bgVars}
+      // The home page uses the default version's tokens (see postcss/docs-css.mjs).
+      data-docs-version={defaultVersion}
     >
       <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-fd-primary">
         Namirial
@@ -57,11 +65,11 @@ export default function HomePage() {
         products — all driven by the tokens in <code>namirial-theme.css</code>.
       </p>
       <div className="mb-16 flex flex-wrap justify-center gap-3">
-        <Link href="/docs" className="nm-button nm-button--accent nm-button--lg">
+        <Link href={defaultDocsRoute} className="nm-button nm-button--accent nm-button--lg">
           Explore the docs
         </Link>
         <Link
-          href="/docs/components/actions/button"
+          href={`${defaultDocsRoute}/components/actions/button`}
           className="nm-button nm-button--secondary nm-button--lg"
         >
           Browse components

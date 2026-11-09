@@ -5,13 +5,13 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
-# Permessi minimi richiesti dal deploy Pages tramite GitHub Actions
+# Minimum permissions required to deploy Pages through GitHub Actions
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Un solo deploy Pages alla volta; non annulla un deploy in corso
+# One Pages deployment at a time; do not cancel a deployment in progress
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -42,8 +42,8 @@ jobs:
       - name: Build site
         working-directory: ./guidelines
         env:
-          # basePath rilevato automaticamente da GitHub Pages (es. "/namirial-design-system").
-          # In locale non è settato → resta "" e non rompe `npm run dev`.
+          # basePath detected automatically by GitHub Pages (e.g. "/namirial-design-system").
+          # Not set locally → stays "" and does not break `npm run dev`.
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
         run: npm run build
 
@@ -57,10 +57,10 @@ jobs:
             echo "ERRORE: out/index.html mancante"; find out -maxdepth 2 -type f; exit 1
           fi
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./guidelines/out
+      # - name: Upload Pages artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: ./guidelines/out
 
   deploy:
     environment:
@@ -70,6 +70,22 @@ jobs:
     needs: build
 
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4     
+
+      # Deploy to AWS
+      - name: Configure AWS credentials (OIDC — no keys)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::034327894611:role/nds-cdn-us-va1-github-deploy
+          aws-region: us-east-1
+
+      - name: Upload the built site to S3
+        run: aws s3 sync ./guidelines/out s3://nds-cdn-us-va1-site --delete
+
+      - name: Invalidate the CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E3K6FP044UMV61 \
+            --paths '/*'

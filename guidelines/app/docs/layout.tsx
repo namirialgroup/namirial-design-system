@@ -1,21 +1,19 @@
-import { source } from '@/lib/source';
-import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
-import { HomeLayout } from 'fumadocs-ui/layouts/home';
-// import { getLayoutTabs } from 'fumadocs-ui/layouts/shared';
-import { baseOptions } from '@/lib/layout.shared';
+import { getDocsTree, getVersions } from '@/lib/versions';
+import { DocsNavLayout, NavLayout } from '@/components/version-nav';
+import { baseOptions, docsOptions } from '@/lib/layout.shared';
 
 export default function Layout({ children }: LayoutProps<'/docs'>) {
-  const tree = source.getPageTree();
-  const options = baseOptions(); 
+  const tree = getDocsTree();
+  const options = docsOptions();
   return (
-    <HomeLayout {...options}>
-      <DocsLayout
-        // tree={tree}
-        tree={source.getPageTree()}
-        tabs={[]}
+    // Global navbar: logo and main links on the left; version switcher, search, theme and GitHub on the right.
+    // On mobile it is replaced by the DocsLayout header (see app/global.css).
+    <NavLayout {...baseOptions()} versions={getVersions()}>
+      <DocsNavLayout
+        tree={tree}
         {...options}
-        tabMode="navbar" // This instructs Fumadocs to render the global desktop navbar above the sidebar.
-        // Sidebar Configuration
+        // Versions and sections are already in the global navbar: no tab row in the DocsLayout header.
+        tabs={false}
         nav={{
           ...options.nav,
           mode: 'top',
@@ -23,7 +21,7 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
         } as any}
       >
         {children}
-      </DocsLayout>
-    </HomeLayout>
+      </DocsNavLayout>
+    </NavLayout>
   );
 }

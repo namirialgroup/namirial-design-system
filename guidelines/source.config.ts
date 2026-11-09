@@ -1,15 +1,15 @@
 import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 
-// In CI viene valorizzato da GitHub Pages (es. "/namirial-design-system"); in locale resta "".
+// Set by GitHub Pages in CI (e.g. "/namirial-design-system"); stays "" locally.
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 /**
- * I <img> nei file MDX usano path assoluti (es. /img/foo.png). Next.js NON applica
- * il basePath ai tag <img> raw, e in MDX i tag intrinseci letterali non passano dalla
- * mappa `components`. Riscriviamo quindi il `src` in fase di compilazione (hast),
- * così in produzione (GitHub Pages, sotto /namirial-design-system) le immagini
- * risolvono correttamente. Copre sia gli <img> letterali sia le immagini markdown.
+ * <img> tags in MDX files use absolute paths (e.g. /img/v1/foo.png). Next.js does NOT apply
+ * the basePath to raw <img> tags, and in MDX literal intrinsic tags do not go through the
+ * `components` map. So we rewrite `src` at compile time (hast), so that in production
+ * (GitHub Pages, under /namirial-design-system) images resolve correctly. Covers both
+ * literal <img> tags and markdown images.
  */
 function rehypeBasePathImages() {
   if (!basePath) return () => {};
@@ -20,11 +20,11 @@ function rehypeBasePathImages() {
       : src;
 
   const visit = (node: any) => {
-    // Immagini markdown / HTML → nodi hast `element` (tagName + properties)
+    // Markdown / HTML images → hast `element` nodes (tagName + properties)
     if (node?.type === 'element' && node.tagName === 'img' && node.properties) {
       node.properties.src = prefix(node.properties.src);
     }
-    // <img> letterali in MDX → nodi mdxJsx (name + attributes)
+    // Literal <img> in MDX → mdxJsx nodes (name + attributes)
     if (
       (node?.type === 'mdxJsxTextElement' || node?.type === 'mdxJsxFlowElement') &&
       node.name === 'img' &&
@@ -59,7 +59,7 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
-    // Estende i rehype plugin di default di fumadocs con la riscrittura del basePath sulle immagini.
+    // Extends fumadocs' default rehype plugins with the basePath rewrite for images.
     rehypePlugins: (v) => [...v, rehypeBasePathImages],
   },
 });

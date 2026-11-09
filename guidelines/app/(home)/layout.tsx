@@ -1,6 +1,11 @@
-import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { NavLayout } from '@/components/version-nav';
 import { baseOptions } from '@/lib/layout.shared';
+import { getVersions } from '@/lib/versions';
 
 export default function Layout({ children }: LayoutProps<'/'>) {
-  return <HomeLayout {...baseOptions()}>{children}</HomeLayout>;
+  return (
+    <NavLayout {...baseOptions()} versions={getVersions()}>
+      {children}
+    </NavLayout>
+  );
 }
