@@ -93,11 +93,15 @@ jobs:
       - name: Upload the built site to S3
         run: aws s3 sync ./guidelines/out-cdn s3://nds-cdn-us-va1-site --delete
 
-      - name: Invalidate the CloudFront cache
+      - name: Invalidate the CloudFront cache and wait
         run: |
-          aws cloudfront create-invalidation \
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
             --distribution-id E3K6FP044UMV61 \
-            --paths '/*'
+            --paths '/*' \
+            --query 'Invalidation.Id' --output text)
+          aws cloudfront wait invalidation-completed \
+            --distribution-id E3K6FP044UMV61 \
+            --id "$INVALIDATION_ID"
 
   # deploy:
   #   environment:
