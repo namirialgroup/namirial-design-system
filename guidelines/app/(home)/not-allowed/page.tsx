@@ -30,17 +30,16 @@ export default function NotAllowedPage() {
       <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-fd-primary">
         Error 403
       </p>
-      <h1 className="mb-4 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
-        Access not allowed
+      <h1 className="mb-8 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
+        Internal resources
       </h1>
-      <p className="mb-8 max-w-2xl text-fd-muted-foreground md:text-lg">
-        You do not have permission to view this version of the Namirial Design System.
-        If you think you should have access, contact the Design System team.
+      <p className="mb-6 max-w-xl text-fd-muted-foreground md:text-lg">
+        Access to this version of the Namirial Design System is restricted to internal corporate networks.
       </p>
-      <div className="flex flex-wrap justify-center gap-3">
-        <Link href={`${docsRoute}/v1`} className="nm-button nm-button--accent nm-button--lg">
-          Go to the v1 docs
-        </Link>
+      <p className="mb-6 max-w-xl text-fd-muted-foreground md:text-lg">
+        If you belong to the organization, ensure you are connected to the company network and reload the page.
+      </p>
+      <div className="flex flex-wrap justify-center">
         <Link href="/" className="nm-button nm-button--secondary nm-button--lg">
           Back to home
         </Link>
