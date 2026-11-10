@@ -2,8 +2,7 @@ name: Deploy docs to GitHub Pages and CDN
 
 on:
   push:
-    # branches: ["main"]
-    branches: ["docs-versioning"]
+    branches: ["main"]
   workflow_dispatch:
 
 # Minimum permissions required to deploy Pages through GitHub Actions
