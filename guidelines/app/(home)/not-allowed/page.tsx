@@ -1,7 +1,11 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import { defaultVersion, docsRoute } from '@/lib/shared';
+import { defaultVersion } from '@/lib/shared';
+// Static import: Next emits the file under _next/static with the basePath applied.
+import notAllowedIllustration from './not-allowed.svg';
+import notAllowedIllustrationDark from './not-allowed-dark.svg';
 
 // Custom 403 landing, outside the docs versioning. With static export and no trailingSlash
 // this route is emitted as out/not-allowed.html, so it can be targeted as an error page.
@@ -27,11 +31,25 @@ export default function NotAllowedPage() {
       style={bgVars}
       data-docs-version={defaultVersion}
     >
+      {/* Decorative: the heading and copy below already convey the message. Both variants are
+          rendered and toggled by the .dark class on <html>, so there is no hydration flash. */}
+      <Image
+        src={notAllowedIllustration}
+        alt=""
+        priority
+        className="mb-10 h-auto w-40 md:w-56 dark:hidden"
+      />
+      <Image
+        src={notAllowedIllustrationDark}
+        alt=""
+        priority
+        className="mb-10 hidden h-auto w-40 md:w-56 dark:block"
+      />
       <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-fd-primary">
         Error 403
       </p>
       <h1 className="mb-8 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
-        Internal resources
+        Internal resource
       </h1>
       <p className="mb-6 max-w-xl text-fd-muted-foreground md:text-lg">
         Access to this version of the Namirial Design System is restricted to internal corporate networks.
